@@ -46,9 +46,10 @@ layout = html.Div([
         html.Tr([html.Td(['Zone CH5']), html.Td(id='a17_T6')]),
         html.Tr([html.Td(['Zone CH6']), html.Td(id='a17_T7')]),
     ]),
+    #Next for 5056 S2
     html.H4('5056-S2 Digital Output Information'),
     html.Table([
-        html.Tr([html.Td(children='Not value yet',id='a17_5056_S2_result')])
+        html.Tr([html.Td(children='Not value yet',id='a17_5056_s2_result')])
     ]),
     html.H4('Digital Output Setting(5056-S2)'),
     html.Table([
@@ -61,7 +62,7 @@ layout = html.Div([
     ###Next if for S3    
     html.H4('5056-S3 Digital Output Information'),
     html.Table([
-        html.Tr([html.Td(children='Not value yet',id='a17_5056_S3_result')])
+        html.Tr([html.Td(children='Not value yet',id='a17_5056_s3_result')])
     ]),
     html.H4('Digital Output Setting(5056-S3)'),
     html.Table([
@@ -71,28 +72,54 @@ layout = html.Div([
                  html.Td(dcc.Input(id='a17_s3_inDO',type='text',debounce=True,placeholder='F02A')),
                  html.Td(html.Button('Set to 5056-S3',id='a17_s3_bo')),html.Td(id='a17_5056_s3_r2') ])
         ],className='adj'),
+    ###Next if for S4
+    html.H4('5056-S4 Digital Output Information'),
+    html.Table([
+        html.Tr([html.Td(children='Not value yet',id='a17_5056_s4_result')])
+    ]),
+    html.H4('Digital Output Setting(5056-S4)'),
+    html.Table([
+        html.Tr([html.Th(['Define(DO)']),html.Th(['Value(Dex for 16 digital)']),
+                 html.Th(['Function']),html.Th(['Final Result'])]),
+        html.Tr([html.Td(['Value to 5056-S4(16 DO)']),
+                 html.Td(dcc.Input(id='a17_s4_inDO',type='text',debounce=True,placeholder='F02A')),
+                 html.Td(html.Button('Set to 5056-S4',id='a17_s4_bo')),html.Td(id='a17_5056_s4_r2') ])
+        ],className='adj'),
+    ###Next if for S5
+    html.H4('5056-S5 Digital Output Information'),
+    html.Table([
+        html.Tr([html.Td(children='Not value yet',id='a17_5056_s5_result')])
+    ]),
+    html.H4('Digital Output Setting(5056-S5)'),
+    html.Table([
+        html.Tr([html.Th(['Define(DO)']),html.Th(['Value(Dex for 16 digital)']),
+                 html.Th(['Function']),html.Th(['Final Result'])]),
+        html.Tr([html.Td(['Value to 5056-S5(16 DO)']),
+                 html.Td(dcc.Input(id='a17_s5_inDO',type='text',debounce=True,placeholder='F02A')),
+                 html.Td(html.Button('Set to 5056-S5',id='a17_s5_bo')),html.Td(id='a17_5056_s5_r2') ])
+        ],className='adj'),
     html.Br()
 ])
 
-
+#Next for S2
 @callback(Output('a17_5056_s2_r2','children'),
               Input('a17_s2_bo','n_clicks'),Input('a17_s2_inDO','value'))
-def set_5056_01(n_clicks,data):
+def set_5056_s2(n_clicks,data):
     if n_clicks is None:
         raise PreventUpdate
     else:
         print('data for set A17 5056 S3',data)
         try:
             RAD.set_5056('A17',data,'S2')
-            return RAD.get_5056('A17')
+            return RAD.get_5056('A17','S2')
         except:
             return ['Error ##']
 
 
-@callback(Output('a17_5056_S2_result','children'),Input('a17-bo-check','n_clicks'))
+@callback(Output('a17_5056_s2_result','children'),Input('a17-bo-check','n_clicks'))
           #Input('a17-5056-r2','children'),Input('a17-5056-r3','children'),
           #prevent_initial_call=True)
-def update_5056_S3(n_clicks):
+def update_5056_s2(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
@@ -102,30 +129,87 @@ def update_5056_S3(n_clicks):
         except:
             return "Error ##02"
 
+#Next for S3
 @callback(Output('a17_5056_s3_r2','children'),
               Input('a17_s3_bo','n_clicks'),Input('a17_s3_inDO','value'))
-def set_5056_01(n_clicks,data):
+def set_5056_s3(n_clicks,data):
     if n_clicks is None:
         raise PreventUpdate
     else:
         print('data for set A17 5056 S3',data)
         try:
             RAD.set_5056('A17',data,'S3')
-            return RAD.get_5056('A01')
+            return RAD.get_5056('A17','S3')
         except:
             return ['Error ##']
 
 
-@callback(Output('a17_5056_S3_result','children'),Input('a17-bo-check','n_clicks'))
+@callback(Output('a17_5056_s3_result','children'),Input('a17-bo-check','n_clicks'))
           #Input('a17-5056-r2','children'),Input('a01-5056-r3','children'),
           #prevent_initial_call=True)
-def update_5056_S3(n_clicks):
+def update_5056_s3(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
         time.sleep(1)
         try:
-            return RAD.get_5056('A17')
+            return RAD.get_5056('A17','S3')
+        except:
+            return "Error ##02"
+
+#Next for S4
+@callback(Output('a17_5056_s4_r2','children'),
+              Input('a17_s4_bo','n_clicks'),Input('a17_s4_inDO','value'))
+def set_5056_s4(n_clicks,data):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        print('data for set A17 5056 S4',data)
+        try:
+            RAD.set_5056('A17',data,'S4')
+            return RAD.get_5056('A17','S4')
+        except:
+            return ['Error ##']
+
+
+@callback(Output('a17_5056_s4_result','children'),Input('a17-bo-check','n_clicks'))
+          #Input('a17-5056-r2','children'),Input('a01-5056-r3','children'),
+          #prevent_initial_call=True)
+def update_5056_s4(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        time.sleep(1)
+        try:
+            return RAD.get_5056('A17','S4')
+        except:
+            return "Error ##02"
+
+#Next for S5
+@callback(Output('a17_5056_s5_r2','children'),
+              Input('a17_s5_bo','n_clicks'),Input('a17_s5_inDO','value'))
+def set_5056_s5(n_clicks,data):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        print('data for set A17 5056 S5',data)
+        try:
+            RAD.set_5056('A17',data,'S5')
+            return RAD.get_5056('A17','S5')
+        except:
+            return ['Error ##']
+
+
+@callback(Output('a17_5056_s5_result','children'),Input('a17-bo-check','n_clicks'))
+          #Input('a17-5056-r2','children'),Input('a01-5056-r3','children'),
+          #prevent_initial_call=True)
+def update_5056_s5(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        time.sleep(1)
+        try:
+            return RAD.get_5056('A17','S5')
         except:
             return "Error ##02"
 

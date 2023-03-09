@@ -203,7 +203,7 @@ def get_5017(machine,b = 8):
         return ['Error 02']*b
 
 def get_A3(machine):
-    res1=['0']*2
-    res2=['1']*16
+    res1=['Fake 0']*2
+    res2=['Fake 1']*16
     res1.extend(res2)
     return  res1

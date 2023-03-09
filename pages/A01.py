@@ -82,9 +82,9 @@ layout = html.Div([
     #html.Div(id='a01-5056-result'),
     html.H4('Digital Output Setting(5056)'),
     html.Table([
-        html.Tr([html.Th(['Define(DO)']),html.Th(['Value(Dex for 16 digital)']),
-                 html.Th(['Function']),html.Th(['Final Result'])]),
-        html.Tr([html.Td(['Value to 5056(16 DO)']),
+        html.Tr([html.Th('Define(DO)'),html.Th('Value(Dex for 16 digital)'),
+                 html.Th('Function'),html.Th('Final Result') ]),
+        html.Tr([html.Td('Value to 5056(16 DO)'),
                  html.Td(dcc.Input(id='a01_inDO',type='text',debounce=True,placeholder='F02A')),
                  html.Td(html.Button('Set to 5056',id='a01_B_DO')),html.Td(id='a01-5056-r2') ])
         ],className='adj'),
@@ -95,7 +95,6 @@ layout = html.Div([
     html.Div(id='a01-5056-r3'),
     html.Br()
 ])
-
 
 @callback(Output('a01-5056-r3','children'),
               Input('a01_Rx_Set','n_clicks'),Input('ch-to-set','value'))
