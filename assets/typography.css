@@ -1,0 +1,15 @@
+body {
+    font-family: sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: hotpink;
+}
+
+table{
+ border: solid blue 4px;
+}
+
+
+table.adj{
+ border: solid red 2px;   
+}

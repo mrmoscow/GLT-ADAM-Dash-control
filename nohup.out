@@ -1,0 +1,101 @@
+Dash is running on http://0.0.0.0:8051/
+
+ * Serving Flask app 'app'
+ * Debug mode: on
+Dash is running on http://0.0.0.0:8051/
+
+ * Serving Flask app 'app'
+ * Debug mode: on
+Checking A01 (5017-> 5018->5024->5056)
+WriteRegisterResponse 17 => 0
+Checking A11 (5017-> 5018->5024->5056)
+Checking A01 (5017-> 5018->5024->5056)
+Checking A01 (5017-> 5018->5024->5056)
+Checking A01 (5017-> 5018->5024->5056)
+Checking A01 (5017-> 5018->5024->5056)
+Checking A11 (5017-> 5018->5024->5056)
+checking A01 : 192.168.1.207
+A01 : 192.168.1.207 Good connection!
+checking A03 : 192.168.1.201
+checking A10 : 192.168.1.217
+checking A11 : 192.168.1.206
+A11 : 192.168.1.206 Good connection!
+A03 : 192.168.1.201 *** Connection Failure ***
+A10 : 192.168.1.217 *** Connection Failure ***
+checking A14 : 192.168.1.208
+checking A17 : 192.168.1.223
+checking A44_volt : 192.168.1.212
+A14 : 192.168.1.208 *** Connection Failure ***
+A17 : 192.168.1.223 *** Connection Failure ***
+A44_volt : 192.168.1.212 *** Connection Failure ***
+Traceback (most recent call last):
+  File "/home/pi/py-project/dash-3/app.py", line 10, in <module>
+    app = Dash(__name__, use_pages=True,title='GLT Dashboard-Demo')
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 501, in __init__
+    self.init_app()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 565, in init_app
+    self.enable_pages()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 2023, in enable_pages
+    self._import_layouts_from_pages()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 1995, in _import_layouts_from_pages
+    spec.loader.exec_module(page_module)
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/pi/py-project/dash-3/pages/A11.py", line 7, in <module>
+    import GLT as GLT # over the pages dir
+  File "/home/pi/py-project/dash-3/GLT.py", line 181
+    def get_A3(machine,)
+                       ^
+SyntaxError: invalid syntax
+Dash is running on http://0.0.0.0:8051/
+
+ * Serving Flask app 'app'
+ * Debug mode: on
+Checking A10 (DI and DO)
+checking A01 : 192.168.1.207
+A01 : 192.168.1.207 Good connection!
+checking A03 : 192.168.1.201
+A03 : 192.168.1.201 *** Connection Failure ***
+Checking A10 (DI and DO)
+Checking A03 (DI and DO)
+Checking A10 (DI and DO)
+Checking A11 (5017-> 5018->5024->5056)
+Checking A01 (5017-> 5018->5024->5056)
+Traceback (most recent call last):
+  File "/home/pi/py-project/dash-3/app.py", line 10, in <module>
+    app = Dash(__name__, use_pages=True,title='GLT Dashboard-Demo')
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 501, in __init__
+    self.init_app()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 565, in init_app
+    self.enable_pages()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 2023, in enable_pages
+    self._import_layouts_from_pages()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 1995, in _import_layouts_from_pages
+    spec.loader.exec_module(page_module)
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/pi/py-project/dash-3/pages/A11.py", line 69
+    html.H4('5056 Digital Output Information'),
+       ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "app.py", line 10, in <module>
+    app = Dash(__name__, use_pages=True,title='GLT Dashboard-Demo')
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 501, in __init__
+    self.init_app()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 565, in init_app
+    self.enable_pages()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 2023, in enable_pages
+    self._import_layouts_from_pages()
+  File "/home/pi/.local/lib/python3.7/site-packages/dash/dash.py", line 1995, in _import_layouts_from_pages
+    spec.loader.exec_module(page_module)
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/pi/py-project/dash-3/pages/A11.py", line 69
+    html.H4('5056 Digital Output Information'),
+       ^
+SyntaxError: invalid syntax
