@@ -83,7 +83,7 @@ def update_output_5017(n_clicks):
         print('Checking A03 (DI and DO)')
         #print(get_5017('A01'))
         try:
-            return RAD.get_A3('A03')
+            return RAD.get_6050('A01')
         except:
             return ['Error ##']*8
 '''

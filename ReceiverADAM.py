@@ -202,8 +202,22 @@ def get_5017(machine,b = 8):
         co.close()
         return ['Error 02']*b
 
-def get_A3(machine):
-    res1=['Fake 0']*2
-    res2=['Fake 1']*16
-    res1.extend(res2)
-    return  res1
+### need to check the feedback from real 5060
+def get_6050(machine,b=18):
+    co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    if not co.connect():      # True / False
+        return ['Error 01']*18
+    try:
+        r = co.read_coils(48,12,unit=1)
+        res=r.bits[0:12]
+        r2 = co.read_coils(50,6,unit=1)
+        res.extend(r2.bits[0:6])
+        #b0=''.join(["0, " if i==0 else "1, " for i in res])
+        #print(["0" if i==0 else "1" for i in res])
+        br=["0" if i==0 else "1" for i in res]
+        print(br)
+        return br
+    except:
+        co.close()
+        return ['Error 02']*18
+
