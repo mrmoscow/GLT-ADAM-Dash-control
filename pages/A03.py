@@ -15,7 +15,7 @@ dash.register_page(__name__)
 
 layout = html.Div([
     html.H3('A03 Status and Setting'),
-    html.Button('A3 fake check',id='a03-bo-check'),
+    html.Button('A3 check',id='a03-bo-check'),
     html.Br(),
     html.Div(id='a03-bo-result'),
     html.H4('The DI status '),
@@ -83,7 +83,7 @@ def update_output_5017(n_clicks):
         print('Checking A03 (DI and DO)')
         #print(get_5017('A01'))
         try:
-            return RAD.get_6050('A01')
+            return RAD.get_6050('A03')
         except:
             return ['Error ##']*8
 '''

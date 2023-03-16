@@ -12,8 +12,8 @@ python3 app.py
 
 ### About the ReceiverADAM module
 * This is a module for this project, in this ReceiverADAM.py there are functions for get(read infromation) and set the ADAM module. 
-We also list the IP of the ADAM and the unit information in the module.  
-* The switch ture table and attentatur voltage will also list here. 
+* We also list the IP of the ADAM and the unit information in the module.  
+* The switch ture table and attentatur voltage will also list here in the future.
 
 ### Knowen bug 
 

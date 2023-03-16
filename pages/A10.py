@@ -15,7 +15,7 @@ dash.register_page(__name__)
 
 layout = html.Div([
     html.H3('A10 Status and Setting'),
-    html.Button('A10 fake check',id='a10-bo-check'),
+    html.Button('A10 check',id='a10-bo-check'),
     html.Br(),
     html.Div(id='a10-bo-result'),
     html.H4('The DI status '),

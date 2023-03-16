@@ -131,7 +131,7 @@ def set_5056(machine,data,card_at='S3'):
         return 'Error 03'
 
 
-
+#5050 is DO.
 def get_5056(machine,card_at='S3'):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
@@ -160,7 +160,7 @@ def set_5024(machine,channel,v):
         co.close()
         return ['Error 03']*b
 
-
+#5024 in A01-16/A11-16
 def get_5024(machine,b = 4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
@@ -174,7 +174,7 @@ def get_5024(machine,b = 4):
         co.close()
         return ['Error 02']*b
 
-
+#5018 in A01-08/A11-08/A14-08/A17-08
 def get_5018(machine,b = 7):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
@@ -188,7 +188,7 @@ def get_5018(machine,b = 7):
         co.close()
         return ['Error 02']*b
 
-
+#5017 in A01-00/A11-00/A14-00/A17-00
 def get_5017(machine,b = 8):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
@@ -202,18 +202,16 @@ def get_5017(machine,b = 8):
         co.close()
         return ['Error 02']*b
 
-### need to check the feedback from real 5060
+### 6050 in A03-00/A10-00
 def get_6050(machine,b=18):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
         return ['Error 01']*18
     try:
-        r = co.read_coils(48,12,unit=1)
+        r = co.read_coils(0,12,unit=1)
         res=r.bits[0:12]
-        r2 = co.read_coils(50,6,unit=1)
+        r2 = co.read_coils(12,6,unit=1)
         res.extend(r2.bits[0:6])
-        #b0=''.join(["0, " if i==0 else "1, " for i in res])
-        #print(["0" if i==0 else "1" for i in res])
         br=["0" if i==0 else "1" for i in res]
         print(br)
         return br
