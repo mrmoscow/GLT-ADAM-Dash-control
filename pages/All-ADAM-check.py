@@ -65,7 +65,7 @@ layout = html.Div([
 @callback(Output('all-result', 'children'),
               Input('interval', 'n_intervals'))
 def update_link(n):
-    return RAD.test_ADAM()
+    return RAD.test_ADAMs()
 
 @callback(
     Output(component_id='a01-link-result', component_property='children'),
@@ -74,69 +74,69 @@ def update_link_a01(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A01')
+        return RAD.check_ADAM('A01')
 
 @callback(Output('a03-link-result','children'),Input('a03-link-check','n_clicks'))
 def update_link_a03(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A03')
+        return RAD.check_ADAM('A03')
 
 @callback(Output('a10-link-result','children'),Input('a10-link-check','n_clicks'))
 def update_link_a10(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A10')
+        return RAD.check_ADAM('A10')
 
 @callback(Output('a11-link-result','children'),Input('a11-link-check', 'n_clicks'))
 def update_link_a11(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A11')
+        return RAD.check_ADAM('A11')
 
 @callback(Output('a14-link-result','children'),Input('a14-link-check', 'n_clicks'))
 def update_link_a14(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A14')
+        return RAD.check_ADAM('A14')
 
 @callback(Output('a17-link-result','children'),Input('a17-link-check', 'n_clicks'))
 def update_link_a17(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A17')
+        return RAD.check_ADAM('A17')
 
 @callback(Output('a44v-link-result','children'),Input('a44v-link-check', 'n_clicks'))
 def update_link_a44v(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A44_volt')
+        return RAD.check_ADAM('A44_volt')
 
 @callback(Output('a44r-link-result','children'),Input('a44r-link-check', 'n_clicks'))
 def update_link_a44r(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A44_ReSl')
+        return RAD.check_ADAM('A44_ReSl')
 
 @callback(Output('a45v-link-result','children'),Input('a45v-link-check', 'n_clicks'))
 def update_link_a45v(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A45_volt')
+        return RAD.check_ADAM('A45_volt')
 
 @callback(Output('a45r-link-result','children'),Input('a45r-link-check', 'n_clicks'))
 def update_linkt_a45r(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        return RAD.check_ADAM_result('A45_ReSl')
+        return RAD.check_ADAM('A45_ReSl')
 
 
