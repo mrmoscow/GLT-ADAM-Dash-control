@@ -253,13 +253,13 @@ def get_5017(machine,b = 8):
         return ['Error 02']*b
 
 ### 6050 in A03-00/A10-00
-def set_6050(machine,data,card_at='S3'):
+def set_6050(machine,data):
     # data is  [0,0,0,0,0,0], 6 list of 
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
         return 'Error 01'
     try:
-        print(co.write_coils(coil_list[card_at], data,unit=1))
+        print(co.write_coils(12, data,unit=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -282,8 +282,6 @@ def get_6050(machine,b=18):
     except:
         co.close()
         return ['Error 02']*18
-
-
 
 
 A4x_bits = {1:[1,0,0,0], 2:[0,1,0,0],3: [0,0,1,0], 4:[0,0,0,1]}
@@ -310,8 +308,8 @@ def set_Rx(rx_number,tone):
         r1=set_5056('A01','0000')
         time.sleep(0.5)
         r2=set_5056('A01',rxIO_A01)
-        set_6260('A44_ReSl',rxIO_A4x)
-        set_6260('A45_ReSl',rxIO_A4x)
+        #set_6260('A44_ReSl',rxIO_A4x)
+        #set_6260('A45_ReSl',rxIO_A4x)
         #res="The Rx is now at"+tone
         #print(r1)
         return 'The Rx is now at Rx_'+str(rx_number)+' with tone '+tone

@@ -1,11 +1,11 @@
 import dash
-from dash import html, dcc, callback, Input, Output,State
+from dash import html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
 
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 import time
-import ReceiverADAM as RAD #at main dir not
 from datetime import datetime
+import ReceiverADAM as RAD #module for this project
 
 dash.register_page(__name__)
 

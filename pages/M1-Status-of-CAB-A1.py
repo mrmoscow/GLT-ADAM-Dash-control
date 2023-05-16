@@ -82,20 +82,21 @@ layout = html.Div([
     #html.Div(id='a01-5056-result'),
     html.H4('Digital Output Setting(5056)'),
     html.Table([
-        html.Tr([html.Th('Define(DO)'),html.Th('Value(Dex for 16 digital)'),
+        html.Tr([html.Th('Define(DO)'),html.Th('Value(4 digit hex humber for 16 on/off switch)'),
                  html.Th('Function'),html.Th('Final Result') ]),
         html.Tr([html.Td('Value to 5056(16 DO)'),
                  html.Td(dcc.Input(id='a01_inDO',type='text',debounce=True,placeholder='F02A')),
                  html.Td(html.Button('Set to 5056',id='a01_B_DO')),html.Td(id='a01-5056-r2') ])
         ],className='adj'),
-    html.H4('TTL channal selection'),
-    dcc.Dropdown(id='ch-to-set', options=rx_opts,
-                 style={'max-width': '200px'}, placeholder='Select the Channel'),
-    html.Button('Setting the TTL channal',id='a01_Rx_Set'),
+    #html.H4('TTL channal selection'),
+    #dcc.Dropdown(id='ch-to-set', options=rx_opts,
+    #             style={'max-width': '200px'}, placeholder='Select the Channel'),
+    #html.Button('Setting the TTL channal',id='a01_Rx_Set'),
     html.Div(id='a01-5056-r3'),
     html.Br()
 ])
 
+'''
 @callback(Output('a01-5056-r3','children'),
               Input('a01_Rx_Set','n_clicks'),Input('ch-to-set','value'))
 def set_5056_ch(n_clicks,data):
@@ -109,6 +110,7 @@ def set_5056_ch(n_clicks,data):
             return RAD.get_5056('A01')
         except:
             return ['Error ##']
+'''
 
 @callback(Output('a01-5056-r2','children'),
               Input('a01_B_DO','n_clicks'),Input('a01_inDO','value'))
