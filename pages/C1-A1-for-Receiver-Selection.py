@@ -30,6 +30,13 @@ layout = html.Div([
                  style={'max-width': '150px'}, placeholder='Tone On/OFF'),
     html.H5('Select VGA control Voltage'),
     dcc.Input(id='vga_in',type='number',min=0,max=10,debounce=True),
+
+    #html.Table([
+    #    html.Tr([html.Th(['Select Receiver-WCA']),html.Th(['Tone'])]),
+    #    html.Tr([html.Td(dcc.Dropdown(id='Rx_sel1', options=rx_opts,
+    #             style={'max-width': '150px'}, placeholder='ReceiverSelect')),
+    #            html.Td('Test2')]),
+    #],className='adj2'),
     html.H6(''),
     html.Button('Submit',id='Rx_Set'),
     html.Div(id='Rx_setting_res'),
@@ -46,9 +53,6 @@ def set_5056_ch(n_clicks,rx,tone,volt):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        print(rx)
-        #rx=4 if rx == None
-        #tone=1 if tone == None
         if rx is None:
             rx=4
         if tone is None:
@@ -57,14 +61,9 @@ def set_5056_ch(n_clicks,rx,tone,volt):
             tone="Off"
         else:
             tone="On"
-        #tone = 'Off' if tone is 1 else tone = 'On'
-        #data=ch_hex[rx]
-        #print('Start to  receiver to Rx',rx)
         try:
-            #setReceiver.
-            #RAD.set_Rx(rx,tone)
+            print("The Rx now set to",rx,"with tone",tone)
             return RAD.set_Rx(rx,tone)
-            #return 'Rx',rx,'with Tone',tone
         except:
             return 'Error ##'
 

@@ -108,7 +108,7 @@ def set_5056_s2(n_clicks,data):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        print('data for set A17 5056 S3',data)
+        print('data for set A17 5056 S2',data)
         try:
             RAD.set_5056('A17',data,'S2')
             return RAD.get_5056('A17','S2')
@@ -207,7 +207,7 @@ def update_5056_s5(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        time.sleep(1)
+        time.sleep(2)
         try:
             return RAD.get_5056('A17','S5')
         except:
@@ -253,7 +253,7 @@ def update_output_5018(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        time.sleep(2)
+        time.sleep(1)
         try:
             return RAD.get_5018('A17')
         except:

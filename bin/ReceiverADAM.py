@@ -157,7 +157,7 @@ def set_6224(machine,channel,v):
         return ['Error 03']*b
 
 
-def get_6224(machine,b =4):
+def get_6224(machine,b =2):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     if not co.connect():      # True / False
         return ['Error 01']*b

@@ -1,6 +1,7 @@
 body {
     font-family: sans-serif;
 }
+
 h1, h2, h3, h4, h6 {
     color: hotpink;
 }
@@ -16,5 +17,12 @@ table{
 
 
 table.adj{
- border: solid red 2px;   
-}
+    border: solid red 2px;   
+    }
+
+table.adj2{
+    width: 30%;
+    border: solid red 2px;
+    border-collapse: collapse;
+    }
+
