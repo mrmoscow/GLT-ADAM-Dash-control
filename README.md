@@ -7,7 +7,7 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 
 
 ###Module requiresement
-* argparse-1.4.0
+* argparse             1.4.0
 * dash                 2.6.1
 * dash-core-components 2.0.0
 * dash-html-components 2.0.0
@@ -16,6 +16,8 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 
 ### How to run:
 python3 app.py 
+or under  gltobscon 
+cpy3 ~/sfyen/GLT-ADAM-Dash-control than open brower open http://0.0.0.0:8052
 
 
 ### About the ReceiverADAM module
@@ -29,7 +31,6 @@ python3 app.py
 * 
 
 ### ToDo List
-* Test A03.py, test set_6050
-* Test the link and set of A44_r, A45_r
-* Make sure the Receiver Page work well. 
-* PowerImage in Dash
+* CSS file for  pages (C1 at lease)
+* Testing the M7 page. (should merge from A45)
+* Testing the script under bin
