@@ -21,8 +21,13 @@ table.adj{
     }
 
 table.adj2{
-    width: 30%;
+    width: 60%;
     border: solid red 2px;
     border-collapse: collapse;
     }
 
+
+th.adj2,td.adj2{
+    border: solid red 2px;
+    border-collapse: collapse;
+    }

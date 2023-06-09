@@ -42,10 +42,10 @@ layout = html.Div([
     html.Button('Submit',id='att_Set'),
     html.H6('0 is Minimum attenuation, (High LO power)'),
     html.Div(id='att_result'),
-    dcc.Dropdown(list(Power_options.keys()),'Rx1',id='rx-radio',style={'width':'50%','max-width':'400px'}),
-    dcc.Dropdown(id='level-radio',style={'max-width':'400px','width':'50%'}),
+    #dcc.Dropdown(list(Power_options.keys()),'Rx1',id='rx-radio',style={'width':'50%','max-width':'400px'}),
+    #dcc.Dropdown(id='level-radio',style={'max-width':'400px','width':'50%'}),
     html.Hr(),
-    html.Div(id='display-selected-values')
+    #html.Div(id='display-selected-values')
 ])
 
 
@@ -89,7 +89,7 @@ def update_att_A03(n_clicks,att):
         except:
             return "Fail"
 
-
+'''
 @callback(
     Output('level-radio', 'options'),
     Input('rx-radio', 'value'))
@@ -110,3 +110,4 @@ def set_cities_value(available_options):
     Input('level-radio', 'value'))
 def set_display_children(rx, level):
     return u' for LO Frequency{} GHz in {}'.format(level, rx,)
+'''
