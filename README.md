@@ -17,7 +17,9 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 ### How to run:
 python3 app.py 
 or under  gltobscon 
-cpy3 ~/sfyen/GLT-ADAM-Dash-control than open brower open http://0.0.0.0:8052
+cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
+    than open brower open http://0.0.0.0:8052
+
 
 
 ### About the ReceiverADAM module
@@ -33,4 +35,5 @@ cpy3 ~/sfyen/GLT-ADAM-Dash-control than open brower open http://0.0.0.0:8052
 ### ToDo List
 * CSS file for  pages (C1 at lease)
 * Testing the M7 page. (should merge from A45)
-* Testing the script under bin
+* Learn The model of SA, and how the page "Set Keysight Spectrum Analy" like
+* rewrote the SA.c 
