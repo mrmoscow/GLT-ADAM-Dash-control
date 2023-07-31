@@ -3,6 +3,7 @@ from dash import html, dcc, callback, Input, Output
 #from dash.exceptions import PreventUpdate
 
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+import socket
 import time
 from datetime import datetime
 
@@ -327,5 +328,49 @@ def set_Rx(rx_number,tone):
         return 'The Rx is now at Rx_'+str(rx_number)+' with tone '+tone
     except:
         return "Error 09: not running into try zone in set_Rx."
-#
+
+def set_SA(machine,centFreq,span,refLevel,scale,rbw,vbw):
+    print (machine,centFreq,span,refLevel,scale,rbw,vbw)
+    print (ADAM_list[machine])
+    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientSocket.connect((ADAM_list[machine],5025))
+    data = "*IDN?\n"
+    clientSocket.send(data.encode())
+    dataFromServer = clientSocket.recv(1024)
+    print(dataFromServer.decode())
+    try:
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientSocket.connect((ADAM_list[machine],5025))
+        data = "*IDN?\n"
+        clientSocket.send(data.encode())
+        dataFromServer = clientSocket.recv(1024)
+        print(dataFromServer.decode())
+
+        data = 'FREQ:CENT'+" {:.0f} ".format(centFreq) +'Hz\n'
+        print(data)
+        clientSocket.send(data.encode())
+
+        data = "FREQ:SPAN {:.0f} Hz\n".format(span)
+        print(data)
+        clientSocket.send(data.encode())
+
+        data = "DISP:WIND:TRAC:Y:RLEV {:.0f} dBm\n".format(refLevel)
+        print(data)
+        clientSocket.send(data.encode())
+
+        data= "DISP:SEM:VIEW:WIND:TRAC:Y:PDIV {:.0f} dB\n".format(scale)
+        print(data)
+        clientSocket.send(data.encode())
+
+        data= "BAND {:.0f} Hz\n".format(rbw)
+        print(data)
+        clientSocket.send(data.encode())
+
+        data= "BAND:VID {:.0f} Hz\n".format(vbw)
+        print(data)
+        clientSocket.send(data.encode())
+        return 'Setting Succeful'
+    except:
+        print('Error 01')
+        return 'Error 01'
 
