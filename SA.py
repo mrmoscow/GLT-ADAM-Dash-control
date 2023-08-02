@@ -1,11 +1,33 @@
 
 import socket
 import ReceiverADAM as RAD #module for this project
+import requests
 
-'''
 # Create a client socket
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Connect to the server
+clientSocket.connect(("192.168.1.221",5025))
+
+#url = "http://192.168.1.221/Agilent.SA.WebInstrument/Screen.png"
+
+data = "*IDN?\n"
+clientSocket.send(data.encode())
+dataFromServer = clientSocket.recv(1024)
+print(dataFromServer.decode())
+
+#data = ":MMEM:STOR:TRAC:DATA TRACE1,"myTracevi.csv"\n"
+#data = ":MMEM:STOR:SCR \"my4Screen.png\"\n"
+#clientSocket.send(data.encode())
+#print("Done")
+
+
+#data = ":MMEM:DATA? \"my3Screen.png\""
+#clientSocket.send(data.encode())
+#dataFromServer = clientSocket.recv(1024)
+#print(dataFromServer.decode())
+
+
+'''
 try:
     #print(clientSocket.connect(("192.168.1.221",5025)))
     print(clientSocket.connect(("192.168.1.222",5025)))
@@ -51,9 +73,9 @@ except:
 def set_SA(machine,centFreq,span,refLevel,scale,rbw,vbw):
     try:
         clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #clientSocket.connect((machine,5025))
-        print(RAD.ADAM_list[machine])
-        clientSocket.connect((RAD.ADAM_list[machine],5025))
+        clientSocket.connect((machine,5025))
+        #print(RAD.ADAM_list[machine])
+        #clientSocket.connect((RAD.ADAM_list[machine],5025))
         data = "*IDN?\n"
         clientSocket.send(data.encode())
         dataFromServer = clientSocket.recv(1024)
@@ -175,7 +197,15 @@ print(channel_02)
 print(channel_03)
 print(channel_04)
 Sp=channelOpt[1]['SAPar']
-#set_SA("192.168.1.221",Sp[0],Sp[1],Sp[2],Sp[3],Sp[4],Sp[5])
-print(RAD.ADAM_list['SA1'])
-#set_SA('SA1',Sp[0],Sp[1],Sp[2],Sp[3],Sp[4],Sp[5])
-RAD.set_SA('SA1',Sp[0],Sp[1],Sp[2],Sp[3],Sp[4],Sp[5])
+set_SA("192.168.1.221",Sp[0],Sp[1],Sp[2],Sp[3],Sp[4],Sp[5])
+#RAD.set_SA('SA1',Sp[0],Sp[1],Sp[2],Sp[3],Sp[4],Sp[5])
+
+
+url = "http://192.168.1.221/Agilent.SA.WebInstrument/Screen.png"
+response = requests.get(url)
+with open("./assets/SA_image.png", "wb") as f:
+    f.write(response.content)
+
+print("Done for saving png file")
+
+#RAD.getSApng()

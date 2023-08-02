@@ -6,6 +6,7 @@ from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 import socket
 import time
 from datetime import datetime
+import requests
 
 #Next list the name and IP at GLT telescope
 ADAM_list={"A01":'192.168.1.207',\
@@ -32,6 +33,7 @@ coil_list={"S2":32,\
            "S5":80}
 
 adam_delay = 0.25
+
 
 #A1 = ModbusClient('192.168.1.207',port=502,timeout=10)
 
@@ -310,7 +312,8 @@ def set_Rx(rx_number,tone):
     else:
         rxIO_A01=A01_hex[rx_number]
     rxIO_A4x=A4x_bits[rx_number]
-    # for module checking. 
+    # for module checking.
+    #add A11 for tsys power meter switch.
     if 'Bad' in check_ADAM('A01'): return "Not Success: A01 Error-01"
     if 'Bad' in check_ADAM('A03'): return "Not Success: A03 Error-01"
     if 'Bad' in check_ADAM('A44_ReSl'): return "Not Success: A44r Error-01"
@@ -374,3 +377,13 @@ def set_SA(machine,centFreq,span,refLevel,scale,rbw,vbw):
         print('Error 01')
         return 'Error 01'
 
+
+def getSApng():
+    url = "http://192.168.1.221/Agilent.SA.WebInstrument/Screen.png"
+    try:
+        response = requests.get(url)
+        with open("./assets/SA_image.png", "wb") as f:
+            f.write(response.content)
+        return 'Reflash SA PNG file succesfule'
+    except:
+        return 'Reflash SA PNG file failed'
