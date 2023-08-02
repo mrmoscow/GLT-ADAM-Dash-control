@@ -46,7 +46,7 @@ channelOpt =[
     {'label':'0.5 or 1.5 GHz',                  'value':14, 'SAPar':[1E9,1.6E9,0,10, 3E6,300]},
     {'label':'31.5 MHz',                        'value':15, 'SAPar':[3.15E7,200,-50,10, 1, 1]},
     {'label':'Ref1 (SG) couple out',            'value':16, 'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
-    {'label':'NotAssigned',                     'value':17, 'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
+    {'label':'Test-NotAssigned',                     'value':17, 'SAPar':[4.0E9,1.0E9,0,10, 10E4,1E5]},
     {'label':'NotAssigned',                     'value':18, 'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
     {'label':'NotAssigned',                     'value':19, 'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
     {'label':'NotAssigned',                     'value':20, 'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
@@ -80,8 +80,8 @@ d_k = 'SAPar'
 d_v = 'NotAssigned'
 #for remove the dic whit key,value=label,NotAssigned, also remove the key=SAPar for dropdown 
 #channel_O2 = [{k : v for k, v in s.items() if k != d_k} for s in channelOpt]
-channel_O2 = [{k : v for k, v in s.items() if k != d_k} for s in channelOpt if not(s['label'] == 'NotAssigned')]
-
+#channel_O2 = [{k : v for k, v in s.items() if k != d_k} for s in channelOpt if not(s['label'] == 'NotAssigned')]
+channel_O2 = [{k : v for k, v in s.items() if k != d_k} for s in channelOpt if s['label'] != 'NotAssigned']
 #print(channel_O2)
 
 layout = html.Div([
@@ -89,10 +89,18 @@ layout = html.Div([
     dcc.Dropdown(id='SA_sel', options=channel_O2,style={'max-width': '460px'}, placeholder='SA-chaannel-Select'),
     html.H6(''),
     html.Button('Submit',id='SA_set'),
+    #html.Img(src=dash.get_asset_url('image.png'))
     html.Div(id='SA_setting_res'),
-    html.Br()
+    html.Br(),
+    html.Button('Reflash-SA-Image',id='SA_reload'),
+    html.Br(),
+    html.Div(id='SA_reload_res'),
+    html.Br(),
+    html.Img(src=dash.get_asset_url('SA_image.png')),
+    html.Br(),
 ])
 
+#RAD.getSApng()
 
 @callback(Output('SA_setting_res','children'),
           Input('SA_set','n_clicks'),
@@ -107,4 +115,13 @@ def SA_set(n_clicks,channel):
         re=RAD.set_SA('SA1',Sp[0],Sp[1],Sp[2],Sp[3],Sp[4],Sp[5])
         time.sleep(1)
         return channelOpt[channel-1]['label']+str(Sp)+re
+
+@callback(Output('SA_reload_res','children'),
+          Input('SA_reload','n_clicks'),)
+def SA_reload(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        time.sleep(1)
+        return RAD.getSApng()
 
