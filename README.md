@@ -35,5 +35,7 @@ cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
 ### ToDo List
 * CSS file for  pages (C1 at lease)
 * Testing the M7 page. (should merge from A45)
-* Learn The model of SA, and how the page "Set Keysight Spectrum Analy" like
-* rewrote the SA.c 
+* Learn The model of SA, and how the page "Set Keysight Spectrum Analy" like, this is donw
+
+### Testing for git pull & push
+* The computer
