@@ -37,4 +37,3 @@ cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
 * Ture table of switch
 
 ### Testing for git pull & push
-* The computer version 2
