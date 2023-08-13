@@ -29,11 +29,9 @@ cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
 
 
 
-### Knowen bug 
-* 
-
 ### ToDo List
 * CSS file for  pages (C1 at lease)
 * Ture table of switch
+* the New table. 
 
 ### Testing for git pull & push
