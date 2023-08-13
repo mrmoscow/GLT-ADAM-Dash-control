@@ -18,7 +18,7 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 python3 app.py 
 or under  gltobscon 
 cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
-    than open brower open http://0.0.0.0:8052
+than open brower open http://0.0.0.0:8052
 
 
 
@@ -28,10 +28,9 @@ cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
 * The switch ture table and attentatur voltage will also list here in the future.
 
 
-
 ### ToDo List
 * CSS file for  pages (C1 at lease)
-* Ture table of switch
 * the New table. 
 
 ### Testing for git pull & push
+* This is for test Merge, and see how to do theat!
