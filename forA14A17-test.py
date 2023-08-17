@@ -70,12 +70,12 @@ for i in range(46):
 
 def CAB1417switch(channel,mode):
     print(channel,mode)
-    co14=ModbusClient(RAD.ADAM_list["A14"],port=502,timeout=10)
-    co17=ModbusClient(RAD.ADAM_list["A17"],port=502,timeout=10)
-    if not co14.connect():      # True / False
-        return 'Error 01, CAB-A14 not responding. check power and connectivity'
-    if not co17.connect():      # True / False
-        return 'Error 01, CAB-A17 not responding. check power and connectivity'
+    #co14=ModbusClient(RAD.ADAM_list["A14"],port=502,timeout=10)
+    #co17=ModbusClient(RAD.ADAM_list["A17"],port=502,timeout=10)
+    #if not co14.connect():      # True / False
+    #    return 'Error 01, CAB-A14 not responding. check power and connectivity'
+    #if not co17.connect():      # True / False
+    #    return 'Error 01, CAB-A17 not responding. check power and connectivity'
     if mode is 'init':
         data=[False]*16*4
         #print("will init A14 & A17 with",data)
@@ -101,13 +101,14 @@ def CAB1417switch(channel,mode):
             S3_doTable=[False]*4 ; S3_doTable[((i-1)%4)]=True
             #print(co14.write_coils(32+i-1,True,unit=1))
             #print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
-        else:
+        if ((i-1)//22) == 1::
             machine='A17'
             S2_do=(i-23)
             S3_doStart=(i-23)//4*4+48
             S3_doTable=[False]*4 ; S3_doTable[((i-23)%4)]=True
             #print(co17.write_coils(32+i-1,True,unit=1))
             #print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
+        print(machine,S2_do,S3_doStart,S3_doTable)
         try:
             if machine is 'A14':
                 print(co14.write_coils(32+S2_do,True,unit=1))
@@ -134,7 +135,8 @@ def CAB1417switch(channel,mode):
         return 'Error 03'
         '''
 #print(CAB1417switch(0,'init'))
-#print(CAB1417switch(3,'PM'))
-print(CAB1417switch(24,'PM'))
+print(CAB1417switch(3,'PM'))
+print(CAB1417switch(10,'PM'))
+#print(CAB1417switch(24,'PM'))
 #for i in range(46):
 #    print(i,CAB1417switch(i,'PM'))
