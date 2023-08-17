@@ -89,9 +89,6 @@ def CAB1417switch(channel,mode):
     if channel not in range(1,44+1):
         #print(channel, "which out of channel number")
         return str(channel)+"is out of channel range, please check."
-    if mode is 'SA':
-        #print ("into SA")
-        return "Good 2"
     if mode is 'PM':
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
             #print(channel, "which out of channel number")
@@ -121,6 +118,10 @@ def CAB1417switch(channel,mode):
             return "Good 3"
         except:
             return "A14, A17 may have issue when setting ADAM."
+    if mode is 'SA':
+        print ("into SA")
+        return "Good 2"
+
     else:
         return "not in any mode, check the input mode"
     '''

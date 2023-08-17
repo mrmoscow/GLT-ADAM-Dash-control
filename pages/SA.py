@@ -122,12 +122,9 @@ def SA_para_get(channel):
     print("The value",channel,"type",type(channel))
     if channel is None:
         print("NonType")
-        #return [2.2E9,4.4E9,0,10, 1E4,1E4]
         return [None,None,None,None,None,None]
     else:
         para=channelOpt[int(channel)-1]['SAPar']
-    #print(para)
-    #return para[0],para[1],para[2],para[3],para[4],para[5]
         return para
 
 
@@ -146,16 +143,16 @@ def SA_set(n_clicks,cf,sp,rl,lg,rb,vb,channel):
         raise PreventUpdate
     else:
         if channel is None:
-            print("")
+            #print("")
             return "will not change the IF switch, only the SA setting with the value"
         else:
             print(channel,channelOpt[int(channel)-1]['label'],cf,sp,rl,lg,rb,vb)
             result=channelOpt[int(channel)-1]['label']+str(cf)+str(sp)+str(rl)+str(lg)+str(rb)+str(vb)
             #Sp=channelOpt[channel-1]['SAPar'] no more needed
-            #re=RAD.set_SA('SA1',cf,sp,rl,lg,rb,vb)
+            re=RAD.set_SA('SA1',cf,sp,rl,lg,rb,vb)
             #time.sleep(4)
-            #return channelOpt[channel-1]['label']+re
-            return result
+            return channelOpt[channel-1]['label']+re
+            #return result
 
 @callback(Output('SA_reflash_res','children'),Input('SA_reflash','n_clicks'))
 def SA_reflash(n_clicks):
@@ -165,16 +162,13 @@ def SA_reflash(n_clicks):
     else:
         print('In scan button',n_clicks)
         #RAD.getSApng()
-        time.sleep(4)
+        time.sleep(2)
         return "End of the scans, please reload the SA pltting image."
 
 
-@callback(Output('SA_img','src'),
-          Input('SA_img_load','n_clicks'),
-          )
+@callback(Output('SA_img','src'),Input('SA_img_load','n_clicks'))
 def SA_got_img(n_clicks):
     if n_clicks is None:
-        #raise PreventUpdate
         print('In got image None',n_clicks)
         return ""
     else:

@@ -67,7 +67,7 @@ channelOpt =[
 #channel_O2 = [{k : v for k, v in s.items() if k in ['label','value']} for s in channelOpt if s['label'] != 'NotAssigned']
 def gotopt(channelO,gr):
     return [{k : v for k, v in s.items() if k in ['label','value']} for s in channelOpt if s['gr'] is gr]
-print(gotopt(channelOpt,'1A'))
+#print(gotopt(channelOpt,'1A'))
 
 
 layout = html.Div([
