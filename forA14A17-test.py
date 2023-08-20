@@ -36,11 +36,7 @@ import ReceiverADAM as RAD
 44:0000,0300
 '''
 
-res=RAD.hex_to_BiList('7F08')
-#print(type(res),type(res[-1]))
 
-res2=[False]*16*4
-#print(len(res2),type(res2),type(res2[-1]),res2[-1])
 
 for i in range(46):
     #print(i,(i-1)//4,(i-1)%4,(i-1)//22)
@@ -51,7 +47,9 @@ for i in range(46):
         S3_doTable=[False]*4 ; S3_doTable[((i-1)%4)]=True
         S4_doStart=(i-1)//4*4+64
         S4_doTable=[False]*4 ; S4_doTable[((i-1)%4)]=True
+        A14_S5_doStart=
         A14_S5_doTable=RAD.hex_to_BiList('0100')
+        A17_5S_doTable=
         A17_S5_doTable=RAD.hex_to_BiList('0100')
     else:
         machine='A17'
@@ -94,32 +92,46 @@ def CAB1417switch(channel,mode):
             #print(channel, "which out of channel number")
             return "Channel "+str(channel)+" only can shows in Spectrum, please check"
         #print ("into PM")
-        if ((i-1)//22) == 0:
+        if ((channel-1)//22) == 0:
             machine='A14'
-            S2_do=(i-1)
-            S3_doStart=(i-1)//4*4+48
-            S3_doTable=[False]*4 ; S3_doTable[((i-1)%4)]=True
+            S2_do=(channel-1)
+            S3_doStart=(channel-1)//4*4+48
+            S3_doTable=[False]*4 ; S3_doTable[((channel-1)%4)]=True
             #print(co14.write_coils(32+i-1,True,unit=1))
             #print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
-        if ((i-1)//22) == 1::
+        if ((channel-1)//22) == 1:
             machine='A17'
-            S2_do=(i-23)
-            S3_doStart=(i-23)//4*4+48
-            S3_doTable=[False]*4 ; S3_doTable[((i-23)%4)]=True
+            S2_do=(channel-23)
+            S3_doStart=(channel-23)//4*4+48
+            S3_doTable=[False]*4 ; S3_doTable[((channel-23)%4)]=True
             #print(co17.write_coils(32+i-1,True,unit=1))
             #print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
         print(machine,S2_do,S3_doStart,S3_doTable)
         try:
             if machine is 'A14':
-                print(co14.write_coils(32+S2_do,True,unit=1))
-                print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
+                pass
+                #print(co14.write_coils(32+S2_do,True,unit=1))
+                #print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
             if machine is 'A17':
-                print(co17.write_coils(32+S2_do,True,unit=1))
-                print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
+                pass
+                #print(co17.write_coils(32+S2_do,True,unit=1))
+                #print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
             return "Good 3"
         except:
             return "A14, A17 may have issue when setting ADAM."
     if mode is 'SA':
+        if ((channel-1)//22) == 0:
+            machine='A14'
+            S2_do=(channel-1)
+            S4_doStart=(channel-1)//4*4+48
+            S4_doTable=[False]*4 ; S4_doTable[((channel-1)%4)]=True
+            #print(co14.write_coils(32+i-1,True,unit=1))
+            #print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
+        if ((channel-1)//22) == 1:
+            machine='A17'
+            S2_do=(channel-23)
+            S4_doStart=(channel-23)//4*4+48
+            S4_doTable=[False]*4 ; S4_doTable[((channel-23)%4)]=True
         print ("into SA")
         return "Good 2"
 
@@ -135,8 +147,8 @@ def CAB1417switch(channel,mode):
         return 'Error 03'
         '''
 #print(CAB1417switch(0,'init'))
-print(CAB1417switch(3,'PM'))
-print(CAB1417switch(10,'PM'))
+#print(CAB1417switch(3,'PM'))
+#print(CAB1417switch(10,'PM'))
 #print(CAB1417switch(24,'PM'))
-#for i in range(46):
-#    print(i,CAB1417switch(i,'PM'))
+for i in range(46):
+    print(i,CAB1417switch(i,'PM'))
