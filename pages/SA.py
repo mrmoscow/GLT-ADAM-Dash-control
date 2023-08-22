@@ -149,10 +149,10 @@ def SA_set(n_clicks,cf,sp,rl,lg,rb,vb,channel):
             print(channel,channelOpt[int(channel)-1]['label'],cf,sp,rl,lg,rb,vb)
             result=channelOpt[int(channel)-1]['label']+str(cf)+str(sp)+str(rl)+str(lg)+str(rb)+str(vb)
             #Sp=channelOpt[channel-1]['SAPar'] no more needed
+            re_01=RAD.CAB1417switch(channel,'SA')
             re=RAD.set_SA('SA1',cf,sp,rl,lg,rb,vb)
-            #time.sleep(4)
-            return channelOpt[channel-1]['label']+re
-            #return result
+            #time.sleep(2)
+            return channelOpt[channel-1]['label']+re_01+"And SA parameter"+re
 
 @callback(Output('SA_reflash_res','children'),Input('SA_reflash','n_clicks'))
 def SA_reflash(n_clicks):

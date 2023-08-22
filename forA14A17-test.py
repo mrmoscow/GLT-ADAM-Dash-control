@@ -3,24 +3,6 @@ import time
 import ReceiverADAM as RAD
 
 
-for i in range(46):
-    #print(i,(i-1)//4,(i-1)%4,(i-1)//22)
-    if ((i-1)//22) == 0:
-        machine='A14'
-        S2_do=(i-1)
-        S3_doStart=(i-1)//4*4+48
-        S3_doTable=[False]*4 ; S3_doTable[((i-1)%4)]=True
-        S4_doStart=(i-1)//4*4+64
-        S4_doTable=[False]*4 ; S4_doTable[((i-1)%4)]=True
-    else:
-        machine='A17'
-        S2_do=(i-23)
-        S3_doStart=(i-23)//4*4+48
-        S3_doTable=[False]*4 ; S3_doTable[((i-23)%4)]=True
-        S4_doStart=(i-23)//4*4+64
-        S4_doTable=[False]*4 ; S4_doTable[((i-23)%4)]=True
-
-
 channelOpt =[
  {'label':'EHT1_POL0 IF 4-9 GHz',    'value':1,  'gr':'P1A',   'SAPar':[8E9,1E10,-40,5,3E6,300]},
  {'label':'EHT1_POL0 BB 6-8 GHz',    'value':2,  'gr':'P1A',   'SAPar':[1.5E9,2.9E9,-30,5, 3E6,300]},
@@ -176,56 +158,60 @@ def CAB1417switch(channel,mode):
     A14_S5_doTable,A17_5S_doTable= S5_table(channelOpt[channel-1]['gr'])
     if mode is 'PM':
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
-            #print(channel, "which out of channel number")
-            return "Channel "+str(channel)+" only can shows in Spectrum, please check"
-        #print ("into PM")
+            return "You choise, Channel "+str(channel)+" for PowerMeter but it only for Spectrum, please check"
         print("in PM",channel, machine, S2_do, S3_doStart, S3_doTable,A14_S5_doTable,A17_5S_doTable)
-        try:
-            if machine is 'A14':
-                pass
-                #print(co14.write_coils(32+S2_do,True,unit=1))
-                #print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
-            if machine is 'A17':
-                pass
-                #print(co17.write_coils(32+S2_do,True,unit=1))
-                #print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
-            return "Good 2"
-        except:
-            return "A14, A17 may have issue when setting ADAM."
+        if machine is 'A14':
+            try:
+                print(co14.write_coils(32+S2_do,True,unit=1))
+                print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
+                return "Channel "+str(channel)+" set to PowerMeter"
+            except:
+                return "Faile during Channel "+str(channel)+" set to Spectrum."
+        if machine is 'A17':
+            try:
+                print(co17.write_coils(32+S2_do,True,unit=1))
+                print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
+                return "Channel "+str(channel)+" set to PowerMeter"
+            except:
+                return "Faile during Channel "+str(channel)+" set to Spectrum."
     if mode is 'SA':
         print("in SA",channel ,machine, S2_do, S4_doStart, S4_doTable,A14_S5_doTable,A17_5S_doTable)
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
-            #only A14 A17 S5
-            return "Channel "+str(channel)+" set to Spectrum."
+            try:
+                #only A14 A17 S5
+                print(co14.write_coils(80,A14_S5_doTable,unit=1))
+                print(co17.write_coils(80,A14_S5_doTable,unit=1))
+                return "Channel "+str(channel)+" set to Spectrum."
+            except:
+                return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A14':
-            pass
-                #print(co14.write_coils(32+S2_do,False,unit=1))
-                #print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1))
-                #print(co14.write_coils(80,A14_S5_doTable,unit=1))
-                #print(co17.write_coils(80,A17_S5_doTable,unit=1))
+            try:
+                print(co14.write_coils(32+S2_do,False,unit=1))
+                print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1))
+                print(co14.write_coils(80,A14_S5_doTable,unit=1))
+                print(co17.write_coils(80,A17_S5_doTable,unit=1))
+                return "Channel "+str(channel)+" set to Spectrum."
+            except:
+                return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A17':
-            pass
-                #print(co17.write_coils(32+S2_do,False,unit=1))
-                #print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1))
-                #print(co14.write_coils(80,A14_S5_doTable,unit=1))
-                #print(co17.write_coils(80,A17_S5_doTable,unit=1))        
-        return "Good 3"
-
+            try:
+                print(co17.write_coils(32+S2_do,False,unit=1))
+                print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1))
+                print(co14.write_coils(80,A14_S5_doTable,unit=1))
+                print(co17.write_coils(80,A17_S5_doTable,unit=1))
+                return "Channel "+str(channel)+" set to Spectrum."
+            except:
+                return "Faile during Channel "+str(channel)+" set to Spectrum."
     else:
         return "not in any mode, check the input mode"
-    '''
-    try:
-        print(co.write_coils(coil_list[card_at], data2,unit=1))
-        time.sleep(adam_delay)  # must be padded before the consecutive reading
-        return 'Setting Succeful'
-    except:
-        co.close()
-        return 'Error 03'
-        '''
+
+
+
 #print(CAB1417switch(0,'init'))
 #print(CAB1417switch(3,'PM'))
-#print(CAB1417switch(10,'PM'))
-#print(CAB1417switch(24,'PM'))
+#print(CAB1417switch(7,'PM'))
+#print(CAB1417switch(23,'PM'))
+#print(CAB1417switch(38,'SA'))
 for i in range(46):
-    CAB1417switch(i,'SA')
+    CAB1417switch(i,'PM')
     #print(i,CAB1417switch(i,'PM'))
