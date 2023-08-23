@@ -543,14 +543,14 @@ def CAB1417switch(channel,mode):
         print("in PM",channel, machine, S2_do, S3_doStart, S3_doTable,A14_S5_doTable,A17_5S_doTable)
         if machine is 'A14':
             try:
-                print(co14.write_coils(32+S2_do,True,unit=1))
+                print(co14.write_coils(32+S2_do,[True],unit=1))
                 print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A17':
             try:
-                print(co17.write_coils(32+S2_do,True,unit=1))
+                print(co17.write_coils(32+S2_do,[True],unit=1))
                 print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
@@ -567,7 +567,7 @@ def CAB1417switch(channel,mode):
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A14':
             try:
-                print(co14.write_coils(32+S2_do,False,unit=1))
+                print(co14.write_coils(32+S2_do,[False],unit=1))
                 print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1))
                 print(co14.write_coils(80,A14_S5_doTable,unit=1))
                 print(co17.write_coils(80,A17_S5_doTable,unit=1))
@@ -576,7 +576,7 @@ def CAB1417switch(channel,mode):
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A17':
             try:
-                print(co17.write_coils(32+S2_do,False,unit=1))
+                print(co17.write_coils(32+S2_do,[False],unit=1))
                 print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1))
                 print(co14.write_coils(80,A14_S5_doTable,unit=1))
                 print(co17.write_coils(80,A17_S5_doTable,unit=1))
