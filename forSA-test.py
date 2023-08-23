@@ -84,7 +84,6 @@ print(cff,spf,rlf,lgf)
 #print(dataFromServer.decode())
 
 
-'''
 plt.plot(freq,power)
 plt.title("Spectrum")
 plt.xlabel("Frequency (GHz)")
@@ -101,6 +100,5 @@ plt.text(0.5, 0.5, 'matplot time',
      horizontalalignment='center',
      verticalalignment='center')
 
-plt.savefig('./assets/SA_plot.png')
-plt.show()
-'''
+plt.savefig('./assets/SA_image.png')
+#plt.show()

@@ -525,16 +525,16 @@ def CAB1417switch(channel,mode):
     if ((channel-1)//22) == 0:
         machine='A14'
         S2_do=(channel-1)
-        S3_doStart=(channel-1)//4*4+48
+        S3_doStart=(channel-1)//4*4
         S3_doTable=[False]*4 ; S3_doTable[((channel-1)%4)]=True
-        S4_doStart=(channel-1)//4*4+48
+        S4_doStart=(channel-1)//4*4
         S4_doTable=[False]*4 ; S4_doTable[((channel-1)%4)]=True
     if ((channel-1)//22) == 1:
         machine='A17'
         S2_do=(channel-23)
-        S3_doStart=(channel-23)//4*4+48
+        S3_doStart=(channel-23)//4*4
         S3_doTable=[False]*4 ; S3_doTable[((channel-23)%4)]=True
-        S4_doStart=(channel-23)//4*4+48
+        S4_doStart=(channel-23)//4*4
         S4_doTable=[False]*4 ; S4_doTable[((channel-23)%4)]=True
     A14_S5_doTable,A17_5S_doTable= S5_table(channelOpt[channel-1]['gr'])
     if mode is 'PM':

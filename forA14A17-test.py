@@ -207,11 +207,11 @@ def CAB1417switch(channel,mode):
 
 
 
-#print(CAB1417switch(0,'init'))
+print(CAB1417switch(0,'init'))
 #print(CAB1417switch(3,'PM'))
 #print(CAB1417switch(7,'PM'))
 #print(CAB1417switch(23,'PM'))
 #print(CAB1417switch(38,'SA'))
-for i in range(46):
-    CAB1417switch(i,'PM')
+#for i in range(46):
+#    CAB1417switch(i,'PM')
     #print(i,CAB1417switch(i,'PM'))
