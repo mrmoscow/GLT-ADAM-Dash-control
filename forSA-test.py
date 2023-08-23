@@ -8,17 +8,17 @@ clientSocket.connect(('192.168.1.221',5025))
 data = "*IDN?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode())
+print(dataFromServer.decode().rstrip())
 
 data = "SWE:POIN?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode())
+print(dataFromServer.decode().rstrip())
 
 data = "FORM:TRAC:DATA?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode())
+print(dataFromServer.decode().rstrip())
 
 #data = "SWE:TIME?\n"
 #clientSocket.send(data.encode())
@@ -42,6 +42,7 @@ clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
 print("Band VID",dataFromServer.decode())
 
+
 data = "DISP:WIND:TRAC:Y:RLEV1?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
@@ -54,24 +55,27 @@ dataFromServer = clientSocket.recv(1024)
 print("Y DIV/dB",dataFromServer.decode())
 lgf=float(dataFromServer.decode())
 
+
 data = "TRAC? TRACE1\n"
 clientSocket.send(data.encode())
 dataall=""
-for i in range(12):
+while True:
     dataFromServer = clientSocket.recv(2048)
-    #if not dataFromServer: break
-    #print(dataFromServer.decode())
     dataall=dataall+dataFromServer.decode()
+    #print(dataall[-1])
+    if "\n" in dataFromServer.decode():
+        break
 #print(dataall)
-power=[float(x) for x in dataall.split(",")]
 
+
+power=[float(x) for x in dataall.split(",")]
 
 freq=[];stf=cff-spf/2.0;stpf=spf/len(power)
 for i in range(len(power)):
     freq.append((stf+(i)*stpf)/1E9)
 
-print("Info,Power",len(power),type(power),type(power[0]),power[2:6])
-print("Info,Freq",len(freq),type(freq),type(freq[0]),freq[2:6])
+print("Info,Power",len(power),type(power),type(power[0]),power[-1])
+print("Info,Freq",len(freq),type(freq),type(freq[0]),freq[-1])
 #print(freq)
 print(cff,spf,rlf,lgf)
 
@@ -80,7 +84,7 @@ print(cff,spf,rlf,lgf)
 #print(dataFromServer.decode())
 
 
-
+'''
 plt.plot(freq,power)
 plt.title("Spectrum")
 plt.xlabel("Frequency (GHz)")
@@ -99,4 +103,4 @@ plt.text(0.5, 0.5, 'matplot time',
 
 plt.savefig('./assets/SA_plot.png')
 plt.show()
-
+'''

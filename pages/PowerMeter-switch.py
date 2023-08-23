@@ -75,18 +75,20 @@ layout = html.Div([
     #dcc.Dropdown(id='SA_sel', options=channel_O2,style={'max-width': '500px'}, placeholder='SA-chaannel-Select'),
     html.Br(),
     html.Table([
-        html.Tr([html.Th(['Power Meter  & Channel ']),html.Th(['which IF you want!'])]),
-        html.Tr([html.Td([]),html.Td([],style={'width':'350px'}),html.Td([])],style={'visibility':'hidden'}),
+        html.Tr([html.Th(['Channel']),html.Th(['which IF you want!']),html.Th(),html.Th(['Setting Result'])]),
+        html.Tr([html.Td([],style={'width':'200px'}),html.Td([],style={'width':'280px'}),
+                 html.Td([],style={'width':'120px'}),html.Td([],style={'width':'200px'})],
+                 style={'visibility':'hidden'}),
         html.Tr([html.Td(['PM 1, Channal A']),html.Td([dcc.Dropdown(id='1A',options=gotopt('P1A'))]),
-                 html.Td([html.Button('Here to set.',id='PM_set')],rowSpan=0) ]),
-        html.Tr([html.Td(['PM 1, Channal B']),html.Td([dcc.Dropdown(id='1B',options=gotopt('P1B'))]),]),
-        html.Tr([html.Td(['PM 2, Channal A']),html.Td([dcc.Dropdown(id='2A',options=gotopt('P2A'))]),]),
-        html.Tr([html.Td(['PM 2, Channal B']),html.Td([dcc.Dropdown(id='2B',options=gotopt('P2B'))]),]),
-        html.Tr([html.Td(['PM 3, Channal A']),html.Td([dcc.Dropdown(id='3A',options=gotopt('P3A'))]),]),
-        html.Tr([html.Td(['PM 3, Channan B']),html.Td([dcc.Dropdown(id='3B',options=gotopt('P3B'))]),]),
-        html.Tr([html.Td(['PM 4, Channal A']),html.Td([dcc.Dropdown(id='4A',options=gotopt('P4A'))]),]),
-        html.Tr([html.Td(['PM 4, Channal B']),html.Td([dcc.Dropdown(id='4B',options=gotopt('P4B'))]),]),
-        ],style={'max-width': '800px','border-spacing':'30px 10px'}),
+                 html.Td([html.Button('Here to set.',id='PM_set')],rowSpan=0),html.Td(id='r_1A')]),
+        html.Tr([html.Td(['PM 1, Channal B']),html.Td([dcc.Dropdown(id='1B',options=gotopt('P1B'))]),html.Td(id='r_1B')]),
+        html.Tr([html.Td(['PM 2, Channal A']),html.Td([dcc.Dropdown(id='2A',options=gotopt('P2A'))]),html.Td(id='r_2A')]),
+        html.Tr([html.Td(['PM 2, Channal B']),html.Td([dcc.Dropdown(id='2B',options=gotopt('P2B'))]),html.Td(id='r_2B')]),
+        html.Tr([html.Td(['PM 3, Channal A']),html.Td([dcc.Dropdown(id='3A',options=gotopt('P3A'))]),html.Td(id='r_3A')]),
+        html.Tr([html.Td(['PM 3, Channan B']),html.Td([dcc.Dropdown(id='3B',options=gotopt('P3B'))]),html.Td(id='r_3B')]),
+        html.Tr([html.Td(['PM 4, Channal A']),html.Td([dcc.Dropdown(id='4A',options=gotopt('P4A'))]),html.Td(id='r_4A')]),
+        html.Tr([html.Td(['PM 4, Channal B']),html.Td([dcc.Dropdown(id='4B',options=gotopt('P4B'))]),html.Td(id='r_4B')]),
+        ],style={'max-width': '1000px','border-spacing':'30px 10px'}),
     html.Br(),
     html.Div(id='PM_res'),
     html.H6('Next is still under Development,'),
@@ -98,11 +100,32 @@ layout = html.Div([
                  html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td('Test1')]),
         html.Tr([html.Td(['PM 1, Channal B']),html.Td(id='S_1B'),html.Td('Test2'),]),
         html.Tr([html.Td(['PM 2, Channal A']),html.Td(id='S_2A'),html.Td('Test3'),]),
-        html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),]),
-        html.Tr([html.Td(['PM 3, Channal A']),html.Td(['3A_r']),]),
-        html.Tr([html.Td(['PM 3, Channal B']),html.Td(['3B_r']),]),
-        html.Tr([html.Td(['PM 4, Channal A']),html.Td(['4A_r']),]),
-        html.Tr([html.Td(['PM 4, Channal B']),html.Td(['4B_r']),]),
+        html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),html.Td('Test4')]),
+        html.Tr([html.Td(['PM 3, Channal A']),html.Td(['3A_r']),html.Td('Test5')]),
+        html.Tr([html.Td(['PM 3, Channal B']),html.Td(['3B_r']),html.Td('Test6')]),
+        html.Tr([html.Td(['PM 4, Channal A']),html.Td(['4A_r']),html.Td('Test7')]),
+        html.Tr([html.Td(['PM 4, Channal B']),html.Td(['4B_r']),html.Td('Test8')]),
         ],style={'max-width': '800px','border-spacing':'30px 10px'}),
     html.Br(),
 ])
+
+@callback(Output('r_1A','children'),Output('r_1B','children'),Output('r_2A','children'),Output('r_2B','children'),
+          Output('r_3A','children'),Output('r_3B','children'),Output('r_4A','children'),Output('r_4B','children'),
+          Input('PM_set','n_clicks'),
+          State('1A','value'),State('1B','value'),State('2A','value'),State('2B','value'),
+          State('3A','value'),State('3B','value'),State('4A','value'),State('4B','value'),
+          )
+def PM_set(n_clicks,i_1A,i_1B,i_2A,i_2B,i_3A,i_3B,i_4A,i_4B):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        a=[i_1A,i_1B,i_2A,i_2A]
+        #print(a)
+        r=[]
+        for i in a:
+            if i is None:
+                r.append(None)
+            else:
+                #r.append("Good")
+                r.append(RAD.CAB1417switch(i,'PM'))
+        return r[0],r[1],r[2],r[3],"3A","3B",i_4A,i_4B
