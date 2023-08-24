@@ -454,19 +454,19 @@ def S5_table(gr):
         A14_S5=[False,False,False,False,False,False,True,False]
         A15_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S18':
-        A14_S5=[False,True,False,False,True,False,True,False]
+        A14_S5=[False,False,False,False,True,False,True,False]
         A15_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S19':
-        A14_S5=[False,True,False,False,False,True,True,False]
+        A14_S5=[False,False,False,False,False,True,True,False]
         A15_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S20':
-        A14_S5=[False,True,False,False,True,True,True,False]
+        A14_S5=[False,False,False,False,True,True,True,False]
         A15_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S21':
-        A14_S5=[False,True,False,False,False,False,False,True]
+        A14_S5=[False,False,False,False,False,False,False,True]
         A15_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S22':
-        A14_S5=[False,True,False,False,False,False,True,True]
+        A14_S5=[False,False,False,False,False,False,True,True]
         A15_S5=[False,False,False,False,False,False,False,True]
     if gr == 'P3A':
         A14_S5=[False,False,False,False,False,False,False,False]
@@ -567,19 +567,19 @@ def CAB1417switch(channel,mode):
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A14':
             try:
-                print(co14.write_coils(32+S2_do,[False],unit=1))
-                print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1))
-                print(co14.write_coils(80,A14_S5_doTable,unit=1))
-                print(co17.write_coils(80,A17_S5_doTable,unit=1))
+                print(co14.write_coils(32+S2_do,[False],unit=1));time.sleep(adam_delay)
+                print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1));time.sleep(adam_delay)
+                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1))
+                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1))
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine is 'A17':
             try:
-                print(co17.write_coils(32+S2_do,[False],unit=1))
-                print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1))
-                print(co14.write_coils(80,A14_S5_doTable,unit=1))
-                print(co17.write_coils(80,A17_S5_doTable,unit=1))
+                print(co17.write_coils(32+S2_do,[False],unit=1));time.sleep(adam_delay)
+                print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1));time.sleep(adam_delay)
+                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1))
+                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1))
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."

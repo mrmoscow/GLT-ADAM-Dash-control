@@ -173,5 +173,5 @@ def SA_got_img(n_clicks):
         return ""
     else:
         print('In got image else',n_clicks)
-        return dash.get_asset_url('SA_image.png')
+        return dash.get_asset_url('SA_plot.png')
 
