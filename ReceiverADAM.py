@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 #from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import socket
 import time
 from datetime import datetime
@@ -117,7 +117,7 @@ def hex_to_BiList(datain):
             res=[int(i) for i in datain]
         else:
             return 'Error 14'
-    elif ininstance(datain[0],bool):
+    elif isinstance(datain[0],bool):
         res=datain
     else:
         return 'Error 15'

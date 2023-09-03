@@ -4,7 +4,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 
 dash.register_page(__name__)

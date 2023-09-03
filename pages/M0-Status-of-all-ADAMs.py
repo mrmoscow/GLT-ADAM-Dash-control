@@ -3,7 +3,7 @@ from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 import ReceiverADAM as RAD
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 
 
