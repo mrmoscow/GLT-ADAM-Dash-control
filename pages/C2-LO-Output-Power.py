@@ -48,8 +48,8 @@ layout = html.Div([
     #html.Div(id='display-selected-values')
 ])
 
-
-@callback(Output('a03b-bo-result','children'),Input('a03b-bo-check','n_clicks'))
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('a03b-bo-result','children'),Input('a03b-bo-check','n_clicks'))
 def update_output_time(n_clicks):
     if n_clicks is None:
         return "Last update: Not once after this page reloac"
@@ -58,7 +58,7 @@ def update_output_time(n_clicks):
         format_data = "%Y/%m/%d, %H:%M:%S,"
         return "Last update:"+datetime.now().strftime(format_data)
 
-@callback(
+@the_app.callback(
     Output('a03b_Do00','children'),Output('a03b_Do01','children'),
     Output('a03b_Do02','children'),Output('a03b_Do03','children'),
     Output('a03b_Do04','children'),Output('a03b_Do05','children'),
@@ -74,7 +74,7 @@ def update_DO_6050(n_clicks):
         except:
             return ['Error ##']*6
 
-@callback(Output('att_result','children'),
+@the_app.callback(Output('att_result','children'),
           Input('att_Set','n_clicks'),
           State('att_Val','value'),
           )
@@ -90,21 +90,21 @@ def update_att_A03(n_clicks,att):
             return "Fail"
 
 '''
-@callback(
+@the_app.callback(
     Output('level-radio', 'options'),
     Input('rx-radio', 'value'))
 def set_cities_options(selected_country):
     return [{'label': i, 'value': i} for i in Power_options[selected_country]]
 
 
-@callback(
+@the_app.callback(
     Output('level-radio', 'value'),
     Input('level-radio', 'options'))
 def set_cities_value(available_options):
     return available_options[0]['value']
 
 
-@callback(
+@the_app.callback(
     Output('display-selected-values', 'children'),
     Input('rx-radio', 'value'),
     Input('level-radio', 'value'))

@@ -77,9 +77,9 @@ layout = html.Div([
     html.Br()
 ])
 
-
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
 '''
-@callback(Output('a11-5056-r2','children'),
+@the_app.callback(Output('a11-5056-r2','children'),
               Input('a11_B_DO','n_clicks'),Input('a11_inDO','value'))
 def set_5056_01(n_clicks,data):
     if n_clicks is None:
@@ -93,7 +93,7 @@ def set_5056_01(n_clicks,data):
             return ['Error ##']
 '''
 
-@callback(Output('a11-5056-result','children'),Input('a11-bo-check','n_clicks'))
+@the_app.callback(Output('a11-5056-result','children'),Input('a11-bo-check','n_clicks'))
 def update_output0(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
@@ -104,7 +104,7 @@ def update_output0(n_clicks):
             return "Error ##02"
 
 '''
-@callback(Output('a11_Q1','children'),
+@the_app.callback(Output('a11_Q1','children'),
               Input('a11_B01','n_clicks'),Input('a11_in01','value'))
 def set_5024_01(n_clicks,volt):
     if n_clicks is None:
@@ -116,7 +116,7 @@ def set_5024_01(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a11_Q2','children'),
+@the_app.callback(Output('a11_Q2','children'),
               Input('a11_B02','n_clicks'),Input('a11_in02','value'))
 def set_5024_02(n_clicks,volt):
     if n_clicks is None:
@@ -128,7 +128,7 @@ def set_5024_02(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a11_Q3','children'),
+@the_app.callback(Output('a11_Q3','children'),
               Input('a11_B03','n_clicks'),Input('a11_in03','value'))
 def set_5024_03(n_clicks,volt):
     if n_clicks is None:
@@ -140,7 +140,7 @@ def set_5024_03(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a11_Q4','children'),
+@the_app.callback(Output('a11_Q4','children'),
               Input('a11_B04','n_clicks'),Input('a11_in04','value'))
 def set_5024_04(n_clicks,volt):
     if n_clicks is None:
@@ -153,7 +153,7 @@ def set_5024_04(n_clicks,volt):
             return ['Error ##']
 '''
 
-@callback(
+@the_app.callback(
     Output('a11_V1','children'),Output('a11_V2','children'),
     Output('a11_V3','children'),Output('a11_V4','children'),
     Output('a11_V5','children'),Output('a11_V6','children'),
@@ -170,7 +170,7 @@ def update_output1(n_clicks):
         except:
             return ['Error ##']*8
 
-@callback(
+@the_app.callback(
     Output('a11_T1','children'),Output('a11_T2','children'),
     Output('a11_T3','children'),Output('a11_T4','children'),
     Output('a11_T5','children'),Output('a11_T6','children'),
@@ -186,7 +186,7 @@ def update_output2(n_clicks):
         except:
             return ['Error ##']*7
 
-@callback(
+@the_app.callback(
     Output('a11_O1','children'),Output('a11_O2','children'),
     Output('a11_O3','children'),Output('a11_O4','children'),
     Input('a11-bo-check','n_clicks'))

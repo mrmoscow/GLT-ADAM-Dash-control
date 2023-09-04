@@ -55,8 +55,8 @@ layout = html.Div([
     html.Br()
 ])
 
-
-@callback(Output('a03-bo-result','children'),Input('a03-bo-check','n_clicks'))
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('a03-bo-result','children'),Input('a03-bo-check','n_clicks'))
 def update_output_time(n_clicks):
     if n_clicks is None:
         return "Last update: Not once after this page reloac"
@@ -65,7 +65,7 @@ def update_output_time(n_clicks):
         format_data = "%Y/%m/%d, %H:%M:%S,"
         return "Last update:"+datetime.now().strftime(format_data)
 
-@callback(
+@the_app.callback(
     Output('a03_DI00','children'),Output('a03_DI01','children'),
     Output('a03_DI02','children'),Output('a03_DI03','children'),
     Output('a03_DI04','children'),Output('a03_DI05','children'),
@@ -87,7 +87,7 @@ def update_output_5017(n_clicks):
         except:
             return ['Error ##']*8
 '''
-@callback(
+@the_app.callback(
     Output('a01_T1','children'),Output('a01_T2','children'),
     Output('a01_T3','children'),Output('a01_T4','children'),
     Output('a01_T5','children'),Output('a01_T6','children'),

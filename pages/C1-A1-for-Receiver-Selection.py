@@ -52,7 +52,8 @@ layout = html.Div([
     html.Br()
 ])
 
-@callback(Output('Rx_setting_res','children'),
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('Rx_setting_res','children'),
           Input('Rx_Set','n_clicks'),
           State('Rx_sel','value'),
           State('tone','value'),
