@@ -67,7 +67,7 @@ def set_5056_ch(n_clicks,rx,tone,volt):
             rx=4
         if tone is None:
             tone=1
-        if tone is 1:
+        if tone == 1:
             tone="Off"
         else:
             tone="On"
