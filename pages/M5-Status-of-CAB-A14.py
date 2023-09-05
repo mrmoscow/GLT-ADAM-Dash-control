@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 import ReceiverADAM as RAD #at main dir not
 from datetime import datetime
@@ -101,8 +101,9 @@ layout = html.Div([
     html.Br()
 ])
 
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
 #Next for S2
-@callback(Output('a14_5056_s2_r2','children'),
+@the_app.callback(Output('a14_5056_s2_r2','children'),
               Input('a14_s2_bo','n_clicks'),Input('a14_s2_inDO','value'))
 def set_5056_s2(n_clicks,data):
     if n_clicks is None:
@@ -116,7 +117,7 @@ def set_5056_s2(n_clicks,data):
             return ['Error ##']
 
 
-@callback(Output('a14_5056_s2_result','children'),Input('a14-bo-check','n_clicks'))
+@the_app.callback(Output('a14_5056_s2_result','children'),Input('a14-bo-check','n_clicks'))
           #Input('a14-5056-r2','children'),Input('a14-5056-r3','children'),
           #prevent_initial_call=True)
 def update_5056_s2(n_clicks):
@@ -130,7 +131,7 @@ def update_5056_s2(n_clicks):
             return "Error ##02"
 
 #Next for S3
-@callback(Output('a14_5056_s3_r2','children'),
+@the_app.callback(Output('a14_5056_s3_r2','children'),
               Input('a14_s3_bo','n_clicks'),Input('a14_s3_inDO','value'))
 def set_5056_s3(n_clicks,data):
     if n_clicks is None:
@@ -144,7 +145,7 @@ def set_5056_s3(n_clicks,data):
             return ['Error ##']
 
 
-@callback(Output('a14_5056_s3_result','children'),Input('a14-bo-check','n_clicks'))
+@the_app.callback(Output('a14_5056_s3_result','children'),Input('a14-bo-check','n_clicks'))
           #Input('a14-5056-r2','children'),Input('a01-5056-r3','children'),
           #prevent_initial_call=True)
 def update_5056_s3(n_clicks):
@@ -158,7 +159,7 @@ def update_5056_s3(n_clicks):
             return "Error ##02"
 
 #Next for S4
-@callback(Output('a14_5056_s4_r2','children'),
+@the_app.callback(Output('a14_5056_s4_r2','children'),
               Input('a14_s4_bo','n_clicks'),Input('a14_s4_inDO','value'))
 def set_5056_s4(n_clicks,data):
     if n_clicks is None:
@@ -172,7 +173,7 @@ def set_5056_s4(n_clicks,data):
             return ['Error ##']
 
 
-@callback(Output('a14_5056_s4_result','children'),Input('a14-bo-check','n_clicks'))
+@the_app.callback(Output('a14_5056_s4_result','children'),Input('a14-bo-check','n_clicks'))
           #Input('a14-5056-r2','children'),Input('a01-5056-r3','children'),
           #prevent_initial_call=True)
 def update_5056_s4(n_clicks):
@@ -186,7 +187,7 @@ def update_5056_s4(n_clicks):
             return "Error ##02"
 
 #Next for S5
-@callback(Output('a14_5056_s5_r2','children'),
+@the_app.callback(Output('a14_5056_s5_r2','children'),
               Input('a14_s5_bo','n_clicks'),Input('a14_s5_inDO','value'))
 def set_5056_s5(n_clicks,data):
     if n_clicks is None:
@@ -200,7 +201,7 @@ def set_5056_s5(n_clicks,data):
             return ['Error ##']
 
 
-@callback(Output('a14_5056_s5_result','children'),Input('a14-bo-check','n_clicks'))
+@the_app.callback(Output('a14_5056_s5_result','children'),Input('a14-bo-check','n_clicks'))
           #Input('a14-5056-r2','children'),Input('a01-5056-r3','children'),
           #prevent_initial_call=True)
 def update_5056_s5(n_clicks):
@@ -214,7 +215,7 @@ def update_5056_s5(n_clicks):
             return "Error ##02"
 
 
-@callback(Output('a14-bo-result','children'),
+@the_app.callback(Output('a14-bo-result','children'),
           Input('a14-bo-check','n_clicks'))
           #Input('a01-5056-r2','children'),Input('a01-5056-r3','children'),
           #prevent_initial_call=True)
@@ -226,7 +227,7 @@ def update_output_time(n_clicks):
         format_data = "%Y/%m/%d, %H:%M:%S,"
         return "Last update:"+datetime.now().strftime(format_data)
 
-@callback(
+@the_app.callback(
     Output('a14_V1','children'),Output('a14_V2','children'),
     Output('a14_V3','children'),Output('a14_V4','children'),
     Output('a14_V5','children'),Output('a14_V6','children'),
@@ -243,7 +244,7 @@ def update_output_5017(n_clicks):
         except:
             return ['Error ##']*8
 
-@callback(
+@the_app.callback(
     Output('a14_T1','children'),Output('a14_T2','children'),
     Output('a14_T3','children'),Output('a14_T4','children'),
     Output('a14_T5','children'),Output('a14_T6','children'),

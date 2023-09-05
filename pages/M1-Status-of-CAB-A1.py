@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 import ReceiverADAM as RAD #at main dir not
 from datetime import datetime
@@ -96,8 +96,9 @@ layout = html.Div([
     html.Br()
 ])
 
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
 '''
-@callback(Output('a01-5056-r3','children'),
+@the_app.callback(Output('a01-5056-r3','children'),
               Input('a01_Rx_Set','n_clicks'),Input('ch-to-set','value'))
 def set_5056_ch(n_clicks,data):
     if n_clicks is None:
@@ -112,7 +113,7 @@ def set_5056_ch(n_clicks,data):
             return ['Error ##']
 '''
 
-@callback(Output('a01-5056-r2','children'),
+@the_app.callback(Output('a01-5056-r2','children'),
               Input('a01_B_DO','n_clicks'),Input('a01_inDO','value'))
 def set_5056_01(n_clicks,data):
     if n_clicks is None:
@@ -126,7 +127,7 @@ def set_5056_01(n_clicks,data):
             return ['Error ##']
 
 
-@callback(Output('a01-5056-result','children'),Input('a01-bo-check','n_clicks'),
+@the_app.callback(Output('a01-5056-result','children'),Input('a01-bo-check','n_clicks'),
           Input('a01-5056-r2','children'),Input('a01-5056-r3','children'),
           prevent_initial_call=True)
 def update_5056_S3(n_clicks,n,m):
@@ -140,7 +141,7 @@ def update_5056_S3(n_clicks,n,m):
             return "Error ##02"
 
 
-@callback(Output('a01_Q1','children'),
+@the_app.callback(Output('a01_Q1','children'),
               Input('a01_B01','n_clicks'),Input('a01_in01','value'))
 def set_5024_01(n_clicks,volt):
     if n_clicks is None:
@@ -152,7 +153,7 @@ def set_5024_01(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a01_Q2','children'),
+@the_app.callback(Output('a01_Q2','children'),
               Input('a01_B02','n_clicks'),Input('a01_in02','value'))
 def set_5024_02(n_clicks,volt):
     if n_clicks is None:
@@ -164,7 +165,7 @@ def set_5024_02(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a01_Q3','children'),
+@the_app.callback(Output('a01_Q3','children'),
               Input('a01_B03','n_clicks'),Input('a01_in03','value'))
 def set_5024_03(n_clicks,volt):
     if n_clicks is None:
@@ -176,7 +177,7 @@ def set_5024_03(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a01_Q4','children'),
+@the_app.callback(Output('a01_Q4','children'),
               Input('a01_B04','n_clicks'),Input('a01_in04','value'))
 def set_5024_04(n_clicks,volt):
     if n_clicks is None:
@@ -188,7 +189,7 @@ def set_5024_04(n_clicks,volt):
         except:
             return ['Error ##']
 
-@callback(Output('a01-bo-result','children'),
+@the_app.callback(Output('a01-bo-result','children'),
           Input('a01-bo-check','n_clicks'),
           Input('a01_Q1','children'),Input('a01_Q2','children'),
           Input('a01_Q3','children'),Input('a01_Q4','children'),
@@ -202,7 +203,7 @@ def update_output_time(n_clicks,n,m,o,p,q,r):
         format_data = "%Y/%m/%d, %H:%M:%S,"
         return "Last update:"+datetime.now().strftime(format_data)
 
-@callback(
+@the_app.callback(
     Output('a01_V1','children'),Output('a01_V2','children'),
     Output('a01_V3','children'),Output('a01_V4','children'),
     Output('a01_V5','children'),Output('a01_V6','children'),
@@ -219,7 +220,7 @@ def update_output_5017(n_clicks):
         except:
             return ['Error ##']*8
 
-@callback(
+@the_app.callback(
     Output('a01_T1','children'),Output('a01_T2','children'),
     Output('a01_T3','children'),Output('a01_T4','children'),
     Output('a01_T5','children'),Output('a01_T6','children'),
@@ -235,7 +236,7 @@ def update_output_5018(n_clicks):
         except:
             return ['Error ##']*7
 
-@callback(
+@the_app.callback(
     Output('a01_O1','children'),Output('a01_O2','children'),
     Output('a01_O3','children'),Output('a01_O4','children'),
     Input('a01-bo-check','n_clicks'),

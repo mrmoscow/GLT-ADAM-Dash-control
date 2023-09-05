@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 import ReceiverADAM as RAD #at main dir not
 from datetime import datetime
@@ -37,8 +37,8 @@ layout = html.Div([
     html.Br(),
 ])
 
-
-@callback(Output('a44-bo-result','children'),Input('a4445-bo-check','n_clicks'))
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('a44-bo-result','children'),Input('a4445-bo-check','n_clicks'))
 def update_output_time(n_clicks):
     if n_clicks is None:
         return "Last update: Not once after this page reloac"
@@ -47,7 +47,7 @@ def update_output_time(n_clicks):
         format_data = "%Y/%m/%d, %H:%M:%S,"
         return "Last update:"+datetime.now().strftime(format_data)
 
-@callback(
+@the_app.callback(
     Output('a44_Do00','children'),Output('a44_Do01','children'),
     Output('a44_Do02','children'),Output('a44_Do03','children'),
     Input('a4445-bo-check','n_clicks'))
@@ -62,7 +62,7 @@ def update_output_A44_6260(n_clicks):
             return ['Error ##']*4
 
 
-@callback(
+@the_app.callback(
     Output('a45_Do00','children'),Output('a45_Do01','children'),
     Output('a45_Do02','children'),Output('a45_Do03','children'),
     Input('a4445-bo-check','n_clicks'))

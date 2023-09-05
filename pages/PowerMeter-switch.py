@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 from datetime import datetime
 import socket
@@ -109,7 +109,8 @@ layout = html.Div([
     html.Br(),
 ])
 
-@callback(Output('r_1A','children'),Output('r_1B','children'),Output('r_2A','children'),Output('r_2B','children'),
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('r_1A','children'),Output('r_1B','children'),Output('r_2A','children'),Output('r_2B','children'),
           Output('r_3A','children'),Output('r_3B','children'),Output('r_4A','children'),Output('r_4B','children'),
           Input('PM_set','n_clicks'),
           State('1A','value'),State('1B','value'),State('2A','value'),State('2B','value'),

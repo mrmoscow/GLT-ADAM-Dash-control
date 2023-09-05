@@ -4,7 +4,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 
 dash.register_page(__name__)
@@ -83,29 +83,29 @@ layout = html.Div([
     dcc.Dropdown(id='rx-to-set', options=rx_opts, clearable=False,
         style={'max-width': '200px'}, placeholder='Select the receiver'),
     html.Div(id='rx-current'),
-    html.Br(), dcc.Link('Back to Homepage', href='/')
 ])
 
 #all_pages[0].append('/CAB-A45')         # URL
 #all_pages[1].append('CAB-A45')          # Link Text
 #all_pages[2].append(layout)             # Layout
 
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
 # Callbacks
-@callback(Output('VGA-cur-ch0', 'children'), Input('VGA-set-ch0', 'value'))
+@the_app.callback(Output('VGA-cur-ch0', 'children'), Input('VGA-set-ch0', 'value'))
 def VGA_set_ch0(val):
     ret = ''
     if val is not None:
         ret = set_VGA(0, val)
     return f'Current VGA attenuation (RHC)= {get_VGA(0)} V ' + ret
 
-@callback(Output('VGA-cur-ch1', 'children'), Input('VGA-set-ch1', 'value'))
+@the_app.callback(Output('VGA-cur-ch1', 'children'), Input('VGA-set-ch1', 'value'))
 def VGA_set_ch1(val):
     ret = ''
     if val is not None:
         ret = set_VGA(1, val)
     return f'Current VGA attenuation (LHC)= {get_VGA(1)} V ' + ret
 
-@callback(Output('rx-current', 'children'), Input('rx-to-set', 'value'))
+@the_app.callback(Output('rx-current', 'children'), Input('rx-to-set', 'value'))
 def Rx_sel(val):
     ret = ''
     if val is not None:

@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 from datetime import datetime
 import ReceiverADAM as RAD #module for this project
@@ -52,7 +52,8 @@ layout = html.Div([
     html.Br()
 ])
 
-@callback(Output('Rx_setting_res','children'),
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('Rx_setting_res','children'),
           Input('Rx_Set','n_clicks'),
           State('Rx_sel','value'),
           State('tone','value'),
@@ -66,7 +67,7 @@ def set_5056_ch(n_clicks,rx,tone,volt):
             rx=4
         if tone is None:
             tone=1
-        if tone is 1:
+        if tone == 1:
             tone="Off"
         else:
             tone="On"

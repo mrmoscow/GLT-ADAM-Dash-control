@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 from datetime import datetime
 import socket
@@ -110,7 +110,8 @@ layout = html.Div([
 
 #RAD.getSApng()
 
-@callback(Output('S_V1','value'),
+the_app = dash.get_app()        # Must specify due to @dash.callback limitations
+@the_app.callback(Output('S_V1','value'),
           Output('S_V2','value'),
           Output('S_V3','value'),
           Output('S_V4','value'),
@@ -128,7 +129,7 @@ def SA_para_get(channel):
         return para
 
 
-@callback(Output('SA_setting_res','children'),
+@the_app.callback(Output('SA_setting_res','children'),
           Input('SA_set','n_clicks'),
           State('S_V1','value'),
           State('S_V2','value'),
@@ -154,7 +155,7 @@ def SA_set(n_clicks,cf,sp,rl,lg,rb,vb,channel):
             #time.sleep(2)
             return channelOpt[channel-1]['label']+re_01+"And SA parameter"+re
 
-@callback(Output('SA_reflash_res','children'),Input('SA_reflash','n_clicks'))
+@the_app.callback(Output('SA_reflash_res','children'),Input('SA_reflash','n_clicks'))
 def SA_reflash(n_clicks):
     if n_clicks is None:
         print('In scan none',n_clicks)
@@ -166,7 +167,7 @@ def SA_reflash(n_clicks):
         return "End of the scans, please reload the SA pltting image."
 
 
-@callback(Output('SA_img','src'),Input('SA_img_load','n_clicks'))
+@the_app.callback(Output('SA_img','src'),Input('SA_img_load','n_clicks'))
 def SA_got_img(n_clicks):
     if n_clicks is None:
         print('In got image None',n_clicks)
