@@ -96,15 +96,15 @@ layout = html.Div([
         html.Tr([html.Th(['Power Meter  & Channel ']),html.Th(['IF now']),html.Th('Get Power Button'),html.Th('Power (dBm)')]),
         html.Tr([html.Td([],style={'width':'250px'}),html.Td([],style={'width':'350px'}),html.Td([],style={'width':'250px'})],
             style={'visibility':'hidden'}),
-        html.Tr([html.Td(['PM 1, Channal A']),html.Td(['1A_r']),
+        html.Tr([html.Td(['PM 1, Channal A']),html.Td([id='S_1A']),
                  html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td('Test1')]),
         html.Tr([html.Td(['PM 1, Channal B']),html.Td(id='S_1B'),html.Td('Test2'),]),
         html.Tr([html.Td(['PM 2, Channal A']),html.Td(id='S_2A'),html.Td('Test3'),]),
         html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),html.Td('Test4')]),
-        html.Tr([html.Td(['PM 3, Channal A']),html.Td(['3A_r']),html.Td('Test5')]),
-        html.Tr([html.Td(['PM 3, Channal B']),html.Td(['3B_r']),html.Td('Test6')]),
-        html.Tr([html.Td(['PM 4, Channal A']),html.Td(['4A_r']),html.Td('Test7')]),
-        html.Tr([html.Td(['PM 4, Channal B']),html.Td(['4B_r']),html.Td('Test8')]),
+        html.Tr([html.Td(['PM 3, Channal A']),html.Td([id='S_3A']),html.Td('Test5')]),
+        html.Tr([html.Td(['PM 3, Channal B']),html.Td([id='S_3B']),html.Td('Test6')]),
+        html.Tr([html.Td(['PM 4, Channal A']),html.Td([id='S_4A']),html.Td('Test7')]),
+        html.Tr([html.Td(['PM 4, Channal B']),html.Td([id='S_4B']),html.Td('Test8')]),
         ],style={'max-width': '800px','border-spacing':'30px 10px'}),
     html.Br(),
 ])
@@ -119,7 +119,7 @@ def PM_set(n_clicks,i_1A,i_1B,i_2A,i_2B,i_3A,i_3B,i_4A,i_4B):
     if n_clicks is None:
         raise PreventUpdate
     else:
-        a=[i_1A,i_1B,i_2A,i_2A]
+        a=[i_1A,i_1B,i_2A,i_2B,i_3A,i_3B,i_4A,i_4B]
         #print(a)
         r=[]
         for i in a:
@@ -128,4 +128,4 @@ def PM_set(n_clicks,i_1A,i_1B,i_2A,i_2B,i_3A,i_3B,i_4A,i_4B):
             else:
                 #r.append("Good")
                 r.append(RAD.CAB1417switch(i,'PM'))
-        return r[0],r[1],r[2],r[3],"3A","3B",i_4A,i_4B
+        return r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7]
