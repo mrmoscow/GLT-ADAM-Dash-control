@@ -1,8 +1,8 @@
+
 import argparse
+from os.path import exists
 import sys
-import ReceiverADAM as RAD
-
-
+sys.path.append("..")
 
 print('Start to checking A44 (DO)')
 try:

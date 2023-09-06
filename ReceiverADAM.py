@@ -8,7 +8,7 @@ from datetime import datetime
 import requests
 
 import sys
-if sys.version_info[1] == 7:
+if sys.version_info[1] == 7 or 9:
     from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 if sys.version_info[1] == 11:
     from pymodbus.client import ModbusTcpClient as ModbusClient
@@ -129,7 +129,7 @@ def hex_to_BiList(datain):
 def set_6260(machine,data):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     try:
-        print(co.write_coils(18, data,unit=1))
+        print(co.write_coils(18, data,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -142,7 +142,7 @@ def get_6260(machine,b=4):
         #return 'Error 01'
         return ['Error 01']*b
     try:
-        r = co.read_coils(18,4,unit=1)
+        r = co.read_coils(18,4,unit=1,slave=1)
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         b1=["0" if i==0 else "1" for i in res]
@@ -161,7 +161,7 @@ def set_6224(machine,channel,v):
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
-        print(co.write_register(channel,int(v/10.0*4095),unit=1))
+        print(co.write_register(channel,int(v/10.0*4095),unit=1,slave=1))
         time.sleep(adam_delay)
         return ['Setting Succeful']*b
     except:
@@ -174,7 +174,7 @@ def get_6224(machine,b =4):
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
-        r = co.read_holding_registers(0,4,unit=1)
+        r = co.read_holding_registers(0,4,unit=1,slave=1)
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
         return volts[0:b]
@@ -192,7 +192,7 @@ def set_5056(machine,data,card_at='S3'):
     if type(data2) is not list:
         return data2
     try:
-        print(co.write_coils(coil_list[card_at], data2,unit=1))
+        print(co.write_coils(coil_list[card_at], data2,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -206,7 +206,7 @@ def get_5056(machine,card_at='S3'):
     if not co.connect():      # True / False
         return 'Error 01'
     try:
-        r = co.read_coils(coil_list[card_at],16,unit=1)
+        r = co.read_coils(coil_list[card_at],16,unit=1,slave=1)
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         return b0
@@ -221,7 +221,7 @@ def set_5024(machine,channel,v):
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
-        print(co.write_register(channel+16,int(v/10.0*4095),unit=1))
+        print(co.write_register(channel+16,int(v/10.0*4095),unit=1,slave=1))
         time.sleep(adam_delay)
         return ['Setting Succeful']*b
     except:
@@ -234,7 +234,7 @@ def get_5024(machine,b = 4):
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
-        r = co.read_holding_registers(16,4,unit=1)
+        r = co.read_holding_registers(16,4,unit=1,slave=1)
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
         return volts[0:b]
@@ -248,7 +248,7 @@ def get_5018(machine,b = 7):
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
-        r = co.read_holding_registers(8,7,unit=1)
+        r = co.read_holding_registers(8,7,unit=1,slave=1)
         intvalue=r.registers
         Temps = [round(float(x)/65535.0*760.0,1) for x in intvalue]
         return Temps[0:b]
@@ -262,7 +262,7 @@ def get_5017(machine,b = 8):
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
-        r = co.read_holding_registers(0,8,unit=1)
+        r = co.read_holding_registers(0,8,unit=1,slave=1)
         intvalue=r.registers
         volts=[round(float(x)/65535.0*20-10.0,3) for x in intvalue]
         return volts[0:b]
@@ -277,7 +277,7 @@ def set_6050(machine,data):
     if not co.connect():      # True / False
         return 'Error 01'
     try:
-        print(co.write_coils(16, data,unit=1))
+        print(co.write_coils(16, data,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -290,9 +290,9 @@ def get_6050(machine,b=18):
     if not co.connect():      # True / False
         return ['Error 01']*18
     try:
-        r = co.read_coils(0,12,unit=1)
+        r = co.read_coils(0,12,unit=1,slave=1)
         res=r.bits[0:12]
-        r2 = co.read_coils(16,6,unit=1)
+        r2 = co.read_coils(16,6,unit=1,slave=1)
         res.extend(r2.bits[0:6])
         br=["0" if i==0 else "1" for i in res]
         print(br)
@@ -515,8 +515,8 @@ def CAB1417switch(channel,mode):
     if mode == 'init':
         data=[False]*16*4
         try:
-            print(co14.write_coils(32,data,unit=1))
-            print(co17.write_coils(32,data,unit=1))
+            print(co14.write_coils(32,data,unit=1,slave=1))
+            print(co17.write_coils(32,data,unit=1,slave=1))
             return "init the A14 & A17 well"
         except:
             #print("file to init A14 & A17")
@@ -546,15 +546,15 @@ def CAB1417switch(channel,mode):
         print("in PM",channel, machine, S2_do, S3_doStart, S3_doTable,A14_S5_doTable,A17_5S_doTable)
         if machine == 'A14':
             try:
-                print(co14.write_coils(32+S2_do,[True],unit=1))
-                print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1))
+                print(co14.write_coils(32+S2_do,[True],unit=1,slave=1))
+                print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1))
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A17':
             try:
-                print(co17.write_coils(32+S2_do,[True],unit=1))
-                print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1))
+                print(co17.write_coils(32+S2_do,[True],unit=1,slave=1))
+                print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1))
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
@@ -563,26 +563,26 @@ def CAB1417switch(channel,mode):
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
             try:
                 #only A14 A17 S5
-                print(co14.write_coils(80,A14_S5_doTable,unit=1))
-                print(co17.write_coils(80,A14_S5_doTable,unit=1))
+                print(co14.write_coils(80,A14_S5_doTable,unit=1,slave=1))
+                print(co17.write_coils(80,A14_S5_doTable,unit=1,slave=1))
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A14':
             try:
-                print(co14.write_coils(32+S2_do,[False],unit=1));time.sleep(adam_delay)
-                print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1));time.sleep(adam_delay)
-                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1))
-                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1))
+                print(co14.write_coils(32+S2_do,[False],unit=1,slave=1));time.sleep(adam_delay)
+                print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1,slave=1))
+                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1))
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A17':
             try:
-                print(co17.write_coils(32+S2_do,[False],unit=1));time.sleep(adam_delay)
-                print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1));time.sleep(adam_delay)
-                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1))
-                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1))
+                print(co17.write_coils(32+S2_do,[False],unit=1,slave=1));time.sleep(adam_delay)
+                print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1,slave=1))
+                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1))
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
