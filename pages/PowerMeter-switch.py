@@ -2,7 +2,6 @@ import dash
 from dash import html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 from datetime import datetime
 import socket
@@ -96,15 +95,15 @@ layout = html.Div([
         html.Tr([html.Th(['Power Meter  & Channel ']),html.Th(['IF now']),html.Th('Get Power Button'),html.Th('Power (dBm)')]),
         html.Tr([html.Td([],style={'width':'250px'}),html.Td([],style={'width':'350px'}),html.Td([],style={'width':'250px'})],
             style={'visibility':'hidden'}),
-        html.Tr([html.Td(['PM 1, Channal A']),html.Td([id='S_1A']),
-                 html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td('Test1')]),
+        html.Tr([html.Td(['PM 1, Channal A']),html.Td(id='S_1A'),
+                 html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td('Test1'),]),
         html.Tr([html.Td(['PM 1, Channal B']),html.Td(id='S_1B'),html.Td('Test2'),]),
         html.Tr([html.Td(['PM 2, Channal A']),html.Td(id='S_2A'),html.Td('Test3'),]),
         html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),html.Td('Test4')]),
-        html.Tr([html.Td(['PM 3, Channal A']),html.Td([id='S_3A']),html.Td('Test5')]),
-        html.Tr([html.Td(['PM 3, Channal B']),html.Td([id='S_3B']),html.Td('Test6')]),
-        html.Tr([html.Td(['PM 4, Channal A']),html.Td([id='S_4A']),html.Td('Test7')]),
-        html.Tr([html.Td(['PM 4, Channal B']),html.Td([id='S_4B']),html.Td('Test8')]),
+        html.Tr([html.Td(['PM 3, Channal A']),html.Td(id='S_3A'),html.Td('Test5')]),
+        html.Tr([html.Td(['PM 3, Channal B']),html.Td(id='S_3B'),html.Td('Test6')]),
+        html.Tr([html.Td(['PM 4, Channal A']),html.Td(id='S_4A'),html.Td('Test7')]),
+        html.Tr([html.Td(['PM 4, Channal B']),html.Td(id='S_4B'),html.Td('Test8')]),
         ],style={'max-width': '800px','border-spacing':'30px 10px'}),
     html.Br(),
 ])
