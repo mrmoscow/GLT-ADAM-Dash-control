@@ -4,7 +4,12 @@ import dash
 from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client import ModbusTcpClient as ModbusClient
+import sys
+if sys.version_info[1] == 7:
+    from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+if sys.version_info[1] == 11:
+    from pymodbus.client import ModbusTcpClient as ModbusClient
+
 import time
 
 dash.register_page(__name__)

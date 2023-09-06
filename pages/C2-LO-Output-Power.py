@@ -2,7 +2,6 @@ import dash
 from dash import html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from pymodbus.client import ModbusTcpClient as ModbusClient
 import time
 import ReceiverADAM as RAD
 from datetime import datetime

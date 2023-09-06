@@ -2,11 +2,17 @@ import dash
 from dash import html, dcc, callback, Input, Output
 #from dash.exceptions import PreventUpdate
 
-from pymodbus.client import ModbusTcpClient as ModbusClient
 import socket
 import time
 from datetime import datetime
 import requests
+
+import sys
+if sys.version_info[1] == 7:
+    from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+if sys.version_info[1] == 11:
+    from pymodbus.client import ModbusTcpClient as ModbusClient
+
 
 #Next list the name and IP at GLT telescope
 ADAM_list={"A01":'192.168.1.207',\
@@ -27,10 +33,7 @@ ADAM_list={"A01":'192.168.1.207',\
            "PM4":'192.168.1.219'}
 
 #Next list the 5056 card at which slite and the first coil position.
-coil_list={"S2":32,\
-           "S3":48,\
-           "S4":64,\
-           "S5":80}
+coil_list={"S2":32,"S3":48,"S4":64,"S5":80}
 
 adam_delay = 0.25
 
