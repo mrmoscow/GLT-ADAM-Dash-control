@@ -96,14 +96,14 @@ layout = html.Div([
         html.Tr([html.Td([],style={'width':'250px'}),html.Td([],style={'width':'350px'}),html.Td([],style={'width':'250px'})],
             style={'visibility':'hidden'}),
         html.Tr([html.Td(['PM 1, Channal A']),html.Td(id='S_1A'),
-                 html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td('Test1'),]),
-        html.Tr([html.Td(['PM 1, Channal B']),html.Td(id='S_1B'),html.Td('Test2'),]),
-        html.Tr([html.Td(['PM 2, Channal A']),html.Td(id='S_2A'),html.Td('Test3'),]),
-        html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),html.Td('Test4')]),
-        html.Tr([html.Td(['PM 3, Channal A']),html.Td(id='S_3A'),html.Td('Test5')]),
-        html.Tr([html.Td(['PM 3, Channal B']),html.Td(id='S_3B'),html.Td('Test6')]),
-        html.Tr([html.Td(['PM 4, Channal A']),html.Td(id='S_4A'),html.Td('Test7')]),
-        html.Tr([html.Td(['PM 4, Channal B']),html.Td(id='S_4B'),html.Td('Test8')]),
+                 html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td(id='P_1A'),]),
+        html.Tr([html.Td(['PM 1, Channal B']),html.Td(id='S_1B'),html.Td(id='P_1B'),]),
+        html.Tr([html.Td(['PM 2, Channal A']),html.Td(id='S_2A'),html.Td(id='P_2A'),]),
+        html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),html.Td(id='P_2B')]),
+        html.Tr([html.Td(['PM 3, Channal A']),html.Td(id='S_3A'),html.Td(id='P_3A')]),
+        html.Tr([html.Td(['PM 3, Channal B']),html.Td(id='S_3B'),html.Td(id='P_3B')]),
+        html.Tr([html.Td(['PM 4, Channal A']),html.Td(id='S_4A'),html.Td(id='P_4A')]),
+        html.Tr([html.Td(['PM 4, Channal B']),html.Td(id='S_4B'),html.Td(id='P_4B')]),
         ],style={'max-width': '800px','border-spacing':'30px 10px'}),
     html.Br(),
 ])
@@ -129,3 +129,20 @@ def PM_set(n_clicks,i_1A,i_1B,i_2A,i_2B,i_3A,i_3B,i_4A,i_4B):
                 #r.append("Good")
                 r.append(RAD.CAB1417switch(i,'PM'))
         return r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7]
+
+@the_app.callback(
+  Output('P_1A','children'),Output('P_1B','children'),
+  Output('P_2A','children'),Output('P_2B','children'),
+  Output('P_3A','children'),Output('P_3B','children'),
+  Output('P_4A','children'),Output('P_4B','children'),
+  Input('GB','n_clicks'),
+         )
+def PM_get(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        a,b=RAD.get_Power('PM1')
+        c,d=RAD.get_Power('PM2')
+        e,f=RAD.get_Power('PM3')
+        g,h=RAD.get_Power('PM4')
+        return a,b,c,d,e,f,g,h

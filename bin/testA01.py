@@ -24,7 +24,7 @@ def get_5056(machine,card_at='S3'):
     if not co.connect():      # True / False
         return 'Error 01'
     print("Modbus link success",co)
-    r = co.read_coils(coil_list[card_at],16,unit=1)
+    r = co.read_coils(coil_list[card_at],16,unit=1,slave=1)
     print("reading coils success", r)
     intvalue=r.bits
     b0=''.join(["0, " if i==0 else "1, " for i in intvalue])

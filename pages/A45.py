@@ -5,7 +5,7 @@ from dash import html, dcc, callback, Input, Output
 from dash.exceptions import PreventUpdate
 
 import sys
-if sys.version_info[1] == 7:
+if sys.version_info[1] == 7 or 9:
     from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 if sys.version_info[1] == 11:
     from pymodbus.client import ModbusTcpClient as ModbusClient
@@ -24,7 +24,7 @@ def get_VGA(addr):
     if not A45_volt.connect():      # True / False
         return '{ *** Connection Failure *** }'
     try:
-        r = A45_volt.read_holding_registers(addr,1)
+        r = A45_volt.read_holding_registers(addr,1,unit=1,slave=1)
         return r.registers[0] *VGA_raw2volt
     except:
         A45_volt.close()
@@ -34,7 +34,7 @@ def set_VGA(addr, v):
     if not A45_volt.connect():      # True / False
         return '{ *** Connection Failure *** }'
     try:
-        A45_volt.write_register(addr, int(v/VGA_raw2volt))
+        A45_volt.write_register(addr, int(v/VGA_raw2volt),unit=1,slave=1)
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return '<New Value Success>'
     except:
@@ -54,7 +54,7 @@ def get_rx():
     if not A45_Rx_sel.connect():
         return '{ *** Connection Failure *** }'
     try:
-        r = A45_Rx_sel.read_coils(18, 4)
+        r = A45_Rx_sel.read_coils(18, 4,unit=1,slave=1)
         return rx_id(r.bits[:4])
     except:
         A45_Rx_sel.close()
@@ -64,7 +64,7 @@ def set_rx(rd):
     if not A45_Rx_sel.connect():
         return '{ *** Connection Failure *** }'
     try:
-        A45_Rx_sel.write_coils(18, rx_bits[rd])
+        A45_Rx_sel.write_coils(18, rx_bits[rd],unit=1,slave=1)
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return '<New Value Success>'
     except:
