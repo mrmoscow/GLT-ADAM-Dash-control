@@ -589,3 +589,27 @@ def CAB1417switch(channel,mode):
     else:
         return "not in any mode, check the input mode"
 
+
+def get_Power(machine):
+    try:
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientSocket.connect((ADAM_list[machine],5025))
+        #data = "*IDN?\n"
+        ##clientSocket.send(data.encode())
+        #dataFromServer = clientSocket.recv(1024)
+        #print(dataFromServer.decode())
+
+        data = 'FETC1?\n'
+        clientSocket.send(data.encode())
+        dataFromServerA = clientSocket.recv(1024)
+
+        data = 'FETC2?\n'
+        clientSocket.send(data.encode())
+        dataFromServerB = clientSocket.recv(1024)
+
+        print(dataFromServerA.decode(),dataFromServerB.decode())
+        return dataFromServerA.decode(),dataFromServerB.decode()
+    except:
+        print ("file to get power Meter")
+        return 'Faill to get power','Faill to get power'
+

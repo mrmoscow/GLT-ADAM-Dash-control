@@ -53,7 +53,7 @@ def get_Power(machine):
         dataFromServerB = clientSocket.recv(1024)
 
         print(dataFromServerA.decode(),dataFromServerB.decode())
-        return dataFromServerA.decode(),dataFromServerB.decode()
+        return float(dataFromServerA.decode()),float(dataFromServerB.decode())
     except:
         print ("file to get power Meter")
         return 'Faill to get power'
