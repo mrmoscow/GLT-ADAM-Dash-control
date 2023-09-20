@@ -18,7 +18,7 @@ watt = get_opt()
 if watt:
     print("sorry, code still in development")
 
-print(RAD.get_Power('PM1'))
+#print(RAD.get_Power('PM1'))
 print("Power1 get",RAD.get_Power('PM1'))
 print("Power2 get",RAD.get_Power('PM2'))
 print("Power3 get",RAD.get_Power('PM3'))
