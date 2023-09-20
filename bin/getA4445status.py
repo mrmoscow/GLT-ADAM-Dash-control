@@ -9,15 +9,12 @@ if sys.version_info[1] == 11:
     from pymodbus.client import ModbusTcpClient as ModbusClient
 
 
-co=ModbusClient('192.168.1.225',port=502,timeout=10)
+co=ModbusClient('192.168.1.213',port=502,timeout=10)
 print("Link good",co)
 r = co.read_coils(18,1)
 print("read coils good",r)
 intvalue=r.bits
-
-#b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
-#b1=["0" if i==0 else "1" for i in b0]
-#print(b1)
+print(intvalue)
 
 print('This script  help to check the A44 and A45')
 print('Start to checking the DO of A44')
