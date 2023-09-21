@@ -146,13 +146,57 @@ def get_6260(machine,b=4):
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         b1=["0" if i==0 else "1" for i in res]
-        #return b0
         return b1
     except:
         co.close()
-        #return 'Error 02'
         return ['Error 02']*b
 
+
+A4x_nfun = {1: "#010004\r", 2: "#010008\r",3: "#010010\r", 4: "#010020\r",0: "#010000\r"}
+
+def setN_6260(machine,Rxnumber):
+    MESSAGE = A4x_nfun[Rxnumber]
+    try:
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+        sock.sendto(  MESSAGE.encode(), (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
+        sock.close()
+        if MESSAGE[-3:-1] == indata.decode()[-3:-1]:
+            return 'Setting Succeful'
+        else:
+            return 'Error 03'
+    except:
+        return 'Error 03'
+
+def getN_6260(machine,b=4):
+    try:
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        #print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
+        a=[int(d) for d in str(bin(int(indata.decode()[-3:-1], 16))[2:].zfill(6))]
+        a.reverse()
+        return a[-b:]
+    except:
+        return ['Error 02']*b
+
+def getN_6260Rx(machine):
+    try:
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        keys = [k for k, v in A4x_nfun.items() if v[-3:-1] == indata.decode()[-3:-1]]
+        #print(keys)
+        if len(keys) == 1:
+            return keys[0]
+        else:
+            return None
+    except:
+        return None
 
 
 def set_6224(machine,channel,v):
@@ -327,8 +371,10 @@ def set_Rx(rx_number,tone):
         r1=set_5056('A01','0000')
         time.sleep(0.5)
         r2=set_5056('A01',rxIO_A01)
-        set_6260('A44_ReSl',rxIO_A4x)
-        set_6260('A45_ReSl',rxIO_A4x)
+        #set_6260('A44_ReSl',rxIO_A4x)
+        #set_6260('A45_ReSl',rxIO_A4x)
+        setN_6260('A44_ReSl',rx_number)
+        setN_6260('A45_ReSl',rx_number)
         #res="The Rx is now at"+tone
         #print(r1)
         return 'The Rx is now at Rx_'+str(rx_number)+' with tone '+tone
