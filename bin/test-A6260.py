@@ -56,41 +56,26 @@ def setN_6260(machine,Rxnumber):
 
 
 def getN_6260(machine,b=4):
+    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+    sock.settimeout(1)
     try:
-        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
         sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
         indata, addr = sock.recvfrom(1024)
-        #print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
         a=[int(d) for d in str(bin(int(indata.decode()[-3:-1], 16))[2:].zfill(6))]
         a.reverse()
         return a[-b:]
-    except:
-        return ['Error 02']*b
-
-def getN_6260Rx(machine):
-    try:
-        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
-        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
-        indata, addr = sock.recvfrom(1024)
-        keys = [k for k, v in A4x_nfun.items() if v[-3:-1] == indata.decode()[-3:-1]]
-        #print(keys)
-        if len(keys) == 1:
-            return keys[0]
-        else:
-            return None
-    except:
-        return None
-
+    except :
+        return ['Error 03']*b
 
 print(getN_6260("A44_ReSl",6))
-print(getN_6260Rx("A44_ReSl"))
+#print(getN_6260Rx("A44_ReSl"))
 
-print(getN_6260("A45_ReSl",6))
-print(getN_6260Rx("A45_ReSl"))
+#print(getN_6260("A45_ReSl",6))
+#print(getN_6260Rx("A45_ReSl"))
 
 #print(setN_6260("A44_ReSl",2))
 #print(setN_6260("A45_ReSl",2))
-#print(getN_6260("ATT",6))
+print(getN_6260("ATT",6))
 #print(getN_6260Rx("ATT"))
 
 '''
@@ -120,28 +105,30 @@ MESSAGE = A4x_nfun[4]
 
 #indata, addr = sock.recvfrom(1024)
 #print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
-'''
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
-sock.sendto( b"$016\r", ("192.168.1.225", 1025))
+sock.settimeout(1)
 
-indata, addr = sock.recvfrom(1024)
-print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
-print(indata.decode()[-3:-1])
+try:
+    sock.sendto( b"$016\r", ("192.168.1.223", 1025))
+    indata, addr = sock.recvfrom(1024)
+    print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
+    print(indata.decode()[-3:-1])
+except socket.timeout:
+    print("Time out")
 
-a=[int(d) for d in str(bin(int(indata.decode()[-3:-1], 16))[2:].zfill(6))]
-a.reverse()
-print(a)
-print(a[-4:])
-keys = [k for k, v in A4x_nfun.items() if v[-3:-1] == indata.decode()[-3:-1]]
-print(keys,len(keys))
-if len(keys) ==1 :
-    print(keys[0])
-'''
+#a=[int(d) for d in str(bin(int(indata.decode()[-3:-1], 16))[2:].zfill(6))]
+#a.reverse()
+#print(a)
+#print(a[-4:])
+#keys = [k for k, v in A4x_nfun.items() if v[-3:-1] == indata.decode()[-3:-1]]
+#print(keys,len(keys))
+#if len(keys) ==1 :
+#    print(keys[0])
 
 #keys = [k for k, v in A4x_nfun.items() if v[:-2] == indata.decode()]
 #print(keys)
 #b"#010000\r"
-#b"#010001\r" , 2,4,8, 
+#b"#010001\r" , 2,4,8,
 #b"#010020\r"
 #MESSAGE = b"#010020\r"
 #sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))

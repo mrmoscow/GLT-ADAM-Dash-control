@@ -18,6 +18,7 @@ def get_opt():
 para = get_opt()
 #channel=int(channel)
 
+if 'Bad' in RAD.check_ADAM('A01'): sys.exit("Error A01 is not conection")
 
 print("The A1 have 5017, 5018,5024,5056")
 

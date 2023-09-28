@@ -659,6 +659,6 @@ def get_Power(machine):
         #print(format(float(dataFromServerA.decode()),'.2f'),format(float(dataFromServerA.decode()),'.2f'))
         return format(float(dataFromServerA.decode()),'.2f'),format(float(dataFromServerB.decode()),'.2f')
     except:
-        print ("file to get power Meter")
-        return 'Faill to get power','Faill to get power'
+        print ("fail to get power Meter")
+        return 'Fail to get power','Faill to get power'
 
