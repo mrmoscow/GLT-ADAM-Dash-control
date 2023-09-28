@@ -48,11 +48,11 @@ def getPowIF(IFgroup):
         return 'Error,PowerMeter group not in the list,  maybe you have a typo?',0
     IFgr=gotopt(IFgroup)
     PMif=PMIFset(IFgroup)[0]
-    s3=RAD.get_5056(PMif['mac'],'S3')[PMif['S3star']:PMif['S3star']+4]
-    s2=RAD.get_5056(PMif['mac'],'S3')[PMif['S3star']:PMif['S3star']+4]
-    #s3=[1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0][PMif['S3star']:PMif['S3star']+4]
-    #s2=[1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0][PMif['S3star']:PMif['S3star']+4]
-    #print(s3)
+    s3=[int(x) for x in RAD.get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
+    s2=[int(x) for x in RAD.get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
+    #s3=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
+    #s2=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
+    print(s3,s2)
     if sum(s3) != 1:
         #print ("no  fit")
         return 'Unknow',0
@@ -62,8 +62,9 @@ def getPowIF(IFgroup):
         if s2[s3.index(1)] != 1:
             return 'Unknow (IF may set to SA)',0
         else:
-            return IFgr[whichOpen]['label'],IFgr[whichOpen]['value']
+            return IFgr[s3.index(1)]['label'],IFgr[s3.index(1)]['value']
 
 
 for gr in ['P1A','P1B','P2A','P2B','P3A','P3B','P4A','P4B']:
     print("Power Meter",gr[1],"channel",gr[2], ", Now IF get at channel",getPowIF(gr)[1],getPowIF(gr)[0])
+
