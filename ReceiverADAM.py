@@ -101,6 +101,7 @@ def check_ADAM(machine):
     else:
         print (machine,":",ADAM_list[machine],"*** Connection Failure ***")
         message +=machine+":"+ADAM_list[machine]+"  "+"**Bad connection!\n"
+    time.sleep(0.5)
     return message
 
 

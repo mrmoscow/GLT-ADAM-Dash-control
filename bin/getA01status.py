@@ -20,14 +20,15 @@ para = get_opt()
 
 if 'Bad' in RAD.check_ADAM('A01'): sys.exit("Error A01 is not conection")
 
+
 print("The A1 have 5017, 5018,5024,5056")
 
-print("Next is the valud from 5017")
-print(RAD.get_5017('A01'))
+print("From 5017:",RAD.get_5017('A01'))
 
-print("Next is the valud from 5018")
-print(RAD.get_5018('A01'))
+print("From 5018",RAD.get_5018('A01'))
 
-print("Next is the valud from 5056")
+print("From 5024",RAD.get_5024('A01'))
+
+print("Next from 5056")
 print(RAD.get_5056('A01'))
 
