@@ -92,7 +92,7 @@ def test_ADAMs():
 
 def check_ADAM(machine):
     message=''
-    print  ("checking",machine,":",ADAM_list[machine])
+    #print  ("checking",machine,":",ADAM_list[machine])
     k=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     #k= ModbusClient(j, port=502, timeout=10)
     if k.connect():
@@ -101,7 +101,7 @@ def check_ADAM(machine):
     else:
         print (machine,":",ADAM_list[machine],"*** Connection Failure ***")
         message +=machine+":"+ADAM_list[machine]+"  "+"**Bad connection!\n"
-    time.sleep(0.5)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     return message
 
 
@@ -129,6 +129,7 @@ def hex_to_BiList(datain):
 
 def set_6260(machine,data):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     try:
         print(co.write_coils(18, data,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
@@ -139,11 +140,13 @@ def set_6260(machine,data):
 
 def get_6260(machine,b=4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         #return 'Error 01'
         return ['Error 01']*b
     try:
         r = co.read_coils(18,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         b1=["0" if i==0 else "1" for i in res]
@@ -205,11 +208,12 @@ def getN_6260Rx(machine):
 def set_6224(machine,channel,v):
     b=1
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         print(co.write_register(channel,int(v/10.0*4095),unit=1,slave=1))
-        time.sleep(adam_delay)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         return ['Setting Succeful']*b
     except:
         co.close()
@@ -218,10 +222,12 @@ def set_6224(machine,channel,v):
 
 def get_6224(machine,b =4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(0,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
         return volts[0:b]
@@ -232,6 +238,7 @@ def get_6224(machine,b =4):
 
 def set_5056(machine,data,card_at='S3'):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     data2=hex_to_BiList(data)
@@ -250,10 +257,12 @@ def set_5056(machine,data,card_at='S3'):
 #5050 is DO.
 def get_5056(machine,card_at='S3'):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     try:
         r = co.read_coils(coil_list[card_at],16,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         return b0
@@ -265,11 +274,12 @@ def get_5056(machine,card_at='S3'):
 def set_5024(machine,channel,v):
     b=1
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         print(co.write_register(channel+16,int(v/10.0*4095),unit=1,slave=1))
-        time.sleep(adam_delay)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         return ['Setting Succeful']*b
     except:
         co.close()
@@ -278,10 +288,12 @@ def set_5024(machine,channel,v):
 #5024 in A01-16/A11-16
 def get_5024(machine,b = 4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(16,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
         return volts[0:b]
@@ -292,10 +304,12 @@ def get_5024(machine,b = 4):
 #5018 in A01-08/A11-08/A14-08/A17-08
 def get_5018(machine,b = 7):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(8,7,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         Temps = [round(float(x)/65535.0*760.0,1) for x in intvalue]
         return Temps[0:b]
@@ -306,10 +320,12 @@ def get_5018(machine,b = 7):
 #5017 in A01-00/A11-00/A14-00/A17-00
 def get_5017(machine,b = 8):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(0,8,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/65535.0*20-10.0,3) for x in intvalue]
         return volts[0:b]
@@ -321,6 +337,7 @@ def get_5017(machine,b = 8):
 def set_6050(machine,data):
     # data is  [0,0,0,0,0,0], 6 list of 
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     try:
@@ -334,10 +351,12 @@ def set_6050(machine,data):
 ### 6050 in A03-00/A10-00
 def get_6050(machine,b=18):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*18
     try:
         r = co.read_coils(0,12,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         res=r.bits[0:12]
         r2 = co.read_coils(16,6,unit=1,slave=1)
         res.extend(r2.bits[0:6])
