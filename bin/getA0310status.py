@@ -47,7 +47,7 @@ def get_6050(machine,b=18):
 print('This script  help to check the A03 (6050)')
 print('Start to checking the  of A3')
 
-result=get_6050('A03')
+result=RAD.get_6050('A03')
 print(result[0:12])
 print(result[12:])
 
@@ -55,6 +55,6 @@ print(result[12:])
 print('This script  help to check the A10 (6050)')
 print('Start to checking the  of A10')
 
-result=get_6050('A10')
+result=RAD.get_6050('A10')
 print(result[0:12])
 print(result[12:])
