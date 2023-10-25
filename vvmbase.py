@@ -27,8 +27,8 @@ def IsSpecial(data):
 
 #==============================================================================
 def CheckError():
-    sockGPIB.send("SYST:ERR?\n")
-    sockGPIB.send("++read eoi\n")
+    sockGPIB.send(b"SYST:ERR?\n")
+    sockGPIB.send(b"++read eoi\n")
 
     s = None
 
@@ -37,25 +37,25 @@ def CheckError():
     except socket.timeout:
         s = ""
 
-    if s[:1] is not "0":
+    if s[:1] != "0":
        print (s)
 
 #==============================================================================
 
 def queryVVM(cmd):
-    sockGPIB.send(cmd + "\n")
-    sockGPIB.send("++read eoi\n")
+    sockGPIB.send(bytes(cmd + "\n",'ascii'))
+    sockGPIB.send(b"++read eoi\n")
     try:
        ret = sockGPIB.recv(8192)
        ret = ret.rstrip('\r\n')
     except socket.timeout:
        ret = ""
+    print(ret)
     return ret
 
 def sendVVM(cmd):
-    sockGPIB.send(cmd + "\n")
+    sockGPIB.send(bytes(cmd + "\n"),'ascii')
 
-    
 def init_device():
     global sockGPIB
 
@@ -67,33 +67,31 @@ def init_device():
 
 
     # Set mode as CONTROLLER
-    sockGPIB.send("++mode 1\n")
-
+    sockGPIB.send(b"++mode 1\n")
 
     # Set HP8508A address
     #sockGPIB.send("++addr " + addr + "\n")
 
-
     # Turn off read-after-write to avoid "Query Unterminated" errors
-    sockGPIB.send("++auto 0\n")
+    sockGPIB.send(b"++auto 0\n")
 
     # Read timeout is 500 msec
-    sockGPIB.send("++read_tmo_ms 500\n")
+    sockGPIB.send(b"++read_tmo_ms 500\n")
 
     # Do not append CR or LF to GPIB data
-    sockGPIB.send("++eos 3\n")
+    sockGPIB.send(b"++eos 3\n")
 
     # Assert EOI with last byte to indicate end of data
-    sockGPIB.send("++eoi 1\n")
+    sockGPIB.send(b"++eoi 1\n")
 
-    cmd = "*CLS"
-    sockGPIB.send(cmd + "\n")
+    cmd = b"*CLS"
+    sockGPIB.send(cmd + b"\n")
     time.sleep(1.0)
     CheckError()
 
-    cmd = "*IDN?"
-    sockGPIB.send(cmd + "\n")
-    sockGPIB.send("++read eoi\n")
+    cmd = b"*IDN?"
+    sockGPIB.send(cmd + b"\n")
+    sockGPIB.send(b"++read eoi\n")
     time.sleep(1.0)
     try:
       s = sockGPIB.recv(4096)
@@ -101,8 +99,8 @@ def init_device():
       s = ""
     CheckError()
 
-    cmd = "*RST"
-    sockGPIB.send(cmd + "\n")
+    cmd = b"*RST"
+    sockGPIB.send(cmd + b"\n")
     time.sleep(1.0)
     CheckError()
 
@@ -116,7 +114,7 @@ def set_device():
     sockGPIB.connect((ip, 1234))
 
     # Set mode as CONTROLLER
-    sockGPIB.send("++mode 1\n")
+    sockGPIB.send(b"++mode 1\n")
 
 
     # Set HP8508A address
@@ -124,13 +122,13 @@ def set_device():
 
 
     # Turn off read-after-write to avoid "Query Unterminated" errors
-    sockGPIB.send("++auto 0\n")
+    sockGPIB.send(b"++auto 0\n")
 
     # Read timeout is 500 msec
-    sockGPIB.send("++read_tmo_ms 500\n")
+    sockGPIB.send(b"++read_tmo_ms 500\n")
 
     # Do not append CR or LF to GPIB data
-    sockGPIB.send("++eos 3\n")
+    sockGPIB.send(b"++eos 3\n")
 
     # Assert EOI with last byte to indicate end of data
-    sockGPIB.send("++eoi 1\n")
+    sockGPIB.send(b"++eoi 1\n")
