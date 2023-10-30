@@ -257,7 +257,7 @@ def set_5056(machine,data,card_at='S3'):
 #5050 is DO.
 def get_5056(machine,card_at='S3'):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
-    time.sleep(adam_delay)  # must be padded before the consecutive reading
+    time.sleep(adam_delay*2)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     try:

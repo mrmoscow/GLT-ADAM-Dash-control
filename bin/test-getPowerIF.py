@@ -49,7 +49,7 @@ def getPowIF(IFgroup):
     IFgr=gotopt(IFgroup)
     PMif=PMIFset(IFgroup)[0]
     s3=[int(x) for x in RAD.get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
-    s2=[int(x) for x in RAD.get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
+    s2=[int(x) for x in RAD.get_5056(PMif['mac'],'S2').split(',')[PMif['S3star']:PMif['S3star']+4]]
     #s3=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     #s2=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     print(s3,s2)
