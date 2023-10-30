@@ -46,13 +46,8 @@ def getPowIF(IFgroup):
         return 'Error 01, CAB-A17 not responding. check power and connectivity',0
     if sum([True for s in PMIFsetall if s['gr'] == gr]) ==0:
         return 'Error,PowerMeter group not in the list,  maybe you have a typo?',0
-    IFgr=gotopt(IFgroup)
-    PMif=PMIFset(IFgroup)[0]
-    print(IFgr,PMif,PMif['S3star'],PMif['S3star']+4)
     s3=[int(x) for x in RAD.get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
-    print(x)
     s2=[int(x) for x in RAD.get_5056(PMif['mac'],'S2').split(',')[PMif['S3star']:PMif['S3star']+4]]
-    print(x)
     #s3=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     #s2=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     print(s3,s2)
