@@ -55,7 +55,7 @@ def getPowIF(IFgroup):
     print(x)
     #s3=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     #s2=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
-    #print(s3,s2)
+    print(s3,s2)
     if sum(s3) != 1:
         #print ("no  fit")
         return 'Unknow',0
@@ -69,5 +69,6 @@ def getPowIF(IFgroup):
 
 
 for gr in ['P1A','P1B','P2A','P2B','P3A','P3B','P4A','P4B']:
-    print("Power Meter",gr[1],"channel",gr[2], ", Now IF get at channel",getPowIF(gr)[1],getPowIF(gr)[0])
-
+    re0,re1=getPowIF(gr)
+    print("Power Meter",gr[1],"channel",gr[2], ", Now IF get at channel",re1,re0)
+    time.sleep(0.5)
