@@ -265,7 +265,6 @@ def get_5056(machine,card_at='S3'):
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
-        print(b0)
         return b0
     except:
         co.close()
