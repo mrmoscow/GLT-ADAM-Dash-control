@@ -52,7 +52,7 @@ def getPowIF(IFgroup):
     s2=[int(x) for x in RAD.get_5056(PMif['mac'],'S2').split(',')[PMif['S3star']:PMif['S3star']+4]]
     #s3=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     #s2=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
-    print(s3,s2)
+    #print(s3,s2)
     if sum(s3) != 1:
         #print ("no  fit")
         return 'Unknow',0
