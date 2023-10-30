@@ -1,4 +1,3 @@
-#! /home/obscon/bin/mpy3
 
 import argparse
 from os.path import exists

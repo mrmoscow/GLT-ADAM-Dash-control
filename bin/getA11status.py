@@ -1,4 +1,3 @@
-#! /home/obscon/bin/mpy3
 
 import argparse
 from os.path import exists
@@ -11,7 +10,7 @@ def get_opt():
     #parser.add_argument("-c","--channel", type=str, help="channel to SA  [1..44]",required=True)
     parser.add_argument('-i','--info', default=False, action='store_true',help="Just showing the infomation of A11")
     args = parser.parse_args()
-    return args.para
+    return args
 
 
 para = get_opt()
