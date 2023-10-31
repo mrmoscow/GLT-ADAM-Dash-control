@@ -15,7 +15,6 @@ def get_opt():
     return args.channel
 
 
-
 channel = get_opt()
 channel=int(channel)
 

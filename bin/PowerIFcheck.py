@@ -1,10 +1,10 @@
+#!/home/obscon/bin/cpy3
+
 from os.path import exists
 import sys
 import socket
 import time
-#print(sys.version)
-#print(sys.version_info)
-#print(sys.version_info[1])
+
 if sys.version_info[1] == 7 or sys.version_info[1] == 9:
     from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 if sys.version_info[1] == 11:
@@ -16,9 +16,6 @@ import ReceiverADAM as RAD
 
 
 
-
-#if 'Bad' in RAD.check_ADAM('A14'): sys.exit("Error A14 is not conection")
-#if 'Bad' in RAD.check_ADAM('A17'): sys.exit("Error A17 is not conection")
 
 channelOpt=RAD.channelOpt
 PMIFsetall= [
@@ -47,15 +44,10 @@ def getPowIF(IFgroup):
         return 'Error 01, CAB-A17 not responding. check power and connectivity',0
     if sum([True for s in PMIFsetall if s['gr'] == gr]) ==0:
         return 'Error,PowerMeter group not in the list,  maybe you have a typo?',0
-<<<<<<< HEAD
     IFgr=gotopt(IFgroup)
     PMif=PMIFset(IFgroup)[0]
-=======
->>>>>>> 34f152edeb4b9acef4273f252e3d56a44be7320f
     s3=[int(x) for x in RAD.get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
     s2=[int(x) for x in RAD.get_5056(PMif['mac'],'S2').split(',')[PMif['S3star']:PMif['S3star']+4]]
-    #s3=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
-    #s2=[int(x) for x in "1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,".split(',')[PMif['S3star']:PMif['S3star']+4]]
     print(s3,s2)
     if sum(s3) != 1:
         #print ("no  fit")
@@ -71,5 +63,5 @@ def getPowIF(IFgroup):
 
 for gr in ['P1A','P1B','P2A','P2B','P3A','P3B','P4A','P4B']:
     re0,re1=getPowIF(gr)
-    print("Power Meter",gr[1],"channel",gr[2], ", Now IF get at channel",re1,re0)
+    print("Power Meter",gr[1],"channel",gr[2], ", Now connect with ",re1,re0)
     time.sleep(0.5)

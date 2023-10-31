@@ -1,7 +1,6 @@
-#! /usr/bin/python3
+#!/home/obscon/bin/cpy3
 
 import argparse
-from os.path import exists
 import sys
 sys.path.append("..")
 import ReceiverADAM as RAD
@@ -10,9 +9,9 @@ import ReceiverADAM as RAD
 def get_opt():
     parser = argparse.ArgumentParser(description="For retrun A01 status")
     #parser.add_argument("-c","--channel", type=str, help="channel to SA  [1..44]",required=True)
-    parser.add_argument('-p','--para', default=False, action='store_true',help="for backup using")
+    parser.add_argument('-i','--info', default=False, action='store_true',help="using in future.")
     args = parser.parse_args()
-    return args.para
+    return args.info
 
 
 para = get_opt()
