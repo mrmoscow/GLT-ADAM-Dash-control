@@ -707,7 +707,7 @@ def getPowIF(IFgroup):
         return 'Error 01, CAB-A14 not responding. check power and connectivity',0
     if not co17.connect():      # True / False
         return 'Error 01, CAB-A17 not responding. check power and connectivity',0
-    if sum([True for s in PMIFsetall if s['gr'] == gr]) ==0:
+    if sum([True for s in PMIFsetall if s['gr'] == IFgroup]) ==0:
         return 'Error,PowerMeter group not in the list,  maybe you have a typo?',0
     IFgr=gotopt(IFgroup)
     PMif=PMIFset(IFgroup)[0]
