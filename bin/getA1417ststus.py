@@ -23,7 +23,7 @@ print("The A14/17 have 5017, 5018,and 4*5056")
 
 print("From A14-5017:",RAD.get_5017('A14'))
 
-print("From A14-5017:",RAD.get_5018('A14'))
+print("From A14-5018:",RAD.get_5018('A14'))
 
 print("Next is the DO valud of 4*5056 on A14")
 print(RAD.get_5056('A14','S2'))
@@ -33,7 +33,7 @@ print(RAD.get_5056('A14','S5'))
 
 print("From A17-5017:",RAD.get_5017('A17'))
 
-print("From A17-5017:",RAD.get_5018('A17'))
+print("From A17-5018:",RAD.get_5018('A17'))
 
 print("Next is the DO valud of 4*5056 on A17")
 print(RAD.get_5056('A17','S2'))

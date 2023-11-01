@@ -14,8 +14,8 @@ dash.register_page(__name__)
 
 layout = html.Div([
     html.H3('ADAM Module Connection Checking'),
-    html.Div(children='Link testing,Please watting',id='all-result'),
-    dcc.Interval(id='interval',interval=40000,n_intervals=0),
+    #html.Div(children='Link testing,Please watting',id='all-result'),
+    #dcc.Interval(id='interval',interval=40000,n_intervals=0),
     html.Hr(),
     html.Button('A01 Link Check', id='a01-link-check'),
     html.Br(),
@@ -61,10 +61,10 @@ layout = html.Div([
 ])
 
 the_app = dash.get_app()        # Must specify due to @dash.callback limitations
-@the_app.callback(Output('all-result', 'children'),
-              Input('interval', 'n_intervals'))
-def update_link(n):
-    return RAD.test_ADAMs()
+#@the_app.callback(Output('all-result', 'children'),
+#              Input('interval', 'n_intervals'))
+#def update_link(n):
+#    return RAD.test_ADAMs()
 
 @the_app.callback(
     Output(component_id='a01-link-result', component_property='children'),

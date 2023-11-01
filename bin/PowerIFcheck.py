@@ -14,9 +14,6 @@ if sys.version_info[1] == 11:
 sys.path.append("..")
 import ReceiverADAM as RAD
 
-
-
-
 channelOpt=RAD.channelOpt
 PMIFsetall= [
     {'gr':'P1A','mac':'A14','S3star': 0, 'valuestar':1},
@@ -29,6 +26,7 @@ PMIFsetall= [
     {'gr':'P4B','mac':'A17','S3star':12, 'valuestar':35},
     ]
 
+'''
 def gotopt(gr):
     return [{k : v for k, v in s.items() if k in ['label','value']} for s in channelOpt if s['gr'] == gr]
 
@@ -59,9 +57,9 @@ def getPowIF(IFgroup):
             return 'Unknow (IF may set to SA)',0
         else:
             return IFgr[s3.index(1)]['label'],IFgr[s3.index(1)]['value']
-
+'''
 
 for gr in ['P1A','P1B','P2A','P2B','P3A','P3B','P4A','P4B']:
-    re0,re1=getPowIF(gr)
+    re0,re1=RAD.getPowIF(gr)
     print("Power Meter",gr[1],"channel",gr[2], ", Now connect with ",re1,re0)
     time.sleep(0.5)

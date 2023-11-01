@@ -80,7 +80,6 @@ def update_output_5017(n_clicks):
         raise PreventUpdate
     else:
         print('Checking A10 (DI and DO)')
-        #print(get_5017('A01'))
         try:
             return RAD.get_6050('A10')
         except:
