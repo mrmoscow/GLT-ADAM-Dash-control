@@ -17,7 +17,8 @@ PLUS = 0x2B
 #for vvm in Taipei Lab
 ip="192.168.1.204"
 addr="8"
-#"192.168.1.155 : 25 for vvm in Thule"
+
+#for vvm in Thule"  #ip="192.168.1.155" #addr="25"
 
 
 #==============================================================================
@@ -123,7 +124,6 @@ def check_vvm():
     except socket.timeout:
         print("Can not get the Instance information")
 
-
 check_vvm()
 
 # Take Measurements
@@ -141,8 +141,7 @@ sendVVM("FORM POL")
 time.sleep(0.5)
 phase = queryVVM("MEAS? PHASE")
 sendVVM("DAN ON")
-sendVVM("SYST:KEY 2")
-
+#sendVVM("SYST:KEY 2")
 
 print('A volts: ',str(avol),' B Volts: ',str(bvol),' B-A Phase: ',str(phase))
 print("End")
