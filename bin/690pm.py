@@ -8,12 +8,16 @@ import sys
 sys.path.append("..")
 import ReceiverADAM as RAD
 
+
+sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+sock.settimeout(1)
+
 #sock.sendto( b"$01BRC02\r", ('192.168.1.99', 1025))
-sock.sendto( b"#01\r", ('192.168.1.99', 1025))
-indata, addr = sock.recvfrom(1024)
-print(indata.decode())
-print(indata.decode().split('+'))
-print(re.split(r'[+-]',indata.decode()))
+#sock.sendto( b"#01\r", ('192.168.1.99', 1025))
+#indata, addr = sock.recvfrom(1024)
+#print(indata.decode())
+#print(indata.decode().split('+'))
+#print(re.split(r'[+-]',indata.decode()))
 
 #sock.sendto( b"#010\r", ('192.168.1.99', 1025))
 #sock.sendto( b"#011\r", ('192.168.1.99', 1025))
@@ -22,7 +26,7 @@ print(re.split(r'[+-]',indata.decode()))
 
 sock.sendto( b"$012\r", ('192.168.1.99', 1025))
 indata, addr = sock.recvfrom(1024)
-print(indata.decode(),indata.decode()[0:3],indata.decode()[3])
+print(indata.decode(),indata.decode()[0:3],indata.decode()[2])
 #the all result, fitst 3 to test o.k, [3]is the result
 #[3]=0 or 2 tone off
 #[3]=1 or 3 tone on
@@ -34,10 +38,14 @@ print(indata.decode(),indata.decode()[0:3],indata.decode()[3])
 #indata, addr = sock.recvfrom(1024)
 #print(indata.decode())
 
-
-def get6017AI(machine):
+DOstale=['DO-1:Off, DO-2:Off',
+         'DO-1: ON, DO-2:Off',
+         'DO-1:Off, DO-2: On',
+         'DO-1: On, DO-2: On']
+def get6017AI():
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
+    print(DOstale[0])
     try:
         sock.sendto( b"#01\r", ('192.168.1.99', 1025))
         indata, addr = sock.recvfrom(1024)
@@ -45,12 +53,14 @@ def get6017AI(machine):
         numbers = [float(number) for number in numbers[0:-1]]
         print(numbers)
 
-        sock.sendto( b"#012\r", ('192.168.1.99', 1025))
+        sock.sendto( b"$012\r", ('192.168.1.99', 1025))
         indata, addr = sock.recvfrom(1024)
-        DOout=indata.decode()[3]
+        a=indata.decode()
+        print(a,a[2])
         return indata.decode()
     except:
         return None
+
 
 def enable_6017_do0():
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
@@ -81,9 +91,9 @@ parser.add_argument("command", choices=["r", "tone-in", "tone-out"], help="Comma
 args = parser.parse_args()
 
 if args.command == "r":
-    read_ai_values()
+    get6017AI()
 elif args.command == "tone-in":
-    enable_do0()
+    enable_6017_do0()
 elif args.command == "tone-out":
-    disable_do0()
+    disable_6017_do0()
 
