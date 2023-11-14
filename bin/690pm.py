@@ -9,36 +9,7 @@ sys.path.append("..")
 import ReceiverADAM as RAD
 
 
-sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
-sock.settimeout(1)
-
-#sock.sendto( b"$01BRC02\r", ('192.168.1.99', 1025))
-#sock.sendto( b"#01\r", ('192.168.1.99', 1025))
-#indata, addr = sock.recvfrom(1024)
-#print(indata.decode())
-#print(indata.decode().split('+'))
-#print(re.split(r'[+-]',indata.decode()))
-
-#sock.sendto( b"#010\r", ('192.168.1.99', 1025))
-#sock.sendto( b"#011\r", ('192.168.1.99', 1025))
-#indata, addr = sock.recvfrom(1024)
-#print(indata.decode())
-
-#sock.sendto( b"$012\r", ('192.168.1.99', 1025))
-#indata, addr = sock.recvfrom(1024)
-#print(indata.decode(),indata.decode()[0:3],indata.decode()[3])
-#a=int(indata.decode()[3])
-#the all result, fitst 3 to test o.k, [3]is the result
-#[3]=0 or 2 tone off
-#[3]=1 or 3 tone on
-
-#sock.sendto( b"#01D00\r", ('192.168.1.99', 1025)) # DO 0 off
-#sock.sendto( b"#01D01\r", ('192.168.1.99', 1025)) # DO 0 on
-#sock.sendto( b"#01D11\r", ('192.168.1.99', 1025)) # DO 1 on
-#sock.sendto( b"#01D01\r", ('192.168.1.99', 1025))
-#indata, addr = sock.recvfrom(1024)
-#print(indata.decode())
-
+IP_ADAM6017='192.168.1.99'
 DOstale=['DO-0: Off,   DO-1: Off',
          'DO-0: ON ,   DO-1: Off',
          'DO-0: Off,   DO-1: On',
@@ -48,7 +19,7 @@ def get6017DO():
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
     try:
-        sock.sendto( b"$012\r", ('192.168.1.99', 1025))
+        sock.sendto( b"$012\r", (IP_ADAM6017, 1025))
         indata, addr = sock.recvfrom(1024)
         a=int(indata.decode()[3])
         print("The DO of ADAM 6017 is  ",DOstale[a])
@@ -60,7 +31,7 @@ def get6017AI():
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
     try:
-        sock.sendto( b"#01\r", ('192.168.1.99', 1025))
+        sock.sendto( b"#01\r", (IP_ADAM6017, 1025))
         indata, addr = sock.recvfrom(1024)
         numbers = re.findall(r'-?\d+\.\d+', indata.decode())
         nu = [float(number) for number in numbers[0:-1]]
@@ -77,7 +48,7 @@ def enable_6017_do0():
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
     try:
-        sock.sendto( b"#01D01\r", ('192.168.1.99', 1025))
+        sock.sendto( b"#01D01\r", (IP_ADAM6017, 1025))
         indata, addr = sock.recvfrom(1024)
         print("Tone on now with code",indata.decode())
         return indata.decode()
@@ -88,7 +59,7 @@ def disable_6017_do0():
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
     try:
-        sock.sendto( b"#01D00\r", ('192.168.1.99', 1025))
+        sock.sendto( b"#01D00\r", (IP_ADAM6017, 1025))
         indata, addr = sock.recvfrom(1024)
         print("Tone off now,with code:",indata.decode())
         return indata.decode()
