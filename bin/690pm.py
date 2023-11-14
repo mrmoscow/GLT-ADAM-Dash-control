@@ -68,9 +68,9 @@ def get6017AI():
         print("The Analogy of ADAM6017:")
         print("Ch-0 ( V):",nu[0],"  Ch-1 (V):",nu[1],"  Ch-2 (V):",nu[2],"  Ch-3(mV):",nu[3])
         print("Ch-4 (mV):",nu[4],"  Ch-5 (mV):",nu[5],"  Ch-6 (mV):",nu[6],"  Ch-7(mV):",nu[7])
-        return indata.decode()
+        return nu
     except:
-        return None
+        return ['Unknow']*8
 
 
 def enable_6017_do0():
@@ -97,7 +97,7 @@ def disable_6017_do0():
 
 
 parser = argparse.ArgumentParser(description="690PM Control Script")
-parser.add_argument("command", choices=["r", "tone-in", "tone-off"], help="Command: 'r' for read AI, 'tone-in' to enable DO0, 'tone-off' to disable DO0")
+parser.add_argument("command", choices=["r", "tone-in", "tone-out"], help="Command: 'r' for read AI, 'tone-in' to enable DO0, 'tone-out' to disable DO0")
 
 args = parser.parse_args()
 
@@ -106,6 +106,6 @@ if args.command == "r":
     get6017AI()
 elif args.command == "tone-in":
     enable_6017_do0()
-elif args.command == "tone-off":
+elif args.command == "tone-out":
     disable_6017_do0()
 
