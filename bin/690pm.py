@@ -25,6 +25,7 @@ def get6017DO():
         print("The DO of ADAM 6017 is  ",DOstale[a])
         return DOstale[a]
     except:
+        print("Can not check the DO of ADAM6017")
         return "Unknow"
 
 def get6017AI():
