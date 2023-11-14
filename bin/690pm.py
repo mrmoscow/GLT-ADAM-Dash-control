@@ -3,10 +3,6 @@
 import socket
 import argparse
 import re
-from os.path import exists
-import sys
-sys.path.append("..")
-import ReceiverADAM as RAD
 
 
 IP_ADAM6017='192.168.1.99'
@@ -25,7 +21,7 @@ def get6017DO():
         print("The DO of ADAM 6017 is  ",DOstale[a])
         return DOstale[a]
     except:
-        print("Can not check the DO of ADAM6017")
+        print("Can not check the DO of ADAM6017 at IP:",IP_ADAM6017)
         return "Unknow"
 
 def get6017AI():
@@ -42,6 +38,7 @@ def get6017AI():
         print("Ch-4 (mV):",nu[4],"  Ch-5 (mV):",nu[5],"  Ch-6 (mV):",nu[6],"  Ch-7(mV):",nu[7])
         return nu
     except:
+        print("Can not check the AI of ADAM6017 at IP:",IP_ADAM6017)
         return ['Unknow']*8
 
 
