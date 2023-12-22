@@ -70,7 +70,7 @@ def update_output_A44_6260(n_clicks):
 @the_app.callback(
     Output('a45_Do00','children'),Output('a45_Do01','children'),
     Output('a45_Do02','children'),Output('a45_Do03','children'),
-    Output('a45_Do06','children'),Output('a45_Do05','children'),
+    Output('a45_Do04','children'),Output('a45_Do05','children'),
     Input('a4445-bo-check','n_clicks'))
 def update_output_A44_6260(n_clicks):
     if n_clicks is None:
