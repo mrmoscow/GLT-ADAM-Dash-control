@@ -24,6 +24,8 @@ layout = html.Div([
         html.Tr([html.Td(['DO  1']), html.Td(id='a44_Do01')]),
         html.Tr([html.Td(['DO  2']), html.Td(id='a44_Do02')]),
         html.Tr([html.Td(['DO  3']), html.Td(id='a44_Do03')]),
+        html.Tr([html.Td(['DO  4']), html.Td(id='a44_Do04')]),
+        html.Tr([html.Td(['DO  5']), html.Td(id='a44_Do05')]),
     ]),
     html.H4('The DO status of A45'),
     html.Table([
@@ -32,6 +34,8 @@ layout = html.Div([
         html.Tr([html.Td(['DO  1']), html.Td(id='a45_Do01')]),
         html.Tr([html.Td(['DO  2']), html.Td(id='a45_Do02')]),
         html.Tr([html.Td(['DO  3']), html.Td(id='a45_Do03')]),
+        html.Tr([html.Td(['DO  4']), html.Td(id='a45_Do04')]),
+        html.Tr([html.Td(['DO  5']), html.Td(id='a45_Do05')]),
     ]),
     html.Br(),
 ])
@@ -49,6 +53,7 @@ def update_output_time(n_clicks):
 @the_app.callback(
     Output('a44_Do00','children'),Output('a44_Do01','children'),
     Output('a44_Do02','children'),Output('a44_Do03','children'),
+    Output('a44_Do04','children'),Output('a44_Do05','children'),
     Input('a4445-bo-check','n_clicks'))
 def update_output_A44_6260(n_clicks):
     if n_clicks is None:
@@ -56,14 +61,16 @@ def update_output_A44_6260(n_clicks):
     else:
         print('Checking A44 (DO)')
         try:
-            return RAD.get_6260('A44_ReSl')
+            return RAD.getN_6260("A44_ReSl",6)
+            #return RAD.get_6260('A44_ReSl')
         except:
-            return ['Error ##']*4
+            return ['Error ##']*6
 
 
 @the_app.callback(
     Output('a45_Do00','children'),Output('a45_Do01','children'),
     Output('a45_Do02','children'),Output('a45_Do03','children'),
+    Output('a45_Do06','children'),Output('a45_Do05','children'),
     Input('a4445-bo-check','n_clicks'))
 def update_output_A44_6260(n_clicks):
     if n_clicks is None:
@@ -72,7 +79,8 @@ def update_output_A44_6260(n_clicks):
         time.sleep(1)
         print('Checking A45 (DO)')
         try:
-            return RAD.get_6260('A45_ReSl')
+            return RAD.getN_6260("A45_ReSl",6)
+            #return RAD.get_6260('A45_ReSl')
         except:
-            return ['Error ##']*4
+            return ['Error ##']*6
 
