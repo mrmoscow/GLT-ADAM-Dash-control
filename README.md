@@ -25,18 +25,4 @@ than open brower open http://0.0.0.0:8052
 * The switch ture table and attentatur voltage will also list here in the future.
 
 
-### ToDo List
-* new code () for cal the Allen Dev 
-* new dash page for control VVM and phase monitot
-* CSS(for updated) file for pages (C1 at lease)
-* (Done) The SA switch table.
-* (Done) PowerMeter Switch function. 
-
-
-### checkin on testing day on 2023, Dec, 24
-* the SA image got
-* the image shows
-* parameter send to SA(should be o.k )
-* Test run in glt
-* merge into main !
 
