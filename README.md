@@ -2,6 +2,7 @@
 
 This is a dash app for GreenLand telescope(GLT) which using HTML interface to control the GLT ADAM module. 
 In this app, the different py file (under the page dir)  if for control different ADAM module.  
+There is also CLI app which under the bin dir, which can be use under tht CLI. 
 There are also sample CSS style which can be changed by edit the ./asset/typography.css
 
 
@@ -14,10 +15,7 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 * time
 
 ### How to run:
-python3 app.py 
-or under  gltobscon 
-cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
-than open brower open http://0.0.0.0:8052
+python3 app.py.  or under gltobscon cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py   than open brower open http://0.0.0.0:8052 
 
 ### About the ReceiverADAM module
 * This is a module for this project, in this ReceiverADAM.py there are functions for get(read infromation) and set the ADAM module. 
@@ -26,17 +24,17 @@ than open brower open http://0.0.0.0:8052
 
 
 ### ToDo List
-* new code () for cal the Allen Dev 
-* new dash page for control VVM and phase monitot
+* link ADAM6224 with ASIC
+* a way for get the SA data and make a png file.
+* new bin app and dash page for control VVM and phase monitot
+* a way for show the Allan Dev on dahs page.
 * CSS(for updated) file for pages (C1 at lease)
-* (Done) The SA switch table.
-* (Done) PowerMeter Switch function. 
+* The new code stucture.(the ReceiverADAM is too big now.)
 
 
-### checkin on testing day on 2023, Dec, 24
+
+### Gold for testing day on 2024, Jan
 * the SA image got
 * the image shows
-* parameter send to SA(should be o.k )
-* Test run in glt
-* merge into main !
+
 
