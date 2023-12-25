@@ -92,7 +92,7 @@ def test_ADAMs():
 
 def check_ADAM(machine):
     message=''
-    print  ("checking",machine,":",ADAM_list[machine])
+    #print  ("checking",machine,":",ADAM_list[machine])
     k=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     #k= ModbusClient(j, port=502, timeout=10)
     if k.connect():
@@ -101,6 +101,7 @@ def check_ADAM(machine):
     else:
         print (machine,":",ADAM_list[machine],"*** Connection Failure ***")
         message +=machine+":"+ADAM_list[machine]+"  "+"**Bad connection!\n"
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     return message
 
 
@@ -128,6 +129,7 @@ def hex_to_BiList(datain):
 
 def set_6260(machine,data):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     try:
         print(co.write_coils(18, data,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
@@ -138,31 +140,80 @@ def set_6260(machine,data):
 
 def get_6260(machine,b=4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         #return 'Error 01'
         return ['Error 01']*b
     try:
         r = co.read_coils(18,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         b1=["0" if i==0 else "1" for i in res]
-        #return b0
         return b1
     except:
         co.close()
-        #return 'Error 02'
         return ['Error 02']*b
 
+
+A4x_nfun = {1: "#010004\r", 2: "#010008\r",3: "#010010\r", 4: "#010020\r",0: "#010000\r"}
+
+def setN_6260(machine,Rxnumber):
+    MESSAGE = A4x_nfun[Rxnumber]
+    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+    sock.settimeout(1)
+    try:
+        sock.sendto(  MESSAGE.encode(), (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
+        sock.close()
+        if MESSAGE[-3:-1] == indata.decode()[-3:-1]:
+            return 'Setting Succeful'
+        else:
+            return 'Error 03'
+    except:
+        return 'Error 03'
+
+def getN_6260(machine,b=4):
+    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+    sock.settimeout(1)
+    try:
+        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        a=[int(d) for d in str(bin(int(indata.decode()[-3:-1], 16))[2:].zfill(6))]
+        a.reverse()
+        return a[-b:]
+    except:
+        return ['Error 03']*b
+
+def getN_6260Rx(machine):
+    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
+    sock.settimeout(1)
+    try:
+        sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        indata, addr = sock.recvfrom(1024)
+        keys = [k for k, v in A4x_nfun.items() if v[-3:-1] == indata.decode()[-3:-1]]
+        #print(keys)
+        if len(keys) == 1:
+            return keys[0]
+        else:
+            return None
+    except:
+        return None
 
 
 def set_6224(machine,channel,v):
     b=1
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         print(co.write_register(channel,int(v/10.0*4095),unit=1,slave=1))
-        time.sleep(adam_delay)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         return ['Setting Succeful']*b
     except:
         co.close()
@@ -171,10 +222,12 @@ def set_6224(machine,channel,v):
 
 def get_6224(machine,b =4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(0,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
         return volts[0:b]
@@ -185,6 +238,7 @@ def get_6224(machine,b =4):
 
 def set_5056(machine,data,card_at='S3'):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     data2=hex_to_BiList(data)
@@ -203,10 +257,12 @@ def set_5056(machine,data,card_at='S3'):
 #5050 is DO.
 def get_5056(machine,card_at='S3'):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay*2)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     try:
         r = co.read_coils(coil_list[card_at],16,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.bits
         b0=''.join(["0, " if i==0 else "1, " for i in intvalue])
         return b0
@@ -218,11 +274,12 @@ def get_5056(machine,card_at='S3'):
 def set_5024(machine,channel,v):
     b=1
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         print(co.write_register(channel+16,int(v/10.0*4095),unit=1,slave=1))
-        time.sleep(adam_delay)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         return ['Setting Succeful']*b
     except:
         co.close()
@@ -231,10 +288,12 @@ def set_5024(machine,channel,v):
 #5024 in A01-16/A11-16
 def get_5024(machine,b = 4):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(16,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
         return volts[0:b]
@@ -245,10 +304,12 @@ def get_5024(machine,b = 4):
 #5018 in A01-08/A11-08/A14-08/A17-08
 def get_5018(machine,b = 7):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(8,7,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         Temps = [round(float(x)/65535.0*760.0,1) for x in intvalue]
         return Temps[0:b]
@@ -259,10 +320,12 @@ def get_5018(machine,b = 7):
 #5017 in A01-00/A11-00/A14-00/A17-00
 def get_5017(machine,b = 8):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*b
     try:
         r = co.read_holding_registers(0,8,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/65535.0*20-10.0,3) for x in intvalue]
         return volts[0:b]
@@ -274,6 +337,7 @@ def get_5017(machine,b = 8):
 def set_6050(machine,data):
     # data is  [0,0,0,0,0,0], 6 list of 
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return 'Error 01'
     try:
@@ -287,10 +351,12 @@ def set_6050(machine,data):
 ### 6050 in A03-00/A10-00
 def get_6050(machine,b=18):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
     if not co.connect():      # True / False
         return ['Error 01']*18
     try:
         r = co.read_coils(0,12,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
         res=r.bits[0:12]
         r2 = co.read_coils(16,6,unit=1,slave=1)
         res.extend(r2.bits[0:6])
@@ -327,8 +393,10 @@ def set_Rx(rx_number,tone):
         r1=set_5056('A01','0000')
         time.sleep(0.5)
         r2=set_5056('A01',rxIO_A01)
-        set_6260('A44_ReSl',rxIO_A4x)
-        set_6260('A45_ReSl',rxIO_A4x)
+        #set_6260('A44_ReSl',rxIO_A4x)
+        #set_6260('A45_ReSl',rxIO_A4x)
+        setN_6260('A44_ReSl',rx_number)
+        setN_6260('A45_ReSl',rx_number)
         #res="The Rx is now at"+tone
         #print(r1)
         return 'The Rx is now at Rx_'+str(rx_number)+' with tone '+tone
@@ -607,9 +675,49 @@ def get_Power(machine):
         clientSocket.send(data.encode())
         dataFromServerB = clientSocket.recv(1024)
 
-        print(dataFromServerA.decode(),dataFromServerB.decode())
-        return dataFromServerA.decode(),dataFromServerB.decode()
+        #print(dataFromServerA.decode(),dataFromServerB.decode())
+        #print(format(float(dataFromServerA.decode()),'.2f'),format(float(dataFromServerA.decode()),'.2f'))
+        return format(float(dataFromServerA.decode()),'.2f'),format(float(dataFromServerB.decode()),'.2f')
     except:
-        print ("file to get power Meter")
-        return 'Faill to get power','Faill to get power'
+        print ("fail to get power Meter")
+        return 'Fail to get power','Faill to get power'
 
+PMIFsetall= [
+    {'gr':'P1A','mac':'A14','S3star': 0, 'valuestar':1},
+    {'gr':'P1B','mac':'A14','S3star': 4, 'valuestar':5},
+    {'gr':'P2A','mac':'A14','S3star': 8, 'valuestar':9},
+    {'gr':'P2B','mac':'A14','S3star':12, 'valuestar':13},
+    {'gr':'P3A','mac':'A17','S3star': 0, 'valuestar':23},
+    {'gr':'P3B','mac':'A17','S3star': 4, 'valuestar':27},
+    {'gr':'P4A','mac':'A17','S3star': 8, 'valuestar':31},
+    {'gr':'P4B','mac':'A17','S3star':12, 'valuestar':35},
+    ]
+
+
+def gotopt(gr):
+    return [{k : v for k, v in s.items() if k in ['label','value']} for s in channelOpt if s['gr'] == gr]
+
+def PMIFset(gr):
+    return [{k : v for k, v in s.items()}  for s in PMIFsetall if s['gr'] == gr]
+
+def getPowIF(IFgroup):
+    co14=ModbusClient(ADAM_list["A14"],port=502,timeout=10)
+    co17=ModbusClient(ADAM_list["A17"],port=502,timeout=10)
+    if not co14.connect():      # True / False
+        return 'Error 01, CAB-A14 not responding. check power and connectivity',0
+    if not co17.connect():      # True / False
+        return 'Error 01, CAB-A17 not responding. check power and connectivity',0
+    if sum([True for s in PMIFsetall if s['gr'] == IFgroup]) ==0:
+        return 'Error,PowerMeter group not in the list,  maybe you have a typo?',0
+    IFgr=gotopt(IFgroup)
+    PMif=PMIFset(IFgroup)[0]
+    s3=[int(x) for x in get_5056(PMif['mac'],'S3').split(',')[PMif['S3star']:PMif['S3star']+4]]
+    s2=[int(x) for x in get_5056(PMif['mac'],'S2').split(',')[PMif['S3star']:PMif['S3star']+4]]
+    print(s3,s2)
+    if sum(s3) != 1:
+        return 'Unknow',0
+    else:
+        if s2[s3.index(1)] != 1:
+            return 'Unknow (IF may set to SA)',0
+        else:
+            return IFgr[s3.index(1)]['label'],IFgr[s3.index(1)]['value']

@@ -99,12 +99,14 @@ layout = html.Div([
                  html.Td([html.Button('Got Power Value',id='GB')],rowSpan=0),html.Td(id='P_1A'),]),
         html.Tr([html.Td(['PM 1, Channal B']),html.Td(id='S_1B'),html.Td(id='P_1B'),]),
         html.Tr([html.Td(['PM 2, Channal A']),html.Td(id='S_2A'),html.Td(id='P_2A'),]),
-        html.Tr([html.Td(['PM 2, Channal B']),html.Td(['None']),html.Td(id='P_2B')]),
+        html.Tr([html.Td(['PM 2, Channal B']),html.Td(id='S_2B'),html.Td(id='P_2B')]),
         html.Tr([html.Td(['PM 3, Channal A']),html.Td(id='S_3A'),html.Td(id='P_3A')]),
         html.Tr([html.Td(['PM 3, Channal B']),html.Td(id='S_3B'),html.Td(id='P_3B')]),
         html.Tr([html.Td(['PM 4, Channal A']),html.Td(id='S_4A'),html.Td(id='P_4A')]),
         html.Tr([html.Td(['PM 4, Channal B']),html.Td(id='S_4B'),html.Td(id='P_4B')]),
         ],style={'max-width': '800px','border-spacing':'30px 10px'}),
+    html.Br(),
+    html.Button('Check IF at..',id='getIF'),
     html.Br(),
 ])
 
@@ -146,3 +148,24 @@ def PM_get(n_clicks):
         e,f=RAD.get_Power('PM3')
         g,h=RAD.get_Power('PM4')
         return a,b,c,d,e,f,g,h
+
+@the_app.callback(
+  Output('S_1A','children'),Output('S_1B','children'),
+  Output('S_2A','children'),Output('S_2B','children'),
+  Output('S_3A','children'),Output('S_3B','children'),
+  Output('S_4A','children'),Output('S_4B','children'),
+  Input('getIF','n_clicks'),
+  )
+def IF_get(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        a0,a1=RAD.getPowIF('P1A')
+        b0,b1=RAD.getPowIF('P1B')
+        c0,c1=RAD.getPowIF('P2A')
+        d0,d1=RAD.getPowIF('P2B')
+        e0,e1=RAD.getPowIF('P3A')
+        f0,f1=RAD.getPowIF('P3B')
+        g0,g1=RAD.getPowIF('P4A')
+        h0,h1=['Still Testing','Still Testing']#RAD.getPowIF('P4B')
+        return a0,b0,c0,d0,e0,f0,g0,h0

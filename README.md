@@ -16,7 +16,7 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 ### How to run:
 python3 app.py 
 or under  gltobscon 
-cpy3 cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
+cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py
 than open brower open http://0.0.0.0:8052
 
 ### About the ReceiverADAM module
@@ -26,17 +26,17 @@ than open brower open http://0.0.0.0:8052
 
 
 ### ToDo List
+* new code () for cal the Allen Dev 
+* new dash page for control VVM and phase monitot
 * CSS(for updated) file for pages (C1 at lease)
-* The SA switch table
-* PowerMeter Switch function. 
+* (Done) The SA switch table.
+* (Done) PowerMeter Switch function. 
 
 
-### checkin on testing day on Aug 17
+### checkin on testing day on 2023, Dec, 24
 * the SA image got
 * the image shows
-* parameter send to SA
-* The A14 & A17  page checking
-* init function of A14 &A17 (all set to F)
-* PM switch of A14 & A17
-
+* parameter send to SA(should be o.k )
+* Test run in glt
+* merge into main !
 
