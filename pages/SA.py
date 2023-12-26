@@ -7,6 +7,7 @@ from datetime import datetime
 import socket
 
 import ReceiverADAM as RAD #module for this project
+import SpecAnalyzer as SA  #module for SA relative in this project
 
 dash.register_page(__name__)
 
@@ -161,7 +162,8 @@ def SA_reflash(n_clicks):
         return "Please press button for scans!"
     else:
         print('In scan button',n_clicks)
-        #RAD.getSApng()
+        #T.mytime_now()
+        #SA.save_plot()
         time.sleep(2)
         return "End of the scans, please reload the SA pltting image."
 
