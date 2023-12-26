@@ -45,7 +45,7 @@ def setN_6224(machine,channel,v):
     try:
         sock.sendto( b"#01BC010800\r", ('192.168.1.212', 1025))
         indata, addr = sock.recvfrom(1024)
-        print(indate.decode)
+        print(indata.decode)
         return ['Setting Succeful']
     except:
         co.close()
@@ -54,6 +54,7 @@ def setN_6224(machine,channel,v):
 
 
 print('Start to checking the AO of A44')
+
 
 try:
 #    print ("The AO of A44 is")
