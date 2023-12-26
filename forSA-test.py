@@ -44,7 +44,7 @@ spf=float(dataFromServer.decode())
 data = "BAND:VID?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print("Band VID",dataFromServer.decode()..rstrip())
+print("Band VID",dataFromServer.decode().rstrip())
 
 
 data = "DISP:WIND:TRAC:Y:RLEV1?\n"
