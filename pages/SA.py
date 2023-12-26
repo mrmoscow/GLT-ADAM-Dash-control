@@ -163,7 +163,7 @@ def SA_reflash(n_clicks):
     else:
         print('In scan button',n_clicks)
         #T.mytime_now()
-        #SA.save_plot()
+        SA.save_plot()
         time.sleep(2)
         return "End of the scans, please reload the SA pltting image."
 
