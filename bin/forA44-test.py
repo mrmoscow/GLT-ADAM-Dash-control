@@ -20,6 +20,7 @@ def get_6224(machine,b =4):
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         intvalue=r.registers
         volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
+        print(intvalue)
         return volts[0:b]
     except:
         co.close()
@@ -29,7 +30,7 @@ def getN_6224(machine,b =4):
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
     try:
-        #sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
+        #sock.sendto( b"$01M\r", (ADAM_list[machine], 1025))
         #sock.sendto( b"$01DS01\r", ('192.168.1.212', 1025))
         sock.sendto( b"$01BE01\r", ('192.168.1.212', 1025))
         indata, addr = sock.recvfrom(1024)
@@ -55,24 +56,16 @@ def setN_6224(machine,channel,v):
 
 print('Start to checking the AO of A44')
 
-
 try:
-#    print ("The AO of A44 is")
     print (getN_6224('A44_volt'))
 except:
     print('Error ##', "The get_6224 of A44_volt get issues")
+
+
+
 
 print('Start to checking the in old way')
 try:
-#    print ("The AO of A44 is")
-    print (getN_6224('A44_volt'))
+    print (get_6224('A44_volt'))
 except:
     print('Error ##', "The get_6224 of A44_volt get issues")
-'''
-
-try:
-    print ("The AO result of A44 is")
-    print (RAD.get_6224('A45_volt'))
-except:
-    print('Error ##', "The get_6224 of A45_volt get issues")
-'''
