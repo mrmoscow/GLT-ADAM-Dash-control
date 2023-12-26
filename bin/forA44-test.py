@@ -1,6 +1,7 @@
 import argparse
 from os.path import exists
 import sys
+import socket
 sys.path.append("..")
 if sys.version_info[1] == 7 or sys.version_info[1] == 9:
     from pymodbus.client.sync import ModbusTcpClient as ModbusClient
@@ -9,15 +10,31 @@ if sys.version_info[1] == 11:
 
 import ReceiverADAM as RAD
 
+def get_6224(machine,b =4):
+    co=ModbusClient('192.168.1.212',port=502,timeout=10)
+    time.sleep(adam_delay)  # must be padded before the consecutive reading
+    if not co.connect():      # True / False
+        return ['Error 01']*b
+    try:
+        r = co.read_holding_registers(0,4,unit=1,slave=1)
+        time.sleep(adam_delay)  # must be padded before the consecutive reading
+        intvalue=r.registers
+        volts=[round(float(x)/4095.0*10.0,3) for x in intvalue]
+        return volts[0:b]
+    except:
+        co.close()
+        return ['Error 02']*b
+
 def getN_6224(machine,b =4):
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
     sock.settimeout(1)
     try:
         #sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
-        sock.sendto( b"#01\r", ('192.168.1.212', 1025))
+        #sock.sendto( b"$01DS01\r", ('192.168.1.212', 1025))
+        sock.sendto( b"$01BE01\r", ('192.168.1.212', 1025))
         indata, addr = sock.recvfrom(1024)
-        print(indate.decode)
-        return indate.decode()
+        print( indata.decode())
+        return indata.decode()
     except:
         return ['Error 02']*b
 
@@ -38,6 +55,13 @@ def setN_6224(machine,channel,v):
 
 print('Start to checking the AO of A44')
 
+try:
+#    print ("The AO of A44 is")
+    print (getN_6224('A44_volt'))
+except:
+    print('Error ##', "The get_6224 of A44_volt get issues")
+
+print('Start to checking the in old way')
 try:
 #    print ("The AO of A44 is")
     print (getN_6224('A44_volt'))
