@@ -1,6 +1,10 @@
 
 import socket
 import matplotlib.pyplot as plt
+from datetime import datetime
+
+now = datetime.now()
+d = now.strftime("%Y-%m-%d, %H:%M:%S")
 
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -8,17 +12,17 @@ clientSocket.connect(('192.168.1.221',5025))
 data = "*IDN?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode().rstrip())
+print("From machine",dataFromServer.decode().rstrip(),"at 192.168.1.221")
 
 data = "SWE:POIN?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode().rstrip())
+print("How many sweep points",dataFromServer.decode().rstrip())
 
-data = "FORM:TRAC:DATA?\n"
-clientSocket.send(data.encode())
-dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode().rstrip())
+#data = "FORM:TRAC:DATA?\n"
+#clientSocket.send(data.encode())
+#dataFromServer = clientSocket.recv(1024)
+#print(dataFromServer.decode().rstrip())
 
 #data = "SWE:TIME?\n"
 #clientSocket.send(data.encode())
@@ -28,31 +32,31 @@ print(dataFromServer.decode().rstrip())
 data = "FREQ:CENT?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode())
+print("Frequency Center",dataFromServer.decode().rstrip())
 cff=float(dataFromServer.decode())
 
 data = "FREQ:SPAN?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print("SPAN of Frequency",dataFromServer.decode())
+print("SPAN of Frequency",dataFromServer.decode().rstrip())
 spf=float(dataFromServer.decode())
 
 data = "BAND:VID?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print("Band VID",dataFromServer.decode())
+print("Band VID",dataFromServer.decode()..rstrip())
 
 
 data = "DISP:WIND:TRAC:Y:RLEV1?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print("Y RLEV",dataFromServer.decode())
+print("Y RLEV",dataFromServer.decode().rstrip())
 rlf=float(dataFromServer.decode())
 
 data = "DISP:SEM:VIEW:WIND:TRAC:Y:PDIV?\n"
 clientSocket.send(data.encode())
 dataFromServer = clientSocket.recv(1024)
-print("Y DIV/dB",dataFromServer.decode())
+print("Y DIV/dB",dataFromServer.decode().rstrip())
 lgf=float(dataFromServer.decode())
 
 
@@ -76,8 +80,9 @@ for i in range(len(power)):
 
 print("Info,Power",len(power),type(power),type(power[0]),power[-1])
 print("Info,Freq",len(freq),type(freq),type(freq[0]),freq[-1])
+print("The time now",d)
 #print(freq)
-print(cff,spf,rlf,lgf)
+#print(cff,spf,rlf,lgf)
 
 
 #dataFromServer = clientSocket.recv(2048)
@@ -85,7 +90,7 @@ print(cff,spf,rlf,lgf)
 
 
 plt.plot(freq,power)
-plt.title("Spectrum")
+plt.title("Spectrum \n"+d)
 plt.xlabel("Frequency (GHz)")
 plt.ylabel("Power(dBm)")
 plt.grid(True)
@@ -100,5 +105,5 @@ plt.text(0.5, 0.5, 'matplot time',
      horizontalalignment='center',
      verticalalignment='center')
 
-plt.savefig('./assets/SA_image.png')
+plt.savefig('./assets/SA_plot.png')
 #plt.show()
