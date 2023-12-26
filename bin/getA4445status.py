@@ -31,6 +31,6 @@ except:
     print('Error ##', "The get_6260 of A45_ReSl get issues")
 
 try:
-    print (R"The AO result of A44 is",AD.get_6224('A45_volt'))
+    print (R"The AO result of A44 is", RAD.get_6224('A45_volt'))
 except:
     print('Error ##', "The get_6224 of A45_volt get issues")
