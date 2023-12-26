@@ -18,14 +18,12 @@ try:
 except:
     print('Error ##', "The get_6260 of A44_ReSl get issues")
 
-'''
 print('Start to checking the AO of A44')
 try:
     print ("The AO of A44 is")
     print (RAD.get_6224('A44_volt'))
 except:
     print('Error ##', "The get_6224 of A44_volt get issues")
-'''
 
 print('Start to checking the DO of A45')
 try:
@@ -34,11 +32,9 @@ try:
 except:
     print('Error ##', "The get_6260 of A45_ReSl get issues")
 
-'''
 print('Start to checking the AO of A45')
 try:
     print ("The AO result of A44 is")
     print (RAD.get_6224('A45_volt'))
 except:
     print('Error ##', "The get_6224 of A45_volt get issues")
-'''
