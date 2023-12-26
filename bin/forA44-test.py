@@ -1,6 +1,7 @@
 import argparse
 from os.path import exists
 import sys
+import socket
 sys.path.append("..")
 if sys.version_info[1] == 7 or sys.version_info[1] == 9:
     from pymodbus.client.sync import ModbusTcpClient as ModbusClient
@@ -14,10 +15,11 @@ def getN_6224(machine,b =4):
     sock.settimeout(1)
     try:
         #sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
-        sock.sendto( b"#01\r", ('192.168.1.212', 1025))
+        #sock.sendto( b"$01DS01\r", ('192.168.1.212', 1025))
+        sock.sendto( b"$01BE01\r", ('192.168.1.212', 1025))
         indata, addr = sock.recvfrom(1024)
-        print(indate.decode)
-        return indate.decode()
+        print( indata.decode())
+        return indata.decode()
     except:
         return ['Error 02']*b
 
@@ -28,7 +30,7 @@ def setN_6224(machine,channel,v):
     try:
         sock.sendto( b"#01BC010800\r", ('192.168.1.212', 1025))
         indata, addr = sock.recvfrom(1024)
-        print(indate.decode)
+        print(indata.decode)
         return ['Setting Succeful']
     except:
         co.close()
@@ -37,6 +39,7 @@ def setN_6224(machine,channel,v):
 
 
 print('Start to checking the AO of A44')
+
 
 try:
 #    print ("The AO of A44 is")
