@@ -15,7 +15,8 @@ There are also sample CSS style which can be changed by edit the ./asset/typogra
 * time
 
 ### How to run:
-python3 app.py.  or under gltobscon cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py   than open brower open http://0.0.0.0:8052 
+under gltobscon cpy3 ~/sfyen/GLT-ADAM-Dash-control/app.py   than open brower open http://0.0.0.0:8052  or http://192.168.1.11:8052
+or python3 app.py
 
 ### About the ReceiverADAM module
 * This is a module for this project, in this ReceiverADAM.py there are functions for get(read infromation) and set the ADAM module. 
