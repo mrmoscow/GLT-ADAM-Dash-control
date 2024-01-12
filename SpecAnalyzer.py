@@ -83,7 +83,6 @@ def save_plot():
     print("The time now",d)
     #print(cff,spf,rlf,lgf)
 
-
     plt.plot(freq,power)
     plt.title("Spectrum \n"+d)
     plt.xlabel("Frequency (GHz)")
@@ -108,6 +107,7 @@ def save_plot():
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
     plt.savefig('./assets/SA_plot.png')
+    plt.close()
     return None
 
 if __name__ == "__main__":
