@@ -612,21 +612,21 @@ def CAB1417switch(channel,mode):
     if mode == 'PM':
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
             return "You choise, Channel "+str(channel)+" for PowerMeter but it only for Spectrum, please check"
-        print("in PM",channel, machine, S2_do, S3_doStart, S3_doTable,A14_S5_doTable,A17_5S_doTable)
+        print("in PM",channel, machine, S2_do, S3_doStart, S3_doTable,A14_S5_doTable,A17_S5_doTable)
         if machine == 'A14':
             try:
                 print(co14.write_coils(32+S2_do,[True],unit=1,slave=1));time.sleep(adam_delay)
                 print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
-                return "Faile during Channel "+str(channel)+" set to Spectrum."
+                return "In PM-A14Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A17':
             try:
                 print(co17.write_coils(32+S2_do,[True],unit=1,slave=1));time.sleep(adam_delay)
                 print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
-                return "Faile during Channel "+str(channel)+" set to Spectrum."
+                return "In PM-A17 Faile during Channel "+str(channel)+" set to Spectrum."
     if mode == 'SA':
         print("in SA",channel ,machine, S2_do, S4_doStart, S4_doTable,A14_S5_doTable,A17_S5_doTable)
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
@@ -646,7 +646,7 @@ def CAB1417switch(channel,mode):
                 print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
-                return "In A14,Faile during Channel "+str(channel)+" set to Spectrum."
+                return "In SA-A14,Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A17':
             try:
                 print(co17.write_coils(32+S2_do,[False],unit=1,slave=1));time.sleep(adam_delay)
@@ -655,7 +655,7 @@ def CAB1417switch(channel,mode):
                 print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
-                return "In A17,Faile during Channel "+str(channel)+" set to Spectrum."
+                return "In SA-A17,Faile during Channel "+str(channel)+" set to Spectrum."
     else:
         return "not in any mode, check the input mode"
 
