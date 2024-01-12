@@ -20,6 +20,9 @@ channel=int(channel)
 if para:
     print("Will set channel",channel," to SA with Parameter")
     print(RAD.CAB1417switch(channel,'SA'))
+    cf,sp,rl,lg,rb,vb=RAD.channelOpt[int(channel)-1]['SAPar']
+    print(channel,RAD.channelOpt[int(channel)-1]['label'],cf,sp,rl,lg,rb,vb)
+    print(RAD.set_SA('SA1',cf,sp,rl,lg,rb,vb))
 else:
     print("Will set channel",channel," to SA")
     print(RAD.CAB1417switch(channel,'SA'))
