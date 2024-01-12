@@ -367,41 +367,42 @@ def get_6050(machine,b=18):
         co.close()
         return ['Error 02']*18
 
-
+#1 86Gzh, Rx=3 =230
 A4x_bits = {1:[1,0,0,0], 2:[0,1,0,0],3: [0,0,1,0], 4:[0,0,0,1]}
 rx_bits = {1:[True, False, False, False], 2:[False, True, False, False],
     3: [False, False, True, False], 4:[False, False, False, True]}
 # TureTable for A01- Receiver select
 A01_hex = {1:'FC80', 2:'5400', 3: 'A800', 4:'0000'}
 A01_hex_tone ={1:'FF80', 2:'5500', 3: 'AA00', 4:'0000'}
+#A11_bits={1:[1,1,0,1,0,0], 2:[1,1,0,0,1,1],3: [1,1,0,0,1,1], 4:[0,0,0,0,0,0]}
+A11_hex={1:'D000', 2:'CC00', 3: 'CC00', 4:'0000'}
 
 def set_Rx(rx_number,tone):
     if tone == 'On':
         rxIO_A01=A01_hex_tone[rx_number]
     else:
         rxIO_A01=A01_hex[rx_number]
-    rxIO_A4x=A4x_bits[rx_number]
+    #rxIO_A4x=A4x_bits[rx_number]
     # for module checking.
-    #add A11 for tsys power meter switch.
     if 'Bad' in check_ADAM('A01'): return "Not Success: A01 Error-01"
     if 'Bad' in check_ADAM('A03'): return "Not Success: A03 Error-01"
+    if 'Bad' in check_ADAM('A11'): return "Not Success: A11 Error-01"
     if 'Bad' in check_ADAM('A44_ReSl'): return "Not Success: A44r Error-01"
     if 'Bad' in check_ADAM('A45_ReSl'): return "Not Success: A45r Error-01"
     try:
-        set_6050('A03',[0,0,0,0,0,0])
+        #set_6050('A03',[0,0,0,0,0,0])
         time.sleep(0.5)
         r1=set_5056('A01','0000')
         time.sleep(0.5)
         r2=set_5056('A01',rxIO_A01)
-        #set_6260('A44_ReSl',rxIO_A4x)
-        #set_6260('A45_ReSl',rxIO_A4x)
+        set_5056('A11',A11_hex[rx_number])
         setN_6260('A44_ReSl',rx_number)
         setN_6260('A45_ReSl',rx_number)
         #res="The Rx is now at"+tone
         #print(r1)
         return 'The Rx is now at Rx_'+str(rx_number)+' with tone '+tone
     except:
-        return "Error 09: not running into try zone in set_Rx."
+        return "Error 09: you many need re-run set_Rx again."
 
 def set_SA(machine,centFreq,span,refLevel,scale,rbw,vbw):
     print (machine,centFreq,span,refLevel,scale,rbw,vbw)
@@ -614,15 +615,15 @@ def CAB1417switch(channel,mode):
         print("in PM",channel, machine, S2_do, S3_doStart, S3_doTable,A14_S5_doTable,A17_5S_doTable)
         if machine == 'A14':
             try:
-                print(co14.write_coils(32+S2_do,[True],unit=1,slave=1))
-                print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1))
+                print(co14.write_coils(32+S2_do,[True],unit=1,slave=1));time.sleep(adam_delay)
+                print(co14.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A17':
             try:
-                print(co17.write_coils(32+S2_do,[True],unit=1,slave=1))
-                print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1))
+                print(co17.write_coils(32+S2_do,[True],unit=1,slave=1));time.sleep(adam_delay)
+                print(co17.write_coils(48+S3_doStart,S3_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to PowerMeter"
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
@@ -631,8 +632,8 @@ def CAB1417switch(channel,mode):
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
             try:
                 #only A14 A17 S5
-                print(co14.write_coils(80,A14_S5_doTable,unit=1,slave=1))
-                print(co17.write_coils(80,A14_S5_doTable,unit=1,slave=1))
+                print(co14.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                print(co17.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
@@ -640,20 +641,20 @@ def CAB1417switch(channel,mode):
             try:
                 print(co14.write_coils(32+S2_do,[False],unit=1,slave=1));time.sleep(adam_delay)
                 print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1,slave=1));time.sleep(adam_delay)
-                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1,slave=1))
-                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1))
+                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
-                return "Faile during Channel "+str(channel)+" set to Spectrum."
+                return "In A14,Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A17':
             try:
                 print(co17.write_coils(32+S2_do,[False],unit=1,slave=1));time.sleep(adam_delay)
                 print(co17.write_coils(64+S4_doStart,S4_doTable,unit=1,slave=1));time.sleep(adam_delay)
-                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1,slave=1))
-                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1))
+                print("for 14",co14.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                print("for 17",co17.write_coils(80,A17_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
-                return "Faile during Channel "+str(channel)+" set to Spectrum."
+                return "In A17,Faile during Channel "+str(channel)+" set to Spectrum."
     else:
         return "not in any mode, check the input mode"
 

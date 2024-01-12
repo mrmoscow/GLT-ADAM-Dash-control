@@ -25,12 +25,10 @@ or python3 app.py
 
 
 ### ToDo List
-* link ADAM6224 with ASIC  (Done, no need, using the old method)
-* a way for get the SA data and make a png file. (Done, the SpecAnalyzer.py)
-* Test the check the IP of VVM. 
-* new bin app and dash page for control VVM and phase monitot  
+* new bin app and dash page for control VVM and phase monitot. 
+* A11 in RxSelect page. 
 * a way for show the Allan Dev on dahs page.   
-* CSS(for updated) file for pages (C1 at lease)
+* CSS (for updated) file for pages (C1 at lease)
 * The new code stucture.(the ReceiverADAM is too big now.)
 
 
@@ -39,4 +37,8 @@ or python3 app.py
 * the SA image got
 * the image shows
 
+### Thing finished.
+* link ADAM6224 with ASIC  (Done, no need, using the old method)
+* a way for get the SA data and make a png file. (Done, the SpecAnalyzer.py)
+* Test the check the IP of VVM.  (Done 204)
 
