@@ -72,11 +72,19 @@ def save_plot():
         if "\n" in dataFromServer.decode():
             break
 
-
     power=[float(x) for x in dataall.split(",")]
     freq=[];stf=cff-spf/2.0;stpf=spf/len(power)
-    for i in range(len(power)):
-        freq.append((stf+(i)*stpf)/1E9)
+    if int(spf) == 200:
+        xlabel="Frequency (Hz)"
+        xstep=1.0
+        for i in range(len(power)):
+            freq.append((stf+(i)*stpf))
+
+    else:
+        xlabel="Frequency (GHz)"
+        xstep=1.0e9
+        for i in range(len(power)):
+            freq.append((stf+(i)*stpf)/1E9)
 
     print("Info,Power",len(power),type(power),type(power[0]),power[-1])
     print("Info,Freq",len(freq),type(freq),type(freq[0]),freq[-1])
@@ -85,15 +93,15 @@ def save_plot():
 
     plt.plot(freq,power)
     plt.title("Spectrum \n"+d)
-    plt.xlabel("Frequency (GHz)")
+    plt.xlabel(xlabel)
     plt.ylabel("Power(dBm)")
     plt.grid(True)
-    plt.xlim((cff-spf/2.0)/1.0e9,(cff+spf/2.0)/1.0e9)
+    plt.xlim((cff-spf/2.0)/xstep,(cff+spf/2.0)/xstep)
     plt.ylim(rlf-lgf*10.0, rlf)
     plt.yticks(range(int(rlf-lgf*10.0),int(rlf+lgf),int(lgf)))
-    t = ("RBW: , VBW"
-         "SPAN,CENF,"
-        "off the top or bottom!")
+    #t = ("RBW: , VBW"
+    #     "SPAN,CENF,"
+    #    "off the top or bottom!")
     #plt.text(4, 1, t, ha='left')
     #plt.text(0.5, 0.5, 'matplot time',
     #    horizontalalignment='center',
