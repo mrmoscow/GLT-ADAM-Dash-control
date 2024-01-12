@@ -628,7 +628,7 @@ def CAB1417switch(channel,mode):
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
     if mode == 'SA':
-        print("in SA",channel ,machine, S2_do, S4_doStart, S4_doTable,A14_S5_doTable,A17_5S_doTable)
+        print("in SA",channel ,machine, S2_do, S4_doStart, S4_doTable,A14_S5_doTable,A17_S5_doTable)
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
             try:
                 #only A14 A17 S5
