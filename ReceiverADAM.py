@@ -608,7 +608,7 @@ def CAB1417switch(channel,mode):
         S3_doTable=[False]*4 ; S3_doTable[((channel-23)%4)]=True
         S4_doStart=(channel-23)//4*4
         S4_doTable=[False]*4 ; S4_doTable[((channel-23)%4)]=True
-    A14_S5_doTable,A17_5S_doTable= S5_table(channelOpt[channel-1]['gr'])
+    A14_S5_doTable,A17_S5_doTable= S5_table(channelOpt[channel-1]['gr'])
     if mode == 'PM':
         if channel in [17,18,19,20,21,22,39,40,41,42,43,44]:
             return "You choise, Channel "+str(channel)+" for PowerMeter but it only for Spectrum, please check"
@@ -638,6 +638,7 @@ def CAB1417switch(channel,mode):
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
         if machine == 'A14':
+            print(A17_S5_doTable)
             try:
                 print(co14.write_coils(32+S2_do,[False],unit=1,slave=1));time.sleep(adam_delay)
                 print(co14.write_coils(64+S4_doStart,S4_doTable,unit=1,slave=1));time.sleep(adam_delay)
