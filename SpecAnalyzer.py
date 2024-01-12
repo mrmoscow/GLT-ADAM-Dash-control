@@ -99,10 +99,10 @@ def save_plot():
     #plt.text(0.5, 0.5, 'matplot time',
     #    horizontalalignment='center',
     #    verticalalignment='center')
-    plt.text(0.02, 0.02, f"RBW {rbf:.2e}Hz", transform=plt.gca().transAxes)
+    #plt.text(0.02, 0.02, f"RBW {rbf:.2e}Hz", transform=plt.gca().transAxes)
     plt.text(0.83, 0.02, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.2, 0.02, f"VBW {vbf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.8, 0.95, f"SWP {rlst:.2e}sec", transform=plt.gca().transAxes)
+    #plt.text(0.2, 0.02, f"VBW {vbf:.2e}Hz", transform=plt.gca().transAxes)
+    #plt.text(0.8, 0.95, f"SWP {rlst:.2e}sec", transform=plt.gca().transAxes)
     plt.text(0.64, 0.02, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
     plt.text(0.02, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.2, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
