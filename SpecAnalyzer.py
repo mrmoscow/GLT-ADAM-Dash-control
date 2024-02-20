@@ -119,8 +119,8 @@ def save_plot():
     #0.2 0.02
     plt.text(0.02, 0.95, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
     plt.text(0.3, 0.95, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.6, 0.9, f"RBW {rbf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.8, 0.9, f"VBW {vbf:.2e}sec", transform=plt.gca().transAxes)
+    plt.text(0.02, 0.9, f"RBW {rbf:.1e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.3, 0.9, f"VBW {vbf:.1e}Hz", transform=plt.gca().transAxes)
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
     plt.savefig('./assets/SA_plot.png')
