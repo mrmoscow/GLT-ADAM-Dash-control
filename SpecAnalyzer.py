@@ -8,7 +8,6 @@ def save_plot():
     now = datetime.now()
     d = now.strftime("%Y-%m-%d, %H:%M:%S")
 
-
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect(('192.168.1.221',5025))
     data = "*IDN?\n"
@@ -61,6 +60,12 @@ def save_plot():
     print("Y DIV/dB",dataFromServer.decode().rstrip())
     lgf=float(dataFromServer.decode())
 
+    data = "CALC:DATA1:PEAD?\n"
+    clientSocket.send(data.encode())
+    dataFromServer = clientSocket.recv(1024)
+    print("Peaak result",dataFromServer.decode().rstrip())
+    #pek=float(dataFromServer.decode())
+
 
     data = "TRAC? TRACE1\n"
     clientSocket.send(data.encode())
@@ -110,8 +115,8 @@ def save_plot():
     #0.2 0.02
     plt.text(0.02, 0.95, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
     plt.text(0.3, 0.95, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
-    #plt.text(0.2, 0.02, f"VBW {vbf:.2e}Hz", transform=plt.gca().transAxes)
-    #plt.text(0.8, 0.95, f"SWP {rlst:.2e}sec", transform=plt.gca().transAxes)
+    plt.text(0.6, 0.9, f"VBW {vbf:.2e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.8, 0.9, f"SWP {rlst:.2e}sec", transform=plt.gca().transAxes)
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
     plt.savefig('./assets/SA_plot.png')
