@@ -42,11 +42,18 @@ def save_plot():
     print("SPAN of Frequency",dataFromServer.decode().rstrip())
     spf=float(dataFromServer.decode())
 
+
+    data = "BAND?\n"
+    clientSocket.send(data.encode())
+    dataFromServer = clientSocket.recv(1024)
+    print("Band Frequency, RBW",dataFromServer.decode().rstrip())
+    rbf=float(dataFromServer.decode())
+
     data = "BAND:VID?\n"
     clientSocket.send(data.encode())
     dataFromServer = clientSocket.recv(1024)
-    print("Band VID",dataFromServer.decode().rstrip())
-
+    print("Band VID Frequency, VBW",dataFromServer.decode().rstrip())
+    vbf=float(dataFromServer.decode())
 
     data = "DISP:WIND:TRAC:Y:RLEV1?\n"
     clientSocket.send(data.encode())
@@ -60,11 +67,8 @@ def save_plot():
     print("Y DIV/dB",dataFromServer.decode().rstrip())
     lgf=float(dataFromServer.decode())
 
-    data = "CALC:DATA1:PEAD?\n"
-    clientSocket.send(data.encode())
-    dataFromServer = clientSocket.recv(1024)
-    print("Peaak result",dataFromServer.decode().rstrip())
-    #pek=float(dataFromServer.decode())
+
+
 
 
     data = "TRAC? TRACE1\n"
@@ -115,8 +119,8 @@ def save_plot():
     #0.2 0.02
     plt.text(0.02, 0.95, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
     plt.text(0.3, 0.95, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.6, 0.9, f"VBW {vbf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.8, 0.9, f"SWP {rlst:.2e}sec", transform=plt.gca().transAxes)
+    plt.text(0.6, 0.9, f"RBW {rbf:.2e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.8, 0.9, f"VBW {vbf:.2e}sec", transform=plt.gca().transAxes)
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
     plt.savefig('./assets/SA_plot.png')
