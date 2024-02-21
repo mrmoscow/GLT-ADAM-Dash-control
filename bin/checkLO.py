@@ -3,9 +3,10 @@
 import argparse
 from os.path import exists
 import sys
+import time
 sys.path.append("..")
 import ReceiverADAM as RAD
-import time
+import SpecAnalyzer as SA
 
 def get_opt():
     parser = argparse.ArgumentParser(description="For check the LO siutaiton by using SA")
@@ -18,7 +19,8 @@ def get_opt():
 #para1,para2 = get_opt()
 
 #channel=int(channel)
-checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
+#checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
+checkLOList=[7,8,15]
 
 for channel in checkLOList:
     #maybe not need print("Will set CH",channel," to SA with Parameter")
@@ -29,6 +31,9 @@ for channel in checkLOList:
     print("get CH",channel," spectrum")
     time.sleep(2)
     #plot_and get_PDF
+    pngfile='CH'+f'{a:02d}'+'png'
+    print(pngfile)
+    #SA.save_plot('')
     print("complete")
 
 

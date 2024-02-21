@@ -121,10 +121,11 @@ def save_plot(pngfile='./assets/SA_plot.png'):
     plt.text(0.3, 0.9, f"VBW {vbf:.1e}Hz", transform=plt.gca().transAxes)
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
-    plt.savefig('./assets/SA_plot.png')
+    #plt.savefig('./assets/SA_plot.png')
     plt.savefig(pngfile)
     plt.close()
     return None
 
 if __name__ == "__main__":
-    save_plot('./assets/T2.png')
+    #save_plot('./assets/T2.png')
+    save_plot()
