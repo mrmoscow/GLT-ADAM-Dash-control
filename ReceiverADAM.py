@@ -476,7 +476,7 @@ channelOpt =[
  {'label':'VVM Input (Ref) 50 MHz',  'value':12, 'gr':'P2A',   'SAPar':[5E7,200,0,10, 1,1]},
  {'label':'5.95 GHz',                'value':13, 'gr':'P2B',   'SAPar':[5.9E9,200,0,10, 1,1]},
  {'label':'0.5 or 1.5 GHz',          'value':14, 'gr':'P2B',   'SAPar':[1E9,1.6E9,0,10, 3E6,300]},
- {'label':'31.5 MHz',                'value':15, 'gr':'P2B',   'SAPar':[3.15E7,200,-50,10, 1, 1]},
+ {'label':'31.5 MHz',                'value':15, 'gr':'P2B',   'SAPar':[3.15E7,200,0,10, 1, 1]},
  {'label':'44.5 or 18.5MHz',         'value':16, 'gr':'P2B',   'SAPar':[31.5E6,50E6,-40,10, 1,1]},
  {'label':'NotAssigned',             'value':17, 'gr':'S17',   'SAPar':[4.0E9,1.0E9,0,10, 10E4,1E5]},
  {'label':'NotAssigned',             'value':18, 'gr':'S18',   'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
