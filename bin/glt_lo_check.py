@@ -52,7 +52,7 @@ i=1
 png_files=[]
 rx=0
 for channel in checkLOList:
-    pngfile='./CH'+f'{channel:02d}'+'.png'
+    pngfile=f'./CH{channel:02d}.png'
     plt_title=f'CH{channel:02d}:'+RAD.channelOpt[int(channel)-1]['label']
     # if channel==14 and rx==0:
         #change Rx,
