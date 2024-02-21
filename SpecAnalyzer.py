@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
-def save_plot():
+def save_plot(pngfile='./assets/SA_plot.png'):
     now = datetime.now()
     d = now.strftime("%Y-%m-%d, %H:%M:%S")
 
@@ -69,8 +69,6 @@ def save_plot():
 
 
 
-
-
     data = "TRAC? TRACE1\n"
     clientSocket.send(data.encode())
     dataall=""
@@ -124,8 +122,9 @@ def save_plot():
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
     plt.savefig('./assets/SA_plot.png')
+    plt.savefig(pngfile)
     plt.close()
     return None
 
 if __name__ == "__main__":
-    save_plot()
+    save_plot('./assets/T2.png')
