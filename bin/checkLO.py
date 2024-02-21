@@ -31,9 +31,9 @@ for channel in checkLOList:
     print("get CH",channel," spectrum")
     time.sleep(2)
     #plot_and get_PDF
-    pngfile='CH'+f'{channel:02d}'+'png'
+    pngfile='./CH'+f'{channel:02d}'+'.png'
     print(pngfile)
-    #SA.save_plot('')
+    SA.save_plot(pngfile)
     print("complete")
 
 
