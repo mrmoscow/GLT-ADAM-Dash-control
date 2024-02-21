@@ -27,10 +27,10 @@ for channel in checkLOList:
     #maybe not need print("Will set CH",channel," to SA with Parameter")
     cf,sp,rl,lg,rb,vb=RAD.channelOpt[int(channel)-1]['SAPar']
     print("Set CH",channel,RAD.channelOpt[int(channel)-1]['label'],"with Parameter",cf,sp,rl,lg,rb,vb)
-    RAD.CAB1417switch(int(channe)l,'SA')
+    RAD.CAB1417switch(int(channel),'SA')
     RAD.set_SA('SA1',cf,sp,rl,lg,rb,vb)
     print("waitting get CH",channel," spectrum","it is",i,'out of',len(checkLOList))
-    time.sleep(10)
+    time.sleep(20)
     #plot_and get_PDF
     pngfile='./CH'+f'{channel:02d}'+'.png'
     #print(pngfile)
