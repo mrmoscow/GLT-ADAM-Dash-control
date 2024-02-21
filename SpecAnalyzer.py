@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
-def save_plot(pngfile='./assets/SA_plot.png'):
+def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     now = datetime.now()
     d = now.strftime("%Y-%m-%d, %H:%M:%S")
 
@@ -97,7 +97,7 @@ def save_plot(pngfile='./assets/SA_plot.png'):
     #print("The time now",d)
 
     plt.plot(freq,power)
-    plt.title("Spectrum \n"+d)
+    plt.title(plt_title+"\n"+d)
     plt.xlabel(xlabel)
     plt.ylabel("Power(dBm)")
     plt.grid(True)

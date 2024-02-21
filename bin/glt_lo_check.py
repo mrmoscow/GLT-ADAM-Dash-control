@@ -53,7 +53,8 @@ for channel in checkLOList:
     time.sleep(20)
     pngfile='./CH'+f'{channel:02d}'+'.png'
     #print(pngfile)
-    SA.save_plot(pngfile)
+    plt_title=f'{channel:02d}'+RAD.channelOpt[int(channel)-1]['label']
+    SA.save_plot(pngfile,plt_title)
     print("complete")
     i=i+1
     png_files.append(pngfile)
