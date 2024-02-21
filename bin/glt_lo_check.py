@@ -29,7 +29,7 @@ for channel in checkLOList:
     print("Set CH",channel,RAD.channelOpt[int(channel)-1]['label'],"with Parameter",cf,sp,rl,lg,rb,vb)
     RAD.CAB1417switch(int(channel),'SA')
     RAD.set_SA('SA1',cf,sp,rl,lg,rb,vb)
-    print("waitting for: CH",+f'{channel:02d}',"spectrum.","This one is",i' in total',len(checkLOList))
+    print("waitting for: CH",+f'{channel:02d}',"spectrum.","This one is",i,'/',len(checkLOList))
     #wait for IF path, 5 sec not enoght, 20sec o.k
     time.sleep(20)
     #plot_and get_PDF
