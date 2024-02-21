@@ -18,7 +18,7 @@ def save_plot(pngfile='./assets/SA_plot.png'):
     data = "SWE:POIN?\n"
     clientSocket.send(data.encode())
     dataFromServer = clientSocket.recv(1024)
-    print("How many sweep points",dataFromServer.decode().rstrip())
+    #print("How many sweep points",dataFromServer.decode().rstrip())
 
     #data = "FORM:TRAC:DATA?\n"
     #clientSocket.send(data.encode())
@@ -41,7 +41,6 @@ def save_plot(pngfile='./assets/SA_plot.png'):
     dataFromServer = clientSocket.recv(1024)
     print("SPAN of Frequency",dataFromServer.decode().rstrip())
     spf=float(dataFromServer.decode())
-
 
     data = "BAND?\n"
     clientSocket.send(data.encode())
@@ -93,10 +92,9 @@ def save_plot(pngfile='./assets/SA_plot.png'):
         for i in range(len(power)):
             freq.append((stf+(i)*stpf)/1E9)
 
-    print("Info,Power",len(power),type(power),type(power[0]),power[-1])
-    print("Info,Freq",len(freq),type(freq),type(freq[0]),freq[-1])
-    print("The time now",d)
-    #print(cff,spf,rlf,lgf)
+    #print("Info,Power",len(power),type(power),type(power[0]),power[-1])
+    #print("Info,Freq",len(freq),type(freq),type(freq[0]),freq[-1])
+    #print("The time now",d)
 
     plt.plot(freq,power)
     plt.title("Spectrum \n"+d)
