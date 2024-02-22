@@ -49,7 +49,7 @@ for channel in checkLOList:
 
     print("waitting for: CH",f'{channel:02d}',"spectrum.","This one is",i,"of",len(checkLOList))
     #wait for IF path, 5 sec not enoght, 20sec o.k
-    time.sleep(20)
+    time.sleep(25)
     SA.save_plot(pngfile,plt_title)
     print("complete")
     i=i+1
