@@ -45,8 +45,8 @@ def get_opt():
 #para1,para2 = get_opt()
 
 #channel=int(channel)
-#checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
-checkLOList=[7,8,15,14,14,31]
+checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
+#checkLOList=[7,8,15,14,14,31]
 
 i=1
 png_files=[]

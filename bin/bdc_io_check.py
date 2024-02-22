@@ -35,7 +35,7 @@ i=1
 png_files=[]
 for channel in checkLOList:
 
-    pngfile=f'./CH{channel:02d}.png'
+    pngfile=f'../assets/CH{channel:02d}.png'
     plt_title=f'CH{channel:02d}:'+RAD.channelOpt[int(channel)-1]['label']
     if channel in [1,5,23,27]:
         ta=['RU of ','LU of ','RL of ','LL of '][[1,5,23,27].index(channel)]
@@ -56,7 +56,7 @@ for channel in checkLOList:
     png_files.append(pngfile)
 
 now = datetime.now()
-output_pdf="GLT_receiver_output_check_"+lockFreq+now.strftime("_%Y-%m-%d-%H-%M.pdf")
+output_pdf="../assets/GLT_receiver_output_check_"+lockFreq+now.strftime("_%Y-%m-%d-%H-%M.pdf")
 #print(output_pdf)
 print("Start to generate the PDF file from png")
 combine_png_to_pdf(png_files, output_pdf)
