@@ -52,17 +52,17 @@ i=1
 png_files=[]
 rx_pre=2
 for channel in checkLOList:
-    pngfile=f'./CH{channel:02d}.png'
+    pngfile=f'../assets/CH{channel:02d}.png'
     plt_title=f'CH{channel:02d}:'+RAD.channelOpt[int(channel)-1]['label']
     if (channel==14 and rx_pre==2):
         print("in CH 14, Rx2")
-        pngfile='./CH14-Rx2.png'
+        pngfile='../assets/CH14-Rx2.png'
         plt_title='CH14-Rx2:0.5GHz'
         #Rx IF from Rx1.
         rx_pre=1  # set rx_pre for next run. 
     if (channel==14 and rx_pre==1):
         print("in CH 14, Rx1")
-        pngfile='./CH14-Rx1.png'
+        pngfile='../assets/CH14-Rx1.png'
         plt_title='CH14-Rx2:1.5GHz'
         #R_IF from Rx1
     #maybe not need print("Will set CH",channel," to SA with Parameter")
@@ -80,6 +80,6 @@ for channel in checkLOList:
     png_files.append(pngfile)
 
 now = datetime.now()
-output_pdf=now.strftime("GLT_various-LO_check_%Y-%m-%d-%H-%M.pdf")
+output_pdf=now.strftime("../assets/GLT_various-LO_check_%Y-%m-%d-%H-%M.pdf")
 print("Start to generate the PDF file from png")
 combine_png_to_pdf(png_files, output_pdf)
