@@ -635,7 +635,8 @@ def CAB1417switch(channel,mode):
             try:
                 #only A14 A17 S5
                 print(co14.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
-                print(co17.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                #print(co17.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
+                print(co17.write_coils(80,A17_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
                 return "Faile during Channel "+str(channel)+" set to Spectrum."
