@@ -46,21 +46,21 @@ def get_opt():
 
 #channel=int(channel)
 checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
+#CH14 must at 4 and 5. change i== if the list change. 
 #checkLOList=[7,8,15,14,14,31]
+
 
 i=1
 png_files=[]
-rx_pre=2
 for channel in checkLOList:
     pngfile=f'../assets/CH{channel:02d}.png'
     plt_title=f'CH{channel:02d}:'+RAD.channelOpt[int(channel)-1]['label']
-    if (channel==14 and rx_pre==2):
+    if (channel==14 and i==4): # for 1st CH14
         print("in CH 14, Rx2")
         pngfile='../assets/CH14-Rx2.png'
         plt_title='CH14-Rx2:0.5GHz'
-        #Rx IF from Rx1.
-        rx_pre=1  # set rx_pre for next run. 
-    if (channel==14 and rx_pre==1):
+        #Rx IF from Rx2.
+    if (channel==14 and i==5):
         print("in CH 14, Rx1")
         pngfile='../assets/CH14-Rx1.png'
         plt_title='CH14-Rx2:1.5GHz'
