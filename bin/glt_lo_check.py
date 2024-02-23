@@ -45,9 +45,9 @@ def get_opt():
 #para1,para2 = get_opt()
 
 #channel=int(channel)
-checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
+#checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
 #CH14 must at 4 and 5. change i== if the list change. 
-#checkLOList=[7,8,15,14,14,31]
+checkLOList=[7,8,15,14,14,31]
 
 
 i=1
@@ -59,11 +59,12 @@ for channel in checkLOList:
         print("in CH 14, Rx2")
         pngfile='../assets/CH14-Rx2.png'
         plt_title='CH14-Rx2:0.5GHz'
-        #Rx IF from Rx2.
+        set_5056('A01','5400')
     if (channel==14 and i==5):
         print("in CH 14, Rx1")
         pngfile='../assets/CH14-Rx1.png'
         plt_title='CH14-Rx2:1.5GHz'
+        set_5056('A01','FC80')
         #R_IF from Rx1
     #maybe not need print("Will set CH",channel," to SA with Parameter")
     cf,sp,rl,lg,rb,vb=RAD.channelOpt[int(channel)-1]['SAPar']
