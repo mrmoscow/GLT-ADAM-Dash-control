@@ -38,16 +38,16 @@ def combine_png_to_pdf(png_files, pdf_file):
 def get_opt():
     parser = argparse.ArgumentParser(description="For check the LO siutaiton by using SA")
     #parser.add_argument("-c","--channel", type=str, help="channel to SA  [1..44]",required=True)
-    #parser.add_argument('-p','--para', default=False, action='store_true',help="also change the parameter of SA")
+    parser.add_argument('-r','--rxchange',action="store_true",help="let Rx change, defaule is no Rx(A1) change")
     args = parser.parse_args()
-    return args.channel,args.para
+    return args.rxchange
 
-#para1,para2 = get_opt()
+rx_change = get_opt()
 
 #channel=int(channel)
-#checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
+checkLOList=[7,8,15,14,14,31,29,13,30,19,20,33,34]
 #CH14 must at 4 and 5. change i== if the list change. 
-checkLOList=[7,8,15,14,14,31]
+#checkLOList=[7,8,15,14,14,31]
 
 
 i=1
@@ -59,12 +59,14 @@ for channel in checkLOList:
         print("in CH 14, Rx2")
         pngfile='../assets/CH14-Rx2.png'
         plt_title='CH14-Rx2:0.5GHz'
-        RAD.set_5056('A01','5400')
+        if rx_change == True:
+            RAD.set_5056('A01','5400')
     if (channel==14 and i==5):
         print("in CH 14, Rx1")
         pngfile='../assets/CH14-Rx1.png'
         plt_title='CH14-Rx2:1.5GHz'
-        RAD.set_5056('A01','FC80')
+        if rx_change == True:
+            RAD.set_5056('A01','FC80')
         #R_IF from Rx1
     #maybe not need print("Will set CH",channel," to SA with Parameter")
     cf,sp,rl,lg,rb,vb=RAD.channelOpt[int(channel)-1]['SAPar']
