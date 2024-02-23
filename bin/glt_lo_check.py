@@ -59,12 +59,12 @@ for channel in checkLOList:
         print("in CH 14, Rx2")
         pngfile='../assets/CH14-Rx2.png'
         plt_title='CH14-Rx2:0.5GHz'
-        set_5056('A01','5400')
+        RAD.set_5056('A01','5400')
     if (channel==14 and i==5):
         print("in CH 14, Rx1")
         pngfile='../assets/CH14-Rx1.png'
         plt_title='CH14-Rx2:1.5GHz'
-        set_5056('A01','FC80')
+        RAD.set_5056('A01','FC80')
         #R_IF from Rx1
     #maybe not need print("Will set CH",channel," to SA with Parameter")
     cf,sp,rl,lg,rb,vb=RAD.channelOpt[int(channel)-1]['SAPar']

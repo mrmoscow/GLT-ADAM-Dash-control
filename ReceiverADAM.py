@@ -514,65 +514,65 @@ channelOpt =[
 def S5_table(gr):
     if gr == 'P1A':
         A14_S5=[True,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'P1B':
         A14_S5=[False,True,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'P2A':
         A14_S5=[False,False,True,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'P2B':
         A14_S5=[False,False,False,True,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S17':
         A14_S5=[False,False,False,False,False,False,True,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S18':
         A14_S5=[False,False,False,False,True,False,True,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S19':
         A14_S5=[False,False,False,False,False,True,True,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S20':
         A14_S5=[False,False,False,False,True,True,True,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S21':
         A14_S5=[False,False,False,False,False,False,False,True]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S22':
         A14_S5=[False,False,False,False,False,False,True,True]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'P3A':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[True,False,False,False,False,False,False,False]
+        A17_S5=[True,False,False,False,False,False,False,False]
     if gr == 'P3B':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,True,False,False,False,False,False,False]
+        A17_S5=[False,True,False,False,False,False,False,False]
     if gr == 'P4A':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,True,False,False,False,False,False]
+        A17_S5=[False,False,True,False,False,False,False,False]
     if gr == 'P4B':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,True,False,False,False,False]
+        A17_S5=[False,False,False,True,False,False,False,False]
     if gr == 'S39':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,True,False]
+        A17_S5=[False,False,False,False,False,False,True,False]
     if gr == 'S40':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,True,False,True,False]
+        A17_S5=[False,False,False,False,True,False,True,False]
     if gr == 'S41':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,True,True,False]
+        A17_S5=[False,False,False,False,False,True,True,False]
     if gr == 'S42':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,True,True,True,False]
+        A17_S5=[False,False,False,False,True,True,True,False]
     if gr == 'S43':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,False,True]
+        A17_S5=[False,False,False,False,False,False,False,True]
     if gr == 'S44':
         A14_S5=[False,False,False,False,False,False,False,False]
-        A15_S5=[False,False,False,False,False,False,True,True]
-    return A14_S5,A15_S5
+        A17_S5=[False,False,False,False,False,False,True,True]
+    return A14_S5,A17_S5
 
 
 def CAB1417switch(channel,mode):
