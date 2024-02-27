@@ -20,11 +20,6 @@ def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     dataFromServer = clientSocket.recv(1024)
     #print("How many sweep points",dataFromServer.decode().rstrip())
 
-    #data = "FORM:TRAC:DATA?\n"
-    #clientSocket.send(data.encode())
-    #dataFromServer = clientSocket.recv(1024)
-    #print(dataFromServer.decode().rstrip())
-
     #data = "SWE:TIME?\n"
     #clientSocket.send(data.encode())
     #dataFromServer = clientSocket.recv(1024)
@@ -66,7 +61,22 @@ def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     print("Y DIV/dB",dataFromServer.decode().rstrip())
     lgf=float(dataFromServer.decode())
 
+    data = "CALC:MARK1:MAX\n"
+    clientSocket.send(data.encode())
+    dataFromServer = clientSocket.recv(1024)
+    print("CAL Marking result",dataFromServer.decode().rstrip())
 
+    data = "CALC:MARK1:Y?\n\n"
+    clientSocket.send(data.encode())
+    dataFromServer = clientSocket.recv(1024)
+    print("Peak Power",dataFromServer.decode().rstrip())
+    pkhia=float(dataFromServer.decode())
+
+    data = "CALC:MARK1:X?\n\n"
+    clientSocket.send(data.encode())
+    dataFromServer = clientSocket.recv(1024)
+    print("Peak Frequency",dataFromServer.decode().rstrip())
+    pkhif=float(dataFromServer.decode())
 
     data = "TRAC? TRACE1\n"
     clientSocket.send(data.encode())
@@ -115,7 +125,7 @@ def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     #0.2 0.02
     plt.text(0.02, 0.95, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
     plt.text(0.3, 0.95, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.02, 0.9, f"RBW {rbf:.1e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.02, 0.1, f"RBW {rbf:.1e}Hz", transform=plt.gca().transAxes)
     plt.text(0.3, 0.9, f"VBW {vbf:.1e}Hz", transform=plt.gca().transAxes)
     plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
     plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
