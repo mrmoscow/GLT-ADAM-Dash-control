@@ -30,7 +30,7 @@ or python3 app.py
 * a way for show the Allan Dev on dahs page.   
 * CSS (for updated) file for pages (C1 at lease)
 * The new code stucture.(the ReceiverADAM is too big now.)
-
+* 1st line with running env
 
 
 ### Gold for testing day on 2024, Jan

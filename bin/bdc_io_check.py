@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#!/home/obscon/bin/cpy3
 
 import argparse
 from os.path import exists
