@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#!/home/obscon/bin/cpy3
 
 import argparse
 from os.path import exists
@@ -22,7 +22,7 @@ else:
 
 
 if args.receiver not in ['86','230','345','rx1','rx2','rx3','rx4','off','Rx1','Rx2','Rx3','Rx4']:
-    sys.exit("Error: The receiver should be in 86,230,300, or off")
+    sys.exit("Receiver name Error: should be one of (86,230,345,off)")
 
 if args.receiver in ['86','rx1','Rx1'] :rx=1
 if args.receiver in ['230','rx2','Rx2']:rx=2
