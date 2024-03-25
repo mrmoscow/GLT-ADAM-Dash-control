@@ -119,7 +119,7 @@ def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     plt.text(0.75, 0.01, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
 
     plt.text(0.71, 0.95, f"Peak:{pkhia:.1f} dBm", transform=plt.gca().transAxes)
-    plt.text(0.71, 0.80, f"    :{pkhif:.3e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.71, 0.90, f"Peak:{pkhif:.3e} Hz", transform=plt.gca().transAxes)
 
     plt.text(0.01, 0.06, f"RBW {rbf:.1e}Hz", transform=plt.gca().transAxes)
     plt.text(0.01, 0.01, f"VBW {vbf:.1e}Hz", transform=plt.gca().transAxes)
