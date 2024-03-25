@@ -5,7 +5,7 @@ This app controls the Greenland telescope(GLT) Receiver and the GLT ADAM module 
 2. HTML interface:  control the GLT-RX by browser, 
 
 
-###Module requirement
+### Module requirement
 * argparse             1.4.0
 * dash                 2.6.1
 * dash-core-components 2.0.0
@@ -24,7 +24,6 @@ This app controls the Greenland telescope(GLT) Receiver and the GLT ADAM module 
 * The switch ture table and attenuator voltage will also list here in the future.
 
 
-<<<<<<< HEAD
 ### ToDo List
 * new branch for more functions and code structure. 
 * a way to show Allan Dev on dahs page.   
@@ -36,6 +35,4 @@ This app controls the Greenland telescope(GLT) Receiver and the GLT ADAM module 
 * link ADAM6224 with ASIC  (Done, no need, using the old method)
 * a way to get the SA data and make a PNG file. (Done, the SpecAnalyzer.py)
 * Test the check of the IP of VVM.  (Done 204)
-=======
->>>>>>> 0046912cdc4dfce66d17b072a42f40f0fd87f33d
 
