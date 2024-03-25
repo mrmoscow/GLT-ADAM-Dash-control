@@ -24,6 +24,7 @@ or python3 app.py
 * The switch ture table and attentatur voltage will also list here in the future.
 
 
+<<<<<<< HEAD
 ### ToDo List
 * new bin app and dash page for control VVM and phase monitot. 
 * A11 in RxSelect page. 
@@ -41,4 +42,6 @@ or python3 app.py
 * link ADAM6224 with ASIC  (Done, no need, using the old method)
 * a way for get the SA data and make a png file. (Done, the SpecAnalyzer.py)
 * Test the check the IP of VVM.  (Done 204)
+=======
+>>>>>>> 0046912cdc4dfce66d17b072a42f40f0fd87f33d
 
