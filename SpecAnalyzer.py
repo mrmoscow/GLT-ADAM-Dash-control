@@ -61,10 +61,9 @@ def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     print("Y DIV/dB",dataFromServer.decode().rstrip())
     lgf=float(dataFromServer.decode())
 
+    #make the paak position. no result message. 
     data = "CALC:MARK1:MAX\n"
     clientSocket.send(data.encode())
-    dataFromServer = clientSocket.recv(1024)
-    print("CAL Marking result",dataFromServer.decode().rstrip())
 
     data = "CALC:MARK1:Y?\n\n"
     clientSocket.send(data.encode())
@@ -114,21 +113,19 @@ def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     plt.xlim((cff-spf/2.0)/xstep,(cff+spf/2.0)/xstep)
     plt.ylim(rlf-lgf*10.0, rlf)
     plt.yticks(range(int(rlf-lgf*10.0),int(rlf+lgf),int(lgf)))
-    #t = ("RBW: , VBW"
-    #     "SPAN,CENF,"
-    #    "off the top or bottom!")
-    #plt.text(4, 1, t, ha='left')
-    #plt.text(0.5, 0.5, 'matplot time',
-    #    horizontalalignment='center',
-    #    verticalalignment='center')
-    #plt.text(0.02, 0.02, f"RBW {rbf:.2e}Hz", transform=plt.gca().transAxes)
-    #0.2 0.02
-    plt.text(0.02, 0.95, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.3, 0.95, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.02, 0.1, f"RBW {rbf:.1e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.3, 0.9, f"VBW {vbf:.1e}Hz", transform=plt.gca().transAxes)
-    plt.text(0.6, 0.95, f"RL {rlf:.0f}dBm", transform=plt.gca().transAxes)
-    plt.text(0.8, 0.95, f"Scale {lgf:.0f}dB/", transform=plt.gca().transAxes)
+    #
+    #
+    plt.text(0.75, 0.06, f"CENT {cff:.2e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.75, 0.01, f"SPAN {spf:.2e}Hz", transform=plt.gca().transAxes)
+
+    plt.text(0.75, 0.95, f"Peak {pkhia:.1f}dBm", transform=plt.gca().transAxes)
+    plt.text(0.95, 0.95, f"Peak {pkhif:.2e}Hz", transform=plt.gca().transAxes)
+
+    plt.text(0.01, 0.06, f"RBW {rbf:.1e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.01, 0.01, f"VBW {vbf:.1e}Hz", transform=plt.gca().transAxes)
+    plt.text(0.21, 0.95, f"Ref:{rlf:.0f}dBm", transform=plt.gca().transAxes)
+    plt.text(0.01, 0.95, f"{lgf:.0f}dB/Div", transform=plt.gca().transAxes)
+
     #plt.savefig('./assets/SA_plot.png')
     plt.savefig(pngfile)
     plt.close()
