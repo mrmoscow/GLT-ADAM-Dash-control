@@ -1,7 +1,6 @@
 #!/home/obscon/bin/cpy3
 
 import argparse
-from os.path import exists
 import sys
 import time
 from datetime import datetime

@@ -2,9 +2,9 @@
 
 import argparse
 import sys
-sys.path.append("..")
-import ReceiverADAM as RAD
 
+sys.path.append("../module")
+import ReceiverADAM as RAD
 
 def get_opt():
     parser = argparse.ArgumentParser(description="For retrun A01 status")

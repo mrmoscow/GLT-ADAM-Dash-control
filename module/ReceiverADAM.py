@@ -12,7 +12,7 @@ if sys.version_info[1] == 7 or sys.version_info[1] == 9:
     from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 if sys.version_info[1] == 11:
     from pymodbus.client import ModbusTcpClient as ModbusClient
-
+from channelOpt import channelOpt
 
 #Next list the name and IP at GLT telescope
 ADAM_list={"A01":'192.168.1.207',\
@@ -463,6 +463,7 @@ def getSApng():
         return 'Reflash SA PNG file failed'
 
 #The SAPar:[Center Frequency(Hz),SPAN(Hz),Reference Lavel (dBm),Scale(dB/div),RBW(Hz),VBW(Hz)]
+'''
 channelOpt =[
  {'label':'EHT1_POL0 IF 4-9 GHz',    'value':1,  'gr':'P1A',   'SAPar':[8E9,1E10,-40,5,3E6,300]},
  {'label':'EHT1_POL0 BB 6-8 GHz',    'value':2,  'gr':'P1A',   'SAPar':[1.5E9,2.9E9,-30,5, 3E6,300]},
@@ -509,7 +510,7 @@ channelOpt =[
  {'label':'Spectrum path (RF Swwitch #1)',   'value':43, 'gr':'S43',   'SAPar':[2.2E9,4.4E9,0,10, 1E4,1E4]},
  {'label':'Ref1(18-32GHz)',                  'value':44, 'gr':'S44',   'SAPar':[25E9,20E9,-15,5, 3E6,300]},
   ]
-
+'''
 
 def S5_table(gr):
     if gr == 'P1A':

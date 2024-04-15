@@ -1,4 +1,5 @@
 #! /usr/bin/python3
+#This is not for the GLT site, please check if needed
 #for 690 PM ADAM6017, (192.168.1.99)
 import socket
 import argparse
