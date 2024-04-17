@@ -1,9 +1,13 @@
 #!/home/obscon/bin/cpy3
 
 import argparse
+from os.path import exists
 import sys
-sys.path.append("..")
+
+sys.path.append("../module")
 import ReceiverADAM as RAD
+
+
 
 def get_opt():
     parser = argparse.ArgumentParser(description="For return A14 A17  status")

@@ -1,10 +1,11 @@
-#! /usr/bin/python3
+#!/home/obscon/bin/cpy3
 
 import argparse
-from os.path import exists
 import sys
-sys.path.append("..")
+
+sys.path.append("../module")
 import ReceiverADAM as RAD
+
 
 
 def get_opt():
@@ -13,8 +14,12 @@ def get_opt():
     args = parser.parse_args()
     return args.channel
 
+def main():
+    channel = get_opt()
+    channel=int(channel)
+    print("Will set channel",channel," to PowerMeter")
+    print(RAD.CAB1417switch(channel,'PM'))
 
-channel = get_opt()
-channel=int(channel)
-print("Will set channel",channel," to PowerMeter")
-print(RAD.CAB1417switch(channel,'PM'))
+
+if __name__ == "__main__":
+    main()

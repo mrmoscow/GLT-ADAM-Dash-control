@@ -1,10 +1,11 @@
 #!/home/obscon/bin/cpy3
 
 import argparse
-from os.path import exists
 import sys
-sys.path.append("..")
+
+sys.path.append("../module")
 import ReceiverADAM as RAD
+
 
 
 

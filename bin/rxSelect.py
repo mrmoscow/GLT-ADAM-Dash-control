@@ -1,14 +1,15 @@
 #!/home/obscon/bin/cpy3
 
 import argparse
-from os.path import exists
 import sys
-sys.path.append("..")
+
+sys.path.append("../module")
 import ReceiverADAM as RAD
 
 
 
-parser = argparse.ArgumentParser(description="For set the Tone,IF,LO path as given receiver")
+
+parser = argparse.ArgumentParser(description="For set the Tone,IF,LO path as given receiver. rxSelect 86.")
 parser.add_argument("receiver", type=str, help="The receiver,86,230,345,off or rx1,rx2,rx3,rx4")
 parser.add_argument("-t", "--tone", help="Setting the tone on",
                     action="store_true")

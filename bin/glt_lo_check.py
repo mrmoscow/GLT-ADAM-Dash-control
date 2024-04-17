@@ -1,31 +1,12 @@
 #!/home/obscon/bin/cpy3
 
 import argparse
-from os.path import exists
 import sys
-import time
-from datetime import datetime
-from PIL import Image
 
-sys.path.append("..")
+sys.path.append("../module")
 import ReceiverADAM as RAD
 import SpecAnalyzer as SA
 
-'''
-def combine_png_to_pdf(png_files, output_pdf):
-    # Open the first image
-    img1 = Image.open(png_files[0])
-    # Get the dimensions of the first image
-    width, height = img1.size
-    # Create a new image with the same dimensions as the first image
-    combined_img = Image.new('RGB', (width, height * len(png_files)))
-    # Paste each PNG image into the combined image
-    for i, png_file in enumerate(png_files):
-        img = Image.open(png_file)
-        combined_img.paste(img, (0, i * height))
-    # Save the combined image as a PDF
-    combined_img.save(output_pdf, "PDF", resolution=100.0)
-'''
 
 def combine_png_to_pdf(png_files, pdf_file):
     images = []
@@ -85,4 +66,4 @@ for channel in checkLOList:
 now = datetime.now()
 output_pdf=now.strftime("../assets/GLT_various-LO_check_%Y-%m-%d-%H-%M.pdf")
 print("Start to generate the PDF file from png")
-combine_png_to_pdf(png_files, output_pdf)
+SA.combine_png_to_pdf(png_files, output_pdf)

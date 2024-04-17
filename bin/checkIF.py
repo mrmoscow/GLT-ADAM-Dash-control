@@ -1,18 +1,12 @@
 #!/home/obscon/bin/cpy3
 
-from os.path import exists
-import sys
-import socket
+import argparse
 import time
+import sys
 
-if sys.version_info[1] == 7 or sys.version_info[1] == 9:
-    from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-if sys.version_info[1] == 11:
-    from pymodbus.client import ModbusTcpClient as ModbusClient
-
-
-sys.path.append("..")
+sys.path.append("../module")
 import ReceiverADAM as RAD
+
 
 channelOpt=RAD.channelOpt
 PMIFsetall= [
@@ -58,6 +52,10 @@ def getPowIF(IFgroup):
         else:
             return IFgr[s3.index(1)]['label'],IFgr[s3.index(1)]['value']
 '''
+
+parser = argparse.ArgumentParser(description="For show the IF path informaion. just run the script")
+parser.add_argument('-i','--info', default=False, action='store_true',help="Just for show this infromation")
+args = parser.parse_args()
 
 for gr in ['P1A','P1B','P2A','P2B','P3A','P3B','P4A','P4B']:
     re0,re1=RAD.getPowIF(gr)

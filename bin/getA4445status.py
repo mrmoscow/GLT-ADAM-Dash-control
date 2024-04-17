@@ -2,8 +2,11 @@
 
 import argparse
 import sys
-sys.path.append("..")
+
+sys.path.append("../module")
 import ReceiverADAM as RAD
+
+
 
 
 print('This script  help to check the A44 and A45')
