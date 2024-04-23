@@ -4,7 +4,7 @@ import argparse
 import os,sys,time,random
 sys.path.append("../module")
 import ReceiverADAM as RAD
-
+import dsm
 
 
 
@@ -38,6 +38,18 @@ def main():
     power3a=[];power3b=[];power4a=[];power4b=[]
     timeint=(args.interval/1000.0)
     intshow=f'{timeint:.2f}'
+    dsm_wetvars = [b"DSM_WEATHER_TEMP_C_F"]
+    ACC = b"gltacc"
+    MAC = b"gltMandC"
+    #caba4_hot_R,timestamp=dsm.read(MAC, b"DSM_POWER_4_9_CABA4_RHC_F")
+    #caba4_hot_L,timestamp=dsm.read(MAC, b"DSM_POWER_4_9_CABA4_LHC_F")
+    T_hot,timestamp=dsm.read(MAC, b"DSM_RF_CRYOSTAT_AMBIENT_F")
+    print('Hot Load Temperature',T_hot,'Degree')
+    #T_amb = np.mean(T_ave) #+ 273.15  This term is for cabin temperature.
+
+    T_atm = ([dsm.read(ACC, qvar)[0] for qvar in dsm_wetvars])[0] + 273.15
+    print('Outside Temperature:', T_atm, '[K]')
+
     for i in  range(int(args.time/timeint)):
         os.system('clear')
         print("\n    will record total ", args.time, "Seconds, for each",intshow,
