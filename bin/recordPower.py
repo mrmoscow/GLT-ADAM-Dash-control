@@ -18,11 +18,11 @@ def calTsys(power):
         #print(power[2:4],power[-4:-2])
         yfact=sum(power[2:4])/sum(power[-4:-2])
         tsys=0.0
-        return f'{yfact:02d}'
+        return f'{yfact:.2f}'
     else:
-        power.sort():
+        power.sort()
         yfact=sum(power[2:4])/sum(power[-4:-2])
-
+        return f'{yfact:.2f}'
 
 def main():
     parser = argparse.ArgumentParser(description="record Power(db) from 4 Meter (2 channel for each)")
@@ -37,7 +37,7 @@ def main():
     power1a=[];power1b=[];power2a=[];power2b=[]
     power3a=[];power3b=[];power4a=[];power4b=[]
     timeint=(args.interval/1000.0)
-    intshow=f'{timeint:02d}'
+    intshow=f'{timeint:.2f}'
     for i in  range(int(args.time/timeint)):
         os.system('clear')
         print("\n    will record total ", args.time, "Seconds, for each",intshow,
