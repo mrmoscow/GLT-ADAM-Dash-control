@@ -18,12 +18,13 @@ def calTsys(power):
         power.sort()
         #print(power)
         #print(power[2:4],power[-4:-2])
-        yfact=sum(power[2:4])/sum(power[-4:-2])
+        #yfact=sum(power[2:4])/sum(power[-4:-2])
+        yface=pow(10,(sum(power[2:4])-sum(power[-4:-2]))/10.0)
         tsys=0.0
         return f'{yfact:.2f}'
     else:
         power.sort()
-        yfact=sum(power[2:4])/sum(power[-4:-2])
+        yface=pow(10,(sum(power[2:4])-sum(power[-4:-2]))/10.0)
         return f'{yfact:.2f}'
 
 def main():
