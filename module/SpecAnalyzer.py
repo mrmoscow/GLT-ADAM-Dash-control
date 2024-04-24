@@ -2,8 +2,14 @@
 import socket
 import matplotlib.pyplot as plt
 from datetime import datetime
+from PIL import Image
 
-def combine_png_to_pdf(png_files, output_pdf):
+
+def combine_png_to_pdf(png_files, pdf_file):
+    combine_png_to_pdf_3(png_files, pdf_file)
+
+
+def combine_png_to_pdf_1(png_files, pdf_file):
     # Open the first image
     img1 = Image.open(png_files[0])
     # Get the dimensions of the first image
@@ -17,7 +23,7 @@ def combine_png_to_pdf(png_files, output_pdf):
         #with Image.open(png_file) as img:
         #    combined_img.paste(img, (0, i * height))
     # Save the combined image as a PDF
-    combined_img.save(output_pdf, "PDF", resolution=100.0)
+    combined_img.save(pdf_file, "PDF", resolution=100.0)
 
 
 def combine_png_to_pdf_2(png_files, pdf_file):
@@ -53,7 +59,7 @@ def combine_png_to_pdf_3(png_files, pdf_file):
     images[0].save(pdf_file, save_all=True, append_images=images[1:])
 
 
-def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
+def save_plot(pngfile='../assets/SA_plot.png',plt_title="Spectrum"):
     now = datetime.now()
     d = now.strftime("%Y-%m-%d, %H:%M:%S")
 

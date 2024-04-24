@@ -1,23 +1,15 @@
 #!/home/obscon/bin/cpy3
 
-import argparse
-import sys
-import time
-from datetime import datetime
-from PIL import Image
 
-sys.path.append("..")
+import argparse
+import os,sys,time,random
+from datetime import datetime
+#from PIL import Image
+
+sys.path.append("../module")
 import ReceiverADAM as RAD
 import SpecAnalyzer as SA
 
-
-def combine_png_to_pdf(png_files, pdf_file):
-    images = []
-    for file in png_files:
-        image = Image.open(file)
-        image = image.convert('RGB')
-        images.append(image)
-    images[0].save(pdf_file, save_all=True, append_images=images[1:])
 
 def get_opt():
     parser = argparse.ArgumentParser(description="For check the BDC siutaiton by using SA")
@@ -58,4 +50,4 @@ now = datetime.now()
 output_pdf="../assets/GLT_receiver_output_check_"+lockFreq+now.strftime("_%Y-%m-%d-%H-%M.pdf")
 #print(output_pdf)
 print("Start to generate the PDF file from png")
-combine_png_to_pdf(png_files, output_pdf)
+SA.combine_png_to_pdf(png_files, output_pdf)

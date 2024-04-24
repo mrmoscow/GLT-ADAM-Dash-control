@@ -1,20 +1,14 @@
 #!/home/obscon/bin/cpy3
 
 import argparse
-import sys
+import os,sys,time,random
+from datetime import datetime
+#from PIL import Image
 
 sys.path.append("../module")
 import ReceiverADAM as RAD
 import SpecAnalyzer as SA
 
-
-def combine_png_to_pdf(png_files, pdf_file):
-    images = []
-    for file in png_files:
-        image = Image.open(file)
-        image = image.convert('RGB')
-        images.append(image)
-    images[0].save(pdf_file, save_all=True, append_images=images[1:])
 
 def get_opt():
     parser = argparse.ArgumentParser(description="For check the LO siutaiton by using SA")
