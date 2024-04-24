@@ -19,12 +19,12 @@ def calTsys(power):
         #print(power)
         #print(power[2:4],power[-4:-2])
         #yfact=sum(power[2:4])/sum(power[-4:-2])
-        yfact=pow(10,(sum(power[2:4])-sum(power[-4:-2]))/10.0)
+        yfact=sum(power[2:4])-sum(power[-4:-2])
         tsys=0.0
         return f'{yfact:.2f}'
     else:
         power.sort()
-        yfact=pow(10,(sum(power[2:4])-sum(power[-4:-2]))/10.0)
+        yfact=sum(power[2:4])-sum(power[-4:-2])
         return f'{yfact:.2f}'
 
 def main():
@@ -57,7 +57,7 @@ def main():
     outfile=open("../assets/powerRecorder.txt","a")
     for i in  range(int(args.time/timeint)):
         os.system('clear')
-        #print("\n    HotLoad Temp,",T_hot," [K], OutSide Temp",T_atm," [k] \n ")
+        print("\n    HotLoad Temp,",T_hot," [K], OutSide Temp",T_atm," [k] \n ")
         print("\n    will record total ", args.time, "Seconds, for each",intshow,
                "seconds. This is the", i+1 ,"times. \n \n ")
         #p1=getpowerTest('PM1');power1a.append(float(p1[0])); power1b.append(float(p1[1]))
@@ -70,10 +70,10 @@ def main():
         #print("     PowerMeter 2 get",i,random.randint(4, 12),)
         #outfile.write(rtime,',',p1,p2,p3,p4,'\n')
         outfile.write('{}{} {}{}{}\n'.format(rtime,p1,p2,p3,p4))
-        print("     PowerMeter 1 get",p1," y-factor",calTsys(power1a),calTsys(power1b))
-        print("     PowerMeter 2 get",p2," y-factor",calTsys(power2a),calTsys(power2b))
-        print("     PowerMeter 3 get",p3," y-factor",calTsys(power3a),calTsys(power3b))
-        print("     PowerMeter 4 get",p4," y-factor",calTsys(power4a),calTsys(power4b))
+        print("     PowerMeter 1 -",p1," y-factor (dB)",calTsys(power1a),calTsys(power1b))
+        print("     PowerMeter 2 -",p2," y-factor (dB)",calTsys(power2a),calTsys(power2b))
+        print("     PowerMeter 3 -",p3," y-factor (dB)",calTsys(power3a),calTsys(power3b))
+        print("     PowerMeter 4 -",p4," y-factor (dB)",calTsys(power4a),calTsys(power4b))
         time.sleep((args.interval/1000.0))
     outfile.close()
 #print(RAD.get_Power('PM1'))
