@@ -50,8 +50,9 @@ def main():
     T_hot,timestamp=dsm.read(MAC, b"DSM_RF_CRYOSTAT_AMBIENT_F")
     #print('Hot Load Temperature',T_hot,'Degree')
     #T_amb = np.mean(T_ave) #+ 273.15  This term is for cabin temperature.
-
-    T_atm = dsm.read(ACC, b"DSM_WEATHER_TEMP_C_F")[0]  + 273.15
+    T_atm = dsm.read(ACC, b"DSM_WEATHER_TEMP_C_F")[0]+273.15
+    #T_atm = dsm.read(ACC, b"DSM_WEATHER_TEMP_C_F")[0]  + 273.15
+    print("\n    HotLoad Temp,",T_hot," [K], OutSide Temp",T_atm," [k] \n ")
     dsm.close()
     #print('Outside Temperature:', T_atm, '[K]')
     outfile=open("../assets/powerRecorder.txt","a")
@@ -76,6 +77,7 @@ def main():
         print("     PowerMeter 4 -",p4," y-factor (dB)",calTsys(power4a),calTsys(power4b))
         time.sleep((args.interval/1000.0))
     outfile.close()
+
 #print(RAD.get_Power('PM1'))
 #print("PowerMeter 1 get",RAD.get_Power('PM1'))
 
