@@ -48,7 +48,7 @@ def main():
     T_atm = dsm.read(ACC, b"DSM_WEATHER_TEMP_C_F")[0]+273.15
     dsm.close()
 
-    if timeint < 250:
+    if timeint < 0.249:
         PM=args.fast
         outfile=open("../assets/powerRecorder-q.txt","a")
         os.system('clear')
@@ -59,6 +59,7 @@ def main():
             p1=RAD.get_Power(PM)
             rtime=datetime.utcnow().strftime("%m-%d %H:%M:%S .%f,")
             outfile.write('{}{}, (From{})\n'.format(rtime,p1,PM))
+            print("     PowerMeter ",PM[-1]," -",p1)
             time.sleep(timeint)
         outfile.close()
     else:
