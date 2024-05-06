@@ -39,7 +39,7 @@ def main():
         print("     PowerMeter 2 -",p2)
         print("     PowerMeter 3 -",p3)
         print("     PowerMeter 4 -",p4)
-        time.sleep((args.interval/1000.0))
+        time.sleep((args.interval/1000.0)-0.211)
     outfile.close()
 
 #print(RAD.get_Power('PM1'))

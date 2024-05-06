@@ -24,6 +24,7 @@ def calTsys(power):
         yfact=sum(power[2:4])-sum(power[-4:-2])
         return f'{yfact:.2f}'
 
+
 def main():
     parser = argparse.ArgumentParser(description="record Power(db) from 4 Meter (2 channel for each)")
 
@@ -31,8 +32,8 @@ def main():
                help="total time(in seconds) for the scirp running. default is 60 seconds.")
     parser.add_argument('-i','--interval', type=int ,default=1000,
               help="The interval time (in milli second) of re-flash, default is 1000 millisecond.")
-    parser.add_argument('-f','--fast mode', type=int ,default=1,
-              help="The interval time (in milli second) of re-flash, default is 1000 millisecond.")
+    parser.add_argument('-f','--fast', choices=['PM1', 'PM2', 'PM3','PM4'],default='PM1',
+              help="which PowerMeter you want to use in fast mode( i less 250), Default is PM1")
     args = parser.parse_args()
     #return args.watt
 
@@ -48,19 +49,16 @@ def main():
     dsm.close()
 
     if timeint < 250:
+        PM=args.fast
         outfile=open("../assets/powerRecorder-q.txt","a")
         os.system('clear')
         print("\n    HotLoad Temp,",T_hot," [K], OutSide Temp",T_atm," [k]")
         print("    Quickly Power Recording Mode in process, please wait for ",
                 args.time, "[Seconds]]\n \n ")
         for i in range(int(args.time/timeint)):
-            p1=RAD.get_Power('PM1')
-            #p2=RAD.get_Power('PM2')
-            #p3=RAD.get_Power('PM3')
-            #p4=RAD.get_Power('PM4')
+            p1=RAD.get_Power(PM)
             rtime=datetime.utcnow().strftime("%m-%d %H:%M:%S .%f,")
-            outfile.write('{}{} {}{}{}\n'.format(rtime,p1,p2,p3,p4))
-            #outfile.write('{}{} {}{}{}\n'.format(rtime,p1,p2,p3,p4))
+            outfile.write('{}{}, (From{})\n'.format(rtime,p1,PM))
             time.sleep(timeint)
         outfile.close()
     else:
@@ -80,7 +78,7 @@ def main():
             print("     PowerMeter 2 -",p2," y-factor (dB)",calTsys(power2a),calTsys(power2b))
             print("     PowerMeter 3 -",p3," y-factor (dB)",calTsys(power3a),calTsys(power3b))
             print("     PowerMeter 4 -",p4," y-factor (dB)",calTsys(power4a),calTsys(power4b))
-            time.sleep(timeint)
+            time.sleep(timeint-0.22)
         outfile.close()
 
 #print(RAD.get_Power('PM1'))
