@@ -24,6 +24,10 @@ def calTsys(power):
         yfact=sum(power[2:4])-sum(power[-4:-2])
         return f'{yfact:.2f}'
 
+#in Fast mode, only 1 PowerMeter reading, and only saving.
+#i=50,100,200 (Fast mode)seem work wells, and in time
+#i=250,500,1000,2000,...., will bit quickly(), and not sure for long time...
+#
 
 def main():
     parser = argparse.ArgumentParser(description="record Power(db) from 4 Meter (2 channel for each)")
@@ -36,6 +40,7 @@ def main():
               help="which PowerMeter you want to use in fast mode( i less 249), Default is PM1")
     args = parser.parse_args()
     #return args.watt
+
 
     power1a=[];power1b=[];power2a=[];power2b=[]
     power3a=[];power3b=[];power4a=[];power4b=[]
@@ -50,7 +55,7 @@ def main():
 
     if timeint < 0.249:
         PM=args.fast
-        outfile=open("../assets/powerRecorder-quick","a")
+        outfile=open("../assets/powerRecorder-quick.txt","a")
         os.system('clear')
         print("\n    HotLoad Temp,",T_hot," [K], OutSide Temp",T_atm," [k]")
         print("    Quickly Power Recording Mode in process, please wait for ",
@@ -79,7 +84,7 @@ def main():
             print("     PowerMeter 2 -",p2," y-factor (dB)",calTsys(power2a),calTsys(power2b))
             print("     PowerMeter 3 -",p3," y-factor (dB)",calTsys(power3a),calTsys(power3b))
             print("     PowerMeter 4 -",p4," y-factor (dB)",calTsys(power4a),calTsys(power4b))
-            time.sleep(timeint-0.229)
+            time.sleep(timeint-0.18)
         outfile.close()
 
 #print(RAD.get_Power('PM1'))
