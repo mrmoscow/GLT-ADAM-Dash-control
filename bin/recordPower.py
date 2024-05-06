@@ -31,9 +31,9 @@ def main():
     parser.add_argument('-t','--time', type=int, default=60,
                help="total time(in seconds) for the scirp running. default is 60 seconds.")
     parser.add_argument('-i','--interval', type=int ,default=1000,
-              help="The interval time (in milli second) of re-flash, default is 1000 millisecond.")
+              help="The interval time (in milli second) of re-flash, default is 1000 millisecond. will in fast mode if less 249, millisecond")
     parser.add_argument('-f','--fast', choices=['PM1', 'PM2', 'PM3','PM4'],default='PM1',
-              help="which PowerMeter you want to use in fast mode( i less 250), Default is PM1")
+              help="which PowerMeter you want to use in fast mode( i less 249), Default is PM1")
     args = parser.parse_args()
     #return args.watt
 
@@ -50,7 +50,7 @@ def main():
 
     if timeint < 0.249:
         PM=args.fast
-        outfile=open("../assets/powerRecorder-q.txt","a")
+        outfile=open("../assets/powerRecorder-quick","a")
         os.system('clear')
         print("\n    HotLoad Temp,",T_hot," [K], OutSide Temp",T_atm," [k]")
         print("    Quickly Power Recording Mode in process, please wait for ",
@@ -60,7 +60,7 @@ def main():
             rtime=datetime.utcnow().strftime("%m-%d %H:%M:%S .%f,")
             outfile.write('{}{}, (From{})\n'.format(rtime,p1,PM))
             print("     PowerMeter ",PM[-1]," -",p1)
-            time.sleep(timeint)
+            time.sleep(timeint-0.05)
         outfile.close()
     else:
         outfile=open("../assets/powerRecorder.txt","a")
@@ -79,7 +79,7 @@ def main():
             print("     PowerMeter 2 -",p2," y-factor (dB)",calTsys(power2a),calTsys(power2b))
             print("     PowerMeter 3 -",p3," y-factor (dB)",calTsys(power3a),calTsys(power3b))
             print("     PowerMeter 4 -",p4," y-factor (dB)",calTsys(power4a),calTsys(power4b))
-            time.sleep(timeint-0.22)
+            time.sleep(timeint-0.229)
         outfile.close()
 
 #print(RAD.get_Power('PM1'))
