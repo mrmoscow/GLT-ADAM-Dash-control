@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
   try :
       #Set the whole string
-      s.sendall(message)
+      s.send(message.encode())
   except socket.error:
       #Send failed
       print ('Send failed')
@@ -43,15 +43,15 @@ if __name__ == '__main__':
   #Now receive data
   reply = s.recv(4096)
 
-  print ("Frequency is:  " + reply.rstrip('\n') + ' Hz')
-  freq_query= reply.rstrip('\n') + '\n'
+  print ("Frequency is:  " + reply.decode().rstrip('\n') + ' Hz')
+  freq_query= reply.decode().rstrip('\n') + '\n'
   outfile.write(freq_query)
 
   message = "pow:ampl?\n"
 
   try :
       #Set the whole string
-      s.sendall(message)
+      s.send(message.encode())
   except socket.error:
       #Send failed
       print ('Send failed')
@@ -61,15 +61,15 @@ if __name__ == '__main__':
   #Now receive data
   reply = s.recv(4096)
 
-  print ("Power is:  " + reply.rstrip('\n') + ' dBm')
-  power_query= reply.rstrip('\n') + '\n'
+  print ("Power is:  " + reply.decode().rstrip('\n') + ' dBm')
+  power_query= reply.decode().rstrip('\n') + '\n'
   outfile.write(power_query)
 
   message = "OUTP?\n"
 
   try :
       #Set the whole string
-      s.sendall(message)
+      s.send(message.encode())
   except socket.error:
       #Send failed
       print ('Send failed')
@@ -80,7 +80,7 @@ if __name__ == '__main__':
   #Now receive data
   reply = s.recv(4096)
 
-  print ("RF Output is:  " + reply.rstrip('\n'))
-  stat_query= reply.rstrip('\n')
+  print ("RF Output is:  " + reply.decode().rstrip('\n'))
+  stat_query= reply.decode().rstrip('\n')
   outfile.write(stat_query)
   outfile.close()
