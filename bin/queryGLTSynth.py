@@ -27,7 +27,7 @@ if __name__ == '__main__':
   except OSError:
       pass
 
-  outfile=open('./assets/SGQueryparams.txt','w')
+  outfile=open('../assets/SGQueryparams.txt','w')
 
   message = "freq:cw?\n"
 
