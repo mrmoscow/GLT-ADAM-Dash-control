@@ -47,7 +47,7 @@ if __name__ == '__main__':
   outfile=open('SGparams.txt','w')
   try :
       #Set the whole string
-      s.sendall(message)
+      s.sendall(message.encode())
   except socket.error:
       #Send failed
       print ('Send failed')
