@@ -25,14 +25,15 @@ This app controls the Greenland telescope(GLT) Receiver and the GLT ADAM module 
 
 
 ### ToDo List
+* fix bug in CAB-A3 (for reaging: last two dig, for set re-check)
 * new branch for more functions and code structure. 
 * a way to show Allan Dev on dahs page.   
 * CSS (for updated) file for pages.
-* 1st line with running env
-
+* the r page and the baseic.
 
 ### Thing finished.
 * link ADAM6224 with ASIC  (Done, no need, using the old method)
 * a way to get the SA data and make a PNG file. (Done, the SpecAnalyzer.py)
 * Test the check of the IP of VVM.  (Done 204)
+
 
