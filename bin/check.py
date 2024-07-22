@@ -36,7 +36,4 @@ print(b)
 
 
 #print(RAD.ADAM_list)
-
-
-
 #print()

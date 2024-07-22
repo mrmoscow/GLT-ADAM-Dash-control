@@ -17,6 +17,7 @@ from channelOpt import channelOpt
 #Next list the name and IP at GLT telescope
 ADAM_list={"A01":'192.168.1.207',\
            "A03":'192.168.1.201',\
+           "A30":'192.168.1.30',\
            "A10":'192.168.1.217',\
            "A11":'192.168.1.206',\
            "A14":'192.168.1.208',\
