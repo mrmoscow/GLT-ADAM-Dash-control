@@ -70,14 +70,14 @@ value,increase,decrease = get_opt()
 print('This script  help to check the A3 (6050)')
 print('Start to checking the  of A3')
 
-RAD.check_ADAM('A3')
-result=RAD.get_6050('A3')
+RAD.check_ADAM('A03')
+result=RAD.get_6050('A03')
 print(result[0:12])
 print(result[12:])
 
 #RAD.set_6050('A30',[1,0,0,0,0,0])
 #RAD.set_6050('A30',dec_to_6bit(42))
-result=RAD.get_6050('A3')
+result=RAD.get_6050('A03')
 print(result[12:],list(map(int, result[12:])))
 print(bin_to_dec(list(map(int, result[12:]))) )
 oldvalue=int(bin_to_dec(list(map(int, result[12:]))))
@@ -85,21 +85,21 @@ print("The attenoue at A3 value before setting is",oldvalue )
 
 if value is not None:
     print(f"The all value: {value}")
-    RAD.set_6050('A3',dec_to_6bit(int(value)))
+    RAD.set_6050('A03',dec_to_6bit(int(value)))
 else:
     print("未傳入整數參數")
 
 if increase is not None:
     print(f"increase value is : {increase}")
-    RAD.set_6050('A3',dec_to_6bit(int(oldvalue+increase)))
+    RAD.set_6050('A03',dec_to_6bit(int(oldvalue+increase)))
 else:
     print("No increase value ")
 
 if decrease is not None:
     print(f"The decrease value is: {decrease}")
-    RAD.set_6050('A3',dec_to_6bit(int(oldvalue-decrease)))
+    RAD.set_6050('A03',dec_to_6bit(int(oldvalue-decrease)))
 else:
     print("No decrease value ")
 
-result=RAD.get_6050('A3')
+result=RAD.get_6050('A03')
 print("The new A3 att value is",bin_to_dec(list(map(int, result[12:]))) )
