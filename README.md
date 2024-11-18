@@ -35,5 +35,5 @@ This app controls the Greenland telescope(GLT) Receiver and the GLT ADAM module 
 * link ADAM6224 with ASIC  (Done, no need, using the old method)
 * a way to get the SA data and make a PNG file. (Done, the SpecAnalyzer.py)
 * Test the check of the IP of VVM.  (Done 204)
-
+* This is for test
 
