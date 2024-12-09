@@ -1,0 +1,177 @@
+#!/home/obscon/bin/cpy3
+
+import argparse
+import os,sys,time,random
+from datetime import datetime
+#from PIL import Image
+
+sys.path.append("../module")
+import ReceiverADAM as RAD
+import SpecAnalyzer as SA
+
+
+def is_positive_integer(value):
+    """
+    Checks if the input value is a positive integer.
+
+    Parameters:
+        value (str): The input value to check.
+
+    Returns:
+        bool: True if the value is a positive integer, False otherwise.
+        number(int):
+    ToDo: how about input like:60*60*24*2 or 2E4....
+    """
+    try:
+        number = int(value)
+        if number > 0:
+            return True,number
+        else:
+            return False,0
+    except ValueError:
+        return False,0
+
+
+
+def get_opt():
+    parser = argparse.ArgumentParser(description="For GLT VVM machine control and monitoring. There is 3 vector meter on GLT. 1. Maser-House(.74), 2. LSC(.155),3. Rx-Cabin(.204)")
+    #parser.add_argument("-c","--channel", type=str, help="channel to SA  [1..44]",required=True)
+    parser.add_argument('-v','--vvm',action="store_true",help="")
+    parser.add_argument('-f','--format',action="store_true",help="Display format, 1. B input (db), & B-A(degree), 2. B input(mV) & B-A(degree) 3. 4. "  )
+    args = parser.parse_args()
+    return args
+
+
+rx_change = get_opt()
+
+
+print("----------------------------------------")
+print("Which Vector Meter (HP8508A) do you want to use?")
+print("a-> 192.168.1.74 located at Maser House")
+print("b-> 192.168.1.155 located at Left Side Cabin")
+print("c-> 192.168.1.204 located at Rx Cabin")
+#print("----------------------------------------")
+
+while True:
+    mac_input= input("Please input your choise (a, b, c) :")
+    if mac_input in ["a","A","74","1"]:
+        ip="192.168.0.74"
+        gpip_add="8"
+        loc="Maser House"
+        break
+    elif mac_input in ["b","B","155","2"]:
+        ip="192.168.0.155"
+        gpip_add="25"
+        loc="Left Side Cabin"
+        break
+    elif mac_input in ["c","C","204","3"]:
+        ip="192.168.0.204"
+        gpip_add="25"
+        loc="Rx Cabin"
+        break
+    elif mac_input in ["q","Q","exit","quit"]:
+        sys.exit()
+    else:
+        print ("-----Input error-----")
+
+print("Your Input",mac_input,"for",ip,"at",loc,"and GPIP addreess",gpip_add)
+
+
+print("----------------------------------------")
+while  True:
+    dout_input=input("Do you want to switch to Direct output mode? y/n:")
+    if dout_input in ["y","Y","yes","Yes","YES"]:
+        print("Will set the Vector Meter",ip,"into Direct output Mode")
+        dout_mod=True
+        break
+        #vvm setting
+    elif dout_input in ["n","N","no","No","NO"]:
+        print("Will Start the Recordering. ")
+        dout_mod=False
+        break
+    elif dout_input in ["q","Q","exit","quit"]:
+        sys.exit()
+    else:
+        print ("-----Input error-----")
+
+##Mod
+if dout_mod:
+    print("The code will set the",ip,"into Direct output mode")
+    sys.exit()
+
+
+print("----------------------------------------")
+print("There is 4 record format for VVM, which one do you want?")
+print("1-> B input(dB), & B-A (degree)")
+print("2-> B input(mV), & B-A (degree)")
+print("3-> A input(dB), & B input(dB)")
+print("4-> A input(mV), & B input(mV)")
+while  True:
+    form_input=input("Please Choose format (1,2,3,4):")
+    if form_input in ["1","a","A"]:
+        print("Will using option 1-> B input(dB) & B-A (degree)")
+        form_mod=1
+        form_des="B input(dB) & B-A (degree)"
+        break
+        #vvm setting
+    elif form_input in ["2","b","B"]:
+        print("Will using option 2-> B input(mV) & B-A (degree)")
+        form_mod=2
+        form_des="B input(mV) & B-A (degree)"
+        break
+    elif form_input in ["3","c","C"]:
+        print("Will using option 3-> A input(dB) & B input(dB)")
+        form_mod=3
+        form_des="A input(dB) & B input(dB)"
+        break
+        #vvm setting
+    elif form_input in ["4","d","D"]:
+        print("Will using option 4-> A input(mV) & B input(mV)")
+        form_mod=4
+        form_des="A input(mV) & B input(mV)"
+        break
+        #vvm setting
+    elif form_input in ["q","Q","exit","quit"]:
+        sys.exit()
+    else:
+        print ("-----Input error-----")
+
+
+print("----------------------------------------")
+while  True:
+    re_input=input("Do you want to Recording data? y/n:")
+    if re_input in ["y","Y","yes","Yes","YES"]:
+        print("Will using",ip,"with format",form_mod,"->",form_des)
+        re_mod=True
+        while  True:
+            time_input=input("Input the recording time(in Seconds)?:")
+            #correct,time=False,30
+            correct,time=is_positive_integer(time_input)
+            if time_input in ["q","Q","exit","quit"]:
+                break
+            if correct:
+                print("The time you input is",time,"Seconds")
+                break
+            else:
+                print("Time format mistake, re-try")
+                continue
+        break
+        #vvm setting
+    elif re_input in ["n","N","no","No","NO"]:
+        print("Will Stop the this code ")
+        re_mod=False
+        sys.exit()
+        #break
+    elif re_input in ["q","Q","exit","quit"]:
+        sys.exit()
+
+if re_mod:
+    print("--------------------------------")
+    print("Will Recording Data using vvm:",ip,", For",time,"Seconds\n"
+            "in format",form_mod,"->",form_des)
+    input("Prease enter to start:")
+    #change format
+    #Recording 
+    sys.exit()
+
+print("End of the code")
