@@ -6,9 +6,9 @@ from datetime import datetime
 #from PIL import Image
 
 sys.path.append("../module")
-import ReceiverADAM as RAD
-import SpecAnalyzer as SA
-
+#import ReceiverADAM as RAD
+#import SpecAnalyzer as SA
+import hp8508 as hp
 
 def is_positive_integer(value):
     """
@@ -31,6 +31,39 @@ def is_positive_integer(value):
     except ValueError:
         return False,0
 
+def file_vvm(ip,form_mod,timeint,totime):
+    timenow=time.strftime("%d%m%y_%H%M%S")
+    outfilename="..//assets/vvm_type" + str(form_mod) + "_" + timenow + ".txt"
+    outfile=open(outfilename,"w")
+    timecount=0
+    next_time = time.time()
+
+    for i in range(int(totime/timeint)):
+        timeWritetoFile=datetime.now().strftime("%Y/%m/%d_%H:%M:%S.%f")[:-4]
+        print('%25s %8.1f' % (timeWritetoFile, timecount),end=", ")
+        resultA, resultB = hp.get_vvm_AB(ip,form_mod)
+        outfile.write('%25s %8.1f %20s %20s \n' % (timeWritetoFile, timecount, resultA, resultB))
+        timecount += timeint
+        next_time += timeint
+        sleep_time=next_time - time.time()
+        if sleep_time > 0.0:
+            time.sleep(sleep_time)
+    outfile.close()
+    print("End of the VVM data" )
+
+def data_vvm(ip,form_mod,timeint):
+    try:
+        print("Press Ctrl+C to quit the loop.")
+        next_time = time.time()
+        while True:
+            hp.get_vvm_AB(ip,form_mod)
+            next_time += timeint
+            sleep_time=next_time - time.time()
+            if sleep_time > 0.0:
+                time.sleep(sleep_time)
+    except KeyboardInterrupt:
+        print("\nLoop interrupted. Exiting.")
+
 
 
 def get_opt():
@@ -44,6 +77,12 @@ def get_opt():
 
 rx_change = get_opt()
 
+timeint=0.5
+#in secconds, defaule 
+#totime=25
+#file_vvm("192.168.1.70",2,timeint,25)
+#data_vvm("192.168.1.70",3,timeint)
+
 
 print("----------------------------------------")
 print("Which Vector Meter (HP8508A) do you want to use?")
@@ -55,19 +94,24 @@ print("c-> 192.168.1.204 located at Rx Cabin")
 while True:
     mac_input= input("Please input your choise (a, b, c) :")
     if mac_input in ["a","A","74","1"]:
-        ip="192.168.0.74"
+        ip="192.168.1.74"
         gpip_add="8"
         loc="Maser House"
         break
     elif mac_input in ["b","B","155","2"]:
-        ip="192.168.0.155"
+        ip="192.168.1.155"
         gpip_add="25"
         loc="Left Side Cabin"
         break
     elif mac_input in ["c","C","204","3"]:
-        ip="192.168.0.204"
+        ip="192.168.1.204"
         gpip_add="25"
         loc="Rx Cabin"
+        break
+    elif mac_input in ["d","D","70","4"]:
+        ip="192.168.1.70"
+        gpip_add="25"
+        loc="Taipei Lab"
         break
     elif mac_input in ["q","Q","exit","quit"]:
         sys.exit()
@@ -75,6 +119,7 @@ while True:
         print ("-----Input error-----")
 
 print("Your Input",mac_input,"for",ip,"at",loc,"and GPIP addreess",gpip_add)
+
 
 
 print("----------------------------------------")
@@ -97,6 +142,7 @@ while  True:
 ##Mod
 if dout_mod:
     print("The code will set the",ip,"into Direct output mode")
+    hp.sendVVM(ip,"DAN ON")
     sys.exit()
 
 
@@ -146,11 +192,11 @@ while  True:
         while  True:
             time_input=input("Input the recording time(in Seconds)?:")
             #correct,time=False,30
-            correct,time=is_positive_integer(time_input)
+            correct,all_time=is_positive_integer(time_input)
             if time_input in ["q","Q","exit","quit"]:
                 break
             if correct:
-                print("The time you input is",time,"Seconds")
+                print("The time you input is",all_time,"Seconds")
                 break
             else:
                 print("Time format mistake, re-try")
@@ -158,20 +204,26 @@ while  True:
         break
         #vvm setting
     elif re_input in ["n","N","no","No","NO"]:
-        print("Will Stop the this code ")
         re_mod=False
-        sys.exit()
-        #break
+        #sys.exit()
+        break
     elif re_input in ["q","Q","exit","quit"]:
         sys.exit()
 
+# also timeint=1 (seconds)
+
 if re_mod:
     print("--------------------------------")
-    print("Will Recording Data using vvm:",ip,", For",time,"Seconds\n"
+    print("Will Recording Data using vvm:",ip,", For",all_time,"Seconds\n"
             "in format",form_mod,"->",form_des)
-    input("Prease enter to start:")
-    #change format
-    #Recording 
+    #Next if for Recording.
+    file_vvm(ip,form_mod,timeint,all_time)
+    #Back to Normal setting if dev
+    sys.exit()
+else:
+    #Next is for show the data
+    data_vvm(ip,form_mod,timeint)
+    #Back to Nrrmal Setting if dev
     sys.exit()
 
 print("End of the code")
