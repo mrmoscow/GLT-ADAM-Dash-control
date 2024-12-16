@@ -67,7 +67,7 @@ def data_vvm(ip,form_mod,timeint):
 
 
 def get_opt():
-    parser = argparse.ArgumentParser(description="For GLT VVM machine control and monitoring. There is 3 vector meter on GLT. 1. Maser-House(.74), 2. LSC(.155),3. Rx-Cabin(.204)")
+    parser = argparse.ArgumentParser(description="For GLT VVM machine control and monitoring. There is 3 vector meter on GLT. 1. Maser-House(.74), 2. LSC(.155),3. Rx-Cabin(.204), \n for loong time recording, usind screen (screen -S vvm, once data running, ctrl+A then D )")
     #parser.add_argument("-c","--channel", type=str, help="channel to SA  [1..44]",required=True)
     parser.add_argument('-v','--vvm',action="store_true",help="")
     parser.add_argument('-f','--format',action="store_true",help="Display format, 1. B input (db), & B-A(degree), 2. B input(mV) & B-A(degree) 3. 4. "  )
@@ -119,7 +119,8 @@ while True:
         print ("-----Input error-----")
 
 print("Your Input",mac_input,"for",ip,"at",loc,"and GPIP addreess",gpip_add)
-
+print("Checkiing the Instance status")
+hp.get_vvm_info(ip)
 
 
 print("----------------------------------------")
@@ -219,11 +220,15 @@ if re_mod:
     #Next if for Recording.
     file_vvm(ip,form_mod,timeint,all_time)
     #Back to Normal setting if dev
+    hp.sendVVM(ip,"DAN OFF")
+    print("DAN Turn off, exit the code, GoodBye")
     sys.exit()
 else:
     #Next is for show the data
     data_vvm(ip,form_mod,timeint)
     #Back to Nrrmal Setting if dev
+    hp.sendVVM(ip,"DAN OFF")
+    print("DAN Turn off, exit the code, GoodBye")
     sys.exit()
 
 print("End of the code")

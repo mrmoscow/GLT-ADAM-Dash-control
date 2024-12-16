@@ -47,25 +47,31 @@ def CheckError():
 
 #==============================================================================
 def queryVVM(ip,cmd):
-    sockGPIB = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
-    sockGPIB.settimeout(1.0)
-    sockGPIB.connect((ip, 1234))
-
-    sockGPIB.send(bytes(cmd + "\n",'ascii'))
-    sockGPIB.send(b"++read eoi\n")
     try:
-       ret = sockGPIB.recv(8192)
-       ret = ret.decode().rstrip('\r\n')
+        sockGPIB = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+        sockGPIB.settimeout(1.0)
+        sockGPIB.connect((ip, 1234))
+
+        sockGPIB.send(bytes(cmd + "\n",'ascii'))
+        sockGPIB.send(b"++read eoi\n")
     except socket.timeout:
-       ret = ""
+        print ("Error: TCP/IP timeout")
+    try:
+        ret = sockGPIB.recv(8192)
+        ret = ret.decode().rstrip('\r\n')
+    except socket.timeout:
+        ret = ""
     #print(ret)
     return ret
 
 def sendVVM(ip,cmd):
-    sockGPIB = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
-    sockGPIB.settimeout(1.0)
-    sockGPIB.connect((ip, 1234))
-    sockGPIB.send(bytes(cmd + "\n",'ascii'))
+    try:
+        sockGPIB = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+        sockGPIB.settimeout(1.0)
+        sockGPIB.connect((ip, 1234))
+        sockGPIB.send(bytes(cmd + "\n",'ascii'))
+    except socket.timeout:
+        print ("Error: TCP/IP timeout")
 
 def set_device(ip):
     # Open TCP connect to port 1234 of GPIB-ETHERNET
@@ -125,7 +131,49 @@ def check_vvm(ip):
         indata = sockGPIB.recv(4096)
         print("The IDN of the Inststance is ",indata.decode().rstrip('\r\n'))
     except socket.timeout:
+        print("----Error----")
         print("Can not get the Instance information")
+
+def get_vvm_info(ip):
+    try:
+        sockGPIB = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+        sockGPIB.settimeout(1.0)
+        sockGPIB.connect((ip, 1234))
+        print("Succssfal connent the prologix at IP:",ip)
+        sockGPIB.send(b"++addr\n")
+        time.sleep(0.5)
+        indata = sockGPIB.recv(4096)
+        print("GPIP address",indata.decode().rstrip('\r\n'))
+        sockGPIB.send(b"*IDN?\n")
+        sockGPIB.send(b"++read eoi\n")
+        time.sleep(0.5)
+        try:
+            indata = sockGPIB.recv(4096)
+            print("The IDN of the Inststance is ",indata.decode().rstrip('\r\n'))
+        except socket.timeout:
+            print("----Error----")
+            print("Can not get the Instance information")
+        sockGPIB.send(b"DAN?\n")
+        sockGPIB.send(b"++read eoi\n")
+        time.sleep(0.5)
+        try:
+            indata = sockGPIB.recv(4096)
+            print("The Direct Agnalog output mode is (1: ON)",indata.decode().rstrip('\r\n'))
+        except socket.timeout:
+            print("----Error----")
+            print("Can not get the Instance DAN information.")
+        sockGPIB.send(b"FORM?\n")
+        sockGPIB.send(b"++read eoi\n")
+        time.sleep(0.5)
+        try:
+            indata = sockGPIB.recv(4096)
+            print("The Form type of HP for now",indata.decode().rstrip('\r\n'))
+        except socket.timeout:
+            print("----Error----")
+            print("Can not get the Instance format information.")
+    except socket.timeout:
+        print("----Error----")
+        print("Can not link to the prology of IP:",ip)
 
 def get_vvm_AB(ip,ftype):
     if ftype == 0:
@@ -141,7 +189,7 @@ def get_vvm_AB(ip,ftype):
         time.sleep(0.05)
         BA = queryVVM(ip,"MEAS? BA")
         print('A volts: ',str(avol),' B Volts: ',str(bvol),' B-A Phase: ',str(phase), "BA: ", str(BA))
-        return BA,phase
+        return phase,BA
     elif ftype ==1:
         sendVVM(ip,"DAN OFF")
         sendVVM(ip,"FORM LOG")
