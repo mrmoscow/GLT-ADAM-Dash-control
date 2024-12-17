@@ -230,9 +230,20 @@ def get_vvm_AB(ip,ftype):
         bvol = queryVVM(ip,"MEAS? BVOL")
         print('A Input(mV): ',str(avol),' B Input(mV): ',str(bvol))
         return avol,bvol
+    elif ftype == 5:
+        sendVVM(ip,"DAN OFF")
+        sendVVM(ip,"FORM LIN")
+        sendVVM(ip,"FORM POL")
+        time.sleep(0.05)
+        phase = queryVVM(ip,"MEAS? PHASE")
+        time.sleep(0.05)
+        BA = queryVVM(ip,"MEAS? BA")
+        print(' B-A Phase(deg): ',str(phase), "B/A(ratio): ", str(BA))
+        return phase,BA
     else:
         return 0.0,0.0
-        #ip="192.168.1.70"
+
+#ip="192.168.1.70"
 #check_vvm(ip)
 #get_vvm_AB(ip,0)
 

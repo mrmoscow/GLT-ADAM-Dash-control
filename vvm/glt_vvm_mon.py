@@ -32,8 +32,17 @@ def is_positive_integer(value):
         return False,0
 
 def file_vvm(ip,form_mod,timeint,totime):
+    if ip == "192.168.1.74":
+        loc2="Mas"
+    elif ip == "192.168.1.155":
+        loc2="LSC"
+    elif ip == "192.168.1.204":
+        loc2="RxC"
+    else:
+        loc2="UnK"
+
     timenow=time.strftime("%d%m%y_%H%M%S")
-    outfilename="..//assets/vvm_type" + str(form_mod) + "_" + timenow + ".txt"
+    outfilename="../assets/vvm_" + loc2 + "_t" + str(form_mod) + "_" + timenow + ".txt"
     outfile=open(outfilename,"w")
     timecount=0
     next_time = time.time()
@@ -148,19 +157,19 @@ if dout_mod:
 
 
 print("----------------------------------------")
-print("There is 4 record format for VVM, which one do you want?")
-print("1-> B input(dB), & B-A (degree)")
-print("2-> B input(mV), & B-A (degree)")
-print("3-> A input(dB), & B input(dB)")
-print("4-> A input(mV), & B input(mV)")
+print("There is 5 record format for VVM, which one do you want?")
+print("1-> B input(dB),  & B-A (degree)")
+print("2-> B input(mV),  & B-A (degree)")
+print("3-> A input(dB),  & B input(dB)")
+print("4-> A input(mV),  & B input(mV)")
+print("5-> B-A (degree), & B/A (ratio)")
 while  True:
-    form_input=input("Please Choose format (1,2,3,4):")
+    form_input=input("Please Choose format (1,2,3,4,5):")
     if form_input in ["1","a","A"]:
         print("Will using option 1-> B input(dB) & B-A (degree)")
         form_mod=1
         form_des="B input(dB) & B-A (degree)"
         break
-        #vvm setting
     elif form_input in ["2","b","B"]:
         print("Will using option 2-> B input(mV) & B-A (degree)")
         form_mod=2
@@ -171,13 +180,16 @@ while  True:
         form_mod=3
         form_des="A input(dB) & B input(dB)"
         break
-        #vvm setting
     elif form_input in ["4","d","D"]:
         print("Will using option 4-> A input(mV) & B input(mV)")
         form_mod=4
         form_des="A input(mV) & B input(mV)"
         break
-        #vvm setting
+    elif form_input in ["5","e","E"]:
+        print("Will using option 5-> B-A (degree), & B/A (ratio)")
+        form_mod=5
+        form_des="B-A (degree) & B/A (ratio)"
+        break
     elif form_input in ["q","Q","exit","quit"]:
         sys.exit()
     else:
