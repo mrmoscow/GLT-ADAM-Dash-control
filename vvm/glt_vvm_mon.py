@@ -4,6 +4,8 @@ import argparse
 import os,sys,time,random
 from datetime import datetime
 #from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
 
 sys.path.append("../module")
 #import ReceiverADAM as RAD
@@ -58,7 +60,9 @@ def file_vvm(ip,form_mod,timeint,totime):
         if sleep_time > 0.0:
             time.sleep(sleep_time)
     outfile.close()
-    print("End of the VVM data" )
+    print("End of the VVM data, will plot the Data")
+    #plot_vvm(filename,form_mod)
+    plot_vvm(outfilename,form_mod)
 
 def data_vvm(ip,form_mod,timeint):
     try:
@@ -73,18 +77,41 @@ def data_vvm(ip,form_mod,timeint):
     except KeyboardInterrupt:
         print("\nLoop interrupted. Exiting.")
 
+def plot_vvm(filename,form_mod):
+    [first,loc2,form_mod2,t1,t2]=filename.rstrip('.txt').split("_")
+    timeWritetoFile, timecount, phase, ba = np.genfromtxt(filename,unpack="True")
 
+    fig1=plt.figure()
+    ax = fig1.add_subplot(1,1,1)
+    plt.plot(timecount,phase,'b.',markersize=2)
+    plt.axis([0, round(timecount[-1]), -180,180])
+    major_ticks = np.arange(-180, 181, 20)
+    minor_ticks = np.arange(-180, 181, 5)
+    plt.xlabel('Time (seconds)', fontsize=18)
+    plt.ylabel('Phase (degrees)', fontsize=18)
+    ax.set_yticks(major_ticks)
+    ax.set_yticks(minor_ticks, minor=True)
+    pltfigname=filename.rsplit(".",1)[0]+".png"
+    plt.savefig(pltfigname)
+    #plt.show()
+    plt.clf()
 
 def get_opt():
-    parser = argparse.ArgumentParser(description="For GLT VVM machine control and monitoring. There is 3 vector meter on GLT. 1. Maser-House(.74), 2. LSC(.155),3. Rx-Cabin(.204), \n for loong time recording, usind screen (screen -S vvm, once data running, ctrl+A then D )")
-    #parser.add_argument("-c","--channel", type=str, help="channel to SA  [1..44]",required=True)
-    parser.add_argument('-v','--vvm',action="store_true",help="")
-    parser.add_argument('-f','--format',action="store_true",help="Display format, 1. B input (db), & B-A(degree), 2. B input(mV) & B-A(degree) 3. 4. "  )
+    parser = argparse.ArgumentParser(description=
+         """Control and monitor GLT VVM machine.
+        There are 3 vector meter on GLT. 1.at Maser-House(.74), 2. at LSC(.155), 3. Rx-Cabin(.204),
+        For long time recording, using screen (screen -S before code, when data recording: ctrl+a than d )""")
+    parser.add_argument("-i", "--ip", type=str,
+            choices=["74","155","204","70"],
+            help="IP address of the Vector Meter")
+    parser.add_argument("-f", "--format", type=int, choices=[1, 2, 3, 4, 5], help="Data format, 5 for B-A(degree) and B/A(ratio)")
+    parser.add_argument("-t", "--time", type=int, help="Recording time in seconds")
     args = parser.parse_args()
     return args
 
 
-rx_change = get_opt()
+opt = get_opt()
+
 
 timeint=0.5
 #in secconds, defaule 
@@ -93,41 +120,48 @@ timeint=0.5
 #data_vvm("192.168.1.70",3,timeint)
 
 
-print("----------------------------------------")
-print("Which Vector Meter (HP8508A) do you want to use?")
-print("a-> 192.168.1.74 located at Maser House")
-print("b-> 192.168.1.155 located at Left Side Cabin")
-print("c-> 192.168.1.204 located at Rx Cabin")
-#print("----------------------------------------")
+if opt.ip:
+    mac_input="from -i option"
+    ip0=opt.ip
 
-while True:
-    mac_input= input("Please input your choise (a, b, c) :")
-    if mac_input in ["a","A","74","1"]:
-        ip="192.168.1.74"
-        gpip_add="8"
-        loc="Maser House"
-        break
-    elif mac_input in ["b","B","155","2"]:
-        ip="192.168.1.155"
-        gpip_add="25"
-        loc="Left Side Cabin"
-        break
-    elif mac_input in ["c","C","204","3"]:
-        ip="192.168.1.204"
-        gpip_add="25"
-        loc="Rx Cabin"
-        break
-    elif mac_input in ["d","D","70","4"]:
-        ip="192.168.1.70"
-        gpip_add="25"
-        loc="Taipei Lab"
-        break
-    elif mac_input in ["q","Q","exit","quit"]:
-        sys.exit()
-    else:
-        print ("-----Input error-----")
+else:
+    print("----------------------------------------")
+    print("Which Vector Meter (HP8508A) do you want to use?")
+    print("a-> 192.168.1.74 located at Maser House")
+    print("b-> 192.168.1.155 located at Left Side Cabin")
+    print("c-> 192.168.1.204 located at Rx Cabin")
+    #print("----------------------------------------")
 
-print("Your Input",mac_input,"for",ip,"at",loc,"and GPIP addreess",gpip_add)
+    while True:
+        mac_input= input("Please input your choise (a, b, c) :")
+        if mac_input in ["a","A","74","1"]:
+            ip0="74"
+            break
+        elif mac_input in ["b","B","155","2"]:
+            ip0="155"
+            break
+        elif mac_input in ["c","C","204","3"]:
+            ip0="204"
+            break
+        elif mac_input in ["d","D","70","4"]:
+            ip0="70"
+            break
+        elif mac_input in ["q","Q","exit","quit"]:
+            sys.exit()
+        else:
+            print ("-----Input error-----")
+ip_map ={
+        "74":  {"ip":"192.168.1.74" , "gpip":"8" , "loc":"Maser House"},
+        "155": {"ip":"192.168.1.155", "gpip":"25", "loc":"Left Side Cabin"},
+        "204": {"ip":"192.168.1.204", "gpip":"25", "loc":"Rx Cabin"},
+        "70":  {"ip":"192.168.1.70" , "gpip":"25", "loc":"Taipei Lab"},
+    }
+
+ip=ip_map[ip0]["ip"]
+gpip_add = ip_map[ip0]["gpip"]
+loc = ip_map[ip0]["loc"]
+
+print("Your Input",mac_input,"for",ip,"at",loc,"and GPIP addreess",gpip_add,"\n")
 print("Checkiing the Instance status")
 hp.get_vvm_info(ip)
 

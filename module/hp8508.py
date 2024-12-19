@@ -16,7 +16,9 @@ PLUS = 0x2B
 
 #IP ofprologix  addr for GPIP setting
 #ip="192.168.1.70"
-#addr="8"
+#addr="25"
+#we only need the addr for setting the prologix 
+# when sendVVM, gpip_addr is not needeed. 
 
 #for vvm from Taipei Lan than to JCMT
 #ip="192.168.1.204" #addr="8"
@@ -25,6 +27,7 @@ PLUS = 0x2B
 #ip="192.168.1.204" #addr="25"
 #ip="192.168.1.155" #addr="25"
 #ip="192.168.1.74"  #addr="8"
+
 
 #==============================================================================
 def IsSpecial(data):
@@ -139,17 +142,17 @@ def get_vvm_info(ip):
         sockGPIB = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
         sockGPIB.settimeout(1.0)
         sockGPIB.connect((ip, 1234))
-        print("Succssfal connent the prologix at IP:",ip)
+        print("Succssfal connent the prologix at IP:",ip,end="  ,")
         sockGPIB.send(b"++addr\n")
         time.sleep(0.5)
         indata = sockGPIB.recv(4096)
-        print("GPIP address",indata.decode().rstrip('\r\n'))
+        print("GPIP address:",indata.decode().rstrip('\r\n'))
         sockGPIB.send(b"*IDN?\n")
         sockGPIB.send(b"++read eoi\n")
         time.sleep(0.5)
         try:
             indata = sockGPIB.recv(4096)
-            print("The IDN of the Inststance is ",indata.decode().rstrip('\r\n'))
+            print("The IDN of the Inststance is",indata.decode().rstrip('\r\n'))
         except socket.timeout:
             print("----Error----")
             print("Can not get the Instance information")
@@ -158,7 +161,7 @@ def get_vvm_info(ip):
         time.sleep(0.5)
         try:
             indata = sockGPIB.recv(4096)
-            print("The Direct Agnalog output mode is (1: ON)",indata.decode().rstrip('\r\n'))
+            print("The Direct Agnalog output mode (0->off):",indata.decode().rstrip('\r\n'))
         except socket.timeout:
             print("----Error----")
             print("Can not get the Instance DAN information.")
