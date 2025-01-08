@@ -60,9 +60,9 @@ def file_vvm(ip,form_mod,timeint,totime):
         if sleep_time > 0.0:
             time.sleep(sleep_time)
     outfile.close()
-    print("End of the VVM data, will plot the Data")
-    #plot_vvm(filename,form_mod)
-    plot_vvm(outfilename,form_mod)
+    if form_mod == 5:
+        print("End of the VVM data, will plot the Data")
+        plot_vvm(outfilename,form_mod)
 
 def data_vvm(ip,form_mod,timeint):
     try:
@@ -78,6 +78,7 @@ def data_vvm(ip,form_mod,timeint):
         print("\nLoop interrupted. Exiting.")
 
 def plot_vvm(filename,form_mod):
+    file_name = os.path.basename(filename)
     [first,loc2,form_mod2,t1,t2]=filename.rstrip('.txt').split("_")
     timeWritetoFile, timecount, phase, ba = np.genfromtxt(filename,unpack="True")
 
@@ -87,6 +88,7 @@ def plot_vvm(filename,form_mod):
     plt.axis([0, round(timecount[-1]), -180,180])
     major_ticks = np.arange(-180, 181, 20)
     minor_ticks = np.arange(-180, 181, 5)
+    plt.title(f"Plot for {file_name}")  # Use file name as title
     plt.xlabel('Time (seconds)', fontsize=18)
     plt.ylabel('Phase (degrees)', fontsize=18)
     ax.set_yticks(major_ticks)
@@ -96,6 +98,16 @@ def plot_vvm(filename,form_mod):
     #plt.show()
     plt.clf()
 
+def positive_int(value):
+    try:
+        ivalue = int(value)
+        if ivalue <= 0:
+            raise argparse.ArgumentTypeError(f"Invalid value: {value}. It must be a positive integer.")
+        return ivalue
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"Invalid value: {value}. It must be an integer.")
+
+
 def get_opt():
     parser = argparse.ArgumentParser(description=
          """Control and monitor GLT VVM machine.
@@ -104,18 +116,22 @@ def get_opt():
     parser.add_argument("-i", "--ip", type=str,
             choices=["74","155","204","70"],
             help="IP address of the Vector Meter")
-    parser.add_argument("-f", "--format", type=int, choices=[1, 2, 3, 4, 5], help="Data format, 5 for B-A(degree) and B/A(ratio)")
-    parser.add_argument("-t", "--time", type=int, help="Recording time in seconds")
+    parser.add_argument("-d", "--direct", type=str, choices=["on","off"], help="Turn on/off the Direct output mode          ")
+    parser.add_argument("-f", "--format", type=int, choices=[1, 2, 3, 4, 5], help="Data format, 5 for B-A(degree)               and B/A(ratio)")
+    parser.add_argument("-r", "--record", type=str, choices=["y","n"], help="Into the file recording mode or not(just show up the value).")
+    parser.add_argument("-t", "--time", type=positive_int, help="A positive integer for recording time in second")
     args = parser.parse_args()
+    #if args.record and not (args.ip and args.format):
+    #    parser.error("The --record requires both --ip and --format to be specified.")
+
     return args
+
 
 
 opt = get_opt()
 
-
 timeint=0.5
 #in secconds, defaule 
-#totime=25
 #file_vvm("192.168.1.70",2,timeint,25)
 #data_vvm("192.168.1.70",3,timeint)
 
@@ -126,10 +142,10 @@ if opt.ip:
 
 else:
     print("----------------------------------------")
-    print("Which Vector Meter (HP8508A) do you want to use?")
-    print("a-> 192.168.1.74 located at Maser House")
-    print("b-> 192.168.1.155 located at Left Side Cabin")
-    print("c-> 192.168.1.204 located at Rx Cabin")
+    print("\nSelect VVM (HP8508A):\n")
+    print("(a) At Maser House(.74)")
+    print("(b) At LSC (.155)")
+    print("(c) At Rx Cabin (.204)")
     #print("----------------------------------------")
 
     while True:
@@ -162,102 +178,153 @@ gpip_add = ip_map[ip0]["gpip"]
 loc = ip_map[ip0]["loc"]
 
 print("Your Input",mac_input,"for",ip,"at",loc,"and GPIP addreess",gpip_add,"\n")
+
 print("Checkiing the Instance status")
 hp.get_vvm_info(ip)
 
 
 print("----------------------------------------")
-while  True:
-    dout_input=input("Do you want to switch to Direct output mode? y/n:")
-    if dout_input in ["y","Y","yes","Yes","YES"]:
-        print("Will set the Vector Meter",ip,"into Direct output Mode")
-        dout_mod=True
-        break
-        #vvm setting
-    elif dout_input in ["n","N","no","No","NO"]:
-        print("Will Start the Recordering. ")
-        dout_mod=False
-        break
-    elif dout_input in ["q","Q","exit","quit"]:
+if opt.direct:
+    print("The dirct output mode now will be",opt.direct)
+    if opt.direct == "on":
+        print("Turn on Direct Mode and bye bye!")
+        hp.sendVVM(ip,"DAN ON")
         sys.exit()
-    else:
-        print ("-----Input error-----")
-
-##Mod
-if dout_mod:
-    print("The code will set the",ip,"into Direct output mode")
-    hp.sendVVM(ip,"DAN ON")
-    sys.exit()
-
-
-print("----------------------------------------")
-print("There is 5 record format for VVM, which one do you want?")
-print("1-> B input(dB),  & B-A (degree)")
-print("2-> B input(mV),  & B-A (degree)")
-print("3-> A input(dB),  & B input(dB)")
-print("4-> A input(mV),  & B input(mV)")
-print("5-> B-A (degree), & B/A (ratio)")
-while  True:
-    form_input=input("Please Choose format (1,2,3,4,5):")
-    if form_input in ["1","a","A"]:
-        print("Will using option 1-> B input(dB) & B-A (degree)")
-        form_mod=1
-        form_des="B input(dB) & B-A (degree)"
-        break
-    elif form_input in ["2","b","B"]:
-        print("Will using option 2-> B input(mV) & B-A (degree)")
-        form_mod=2
-        form_des="B input(mV) & B-A (degree)"
-        break
-    elif form_input in ["3","c","C"]:
-        print("Will using option 3-> A input(dB) & B input(dB)")
-        form_mod=3
-        form_des="A input(dB) & B input(dB)"
-        break
-    elif form_input in ["4","d","D"]:
-        print("Will using option 4-> A input(mV) & B input(mV)")
-        form_mod=4
-        form_des="A input(mV) & B input(mV)"
-        break
-    elif form_input in ["5","e","E"]:
-        print("Will using option 5-> B-A (degree), & B/A (ratio)")
-        form_mod=5
-        form_des="B-A (degree) & B/A (ratio)"
-        break
-    elif form_input in ["q","Q","exit","quit"]:
+    if opt.direct == "off":
+        print("Turn off Direct Mode and bye bye!")
+        hp.sendVVM(ip,"DAN OFF")
         sys.exit()
-    else:
-        print ("-----Input error-----")
+
+if opt.format:
+    print("-f option using, Now you are using formate type",opt.format)
+    form_mod=opt.format
+else:
+    #print("-f option No using ")
+    while  True:
+        dout_input=input("\nDo you want to switch to Direct output mode? y/n:")
+        if dout_input in ["y","Y","yes","Yes","YES"]:
+            print("Will set the Vector Meter",ip,"into Direct output Mode")
+            dout_mod=True
+            break
+        elif dout_input in ["n","N","no","No","NO"]:
+            print("Please choise the recording parameter.")
+            dout_mod=False
+            break
+        elif dout_input in ["q","Q","exit","quit"]:
+            sys.exit()
+        else:
+            print ("-----Input error-----")
+    ##Mod
+    if dout_mod:
+        print("The code will set the",ip,"into Direct output mode")
+        hp.sendVVM(ip,"DAN ON")
+        sys.exit()
+
+    print("----------------------------------------")
+    print("\nSelect Display/Record format:\n")
+    print("1-> B input(dB),  & B-A (degree)")
+    print("2-> B input(mV),  & B-A (degree)")
+    print("3-> A input(dB),  & B input(dB)")
+    print("4-> A input(mV),  & B input(mV)")
+    print("5-> B-A (degree), & B/A (ratio)")
+    while  True:
+        form_input=input("Please input your choice (1,2,3,4,5):")
+        if form_input in ["1","a","A"]:
+            print("Will using option 1-> B input(dB) & B-A (degree)")
+            form_mod=1
+            #form_des="B input(dB) & B-A (degree)"
+            break
+        elif form_input in ["2","b","B"]:
+            print("Will using option 2-> B input(mV) & B-A (degree)")
+            form_mod=2
+            #form_des="B input(mV) & B-A (degree)"
+            break
+        elif form_input in ["3","c","C"]:
+            print("Will using option 3-> A input(dB) & B input(dB)")
+            form_mod=3
+            #form_des="A input(dB) & B input(dB)"
+            break
+        elif form_input in ["4","d","D"]:
+            print("Will using option 4-> A input(mV) & B input(mV)")
+            form_mod=4
+            #form_des="A input(mV) & B input(mV)"
+            break
+        elif form_input in ["5","e","E"]:
+            print("Will using option 5-> B-A (degree), & B/A (ratio)")
+            form_mod=5
+            #form_des="B-A (degree) & B/A (ratio)"
+            break
+        elif form_input in ["q","Q","exit","quit"]:
+            sys.exit()
+        else:
+            print ("-----Input error-----")
 
 
-print("----------------------------------------")
-while  True:
-    re_input=input("Do you want to Recording data? y/n:")
-    if re_input in ["y","Y","yes","Yes","YES"]:
-        print("Will using",ip,"with format",form_mod,"->",form_des)
+form_map ={
+        1:{"descript":"B input(dB) & B-A (degree)"},
+        2:{"descript":"B input(mV) & B-A (degree)"},
+        3:{"descript":"A input(dB) & B input(dB)"},
+        4:{"descript":"A input(mV) & B input(mV)"},
+        5:{"descript":"B-A (degree) & B/A (ratio)"},
+    }
+form_des=form_map[form_mod]["descript"]
+
+
+if opt.record:
+    ##print("-r, recording  option using, Now you will recording data",opt.record)
+    if opt.record == "y":
         re_mod=True
+    else:
+        re_mod=False
+else:
+    #print("-r, time not using, manual input.")
+    print("----------------------------------------\n")
+    while  True:
+        re_input=input("Do you want to Recording data? y/n:")
+        if re_input in ["y","Y","yes","Yes","YES"]:
+            print("Will using",ip,"with format",form_mod,"->",form_des)
+            re_mod=True
+            '''
+            while  True:
+                time_input=input("Input the recording time(in Seconds)?:")
+                #correct,time=False,30
+                correct,all_time=is_positive_integer(time_input)
+                if time_input in ["q","Q","exit","quit"]:
+                    break
+                if correct:
+                    print("The time you input is",all_time,"Seconds")
+                    break
+                else:
+                    print("Time format mistake, re-try")
+                    continue
+              '''
+            break
+        elif re_input in ["n","N","no","No","NO"]:
+            re_mod=False
+            break
+        elif re_input in ["q","Q","exit","quit"]:
+            sys.exit()
+
+if opt.time:
+    print("-t, time option using, Recording data for",opt.time,"Seconds")
+    all_time=opt.time
+else:
+    #print("-t, time not using,")
+    if re_mod:
+        print("----------------------------------------\n")
         while  True:
             time_input=input("Input the recording time(in Seconds)?:")
             #correct,time=False,30
             correct,all_time=is_positive_integer(time_input)
             if time_input in ["q","Q","exit","quit"]:
-                break
+                sys.exit()
             if correct:
                 print("The time you input is",all_time,"Seconds")
                 break
             else:
                 print("Time format mistake, re-try")
                 continue
-        break
-        #vvm setting
-    elif re_input in ["n","N","no","No","NO"]:
-        re_mod=False
-        #sys.exit()
-        break
-    elif re_input in ["q","Q","exit","quit"]:
-        sys.exit()
 
-# also timeint=1 (seconds)
 
 if re_mod:
     print("--------------------------------")
@@ -266,15 +333,15 @@ if re_mod:
     #Next if for Recording.
     file_vvm(ip,form_mod,timeint,all_time)
     #Back to Normal setting if dev
-    hp.sendVVM(ip,"DAN OFF")
-    print("DAN Turn off, exit the code, GoodBye")
+    #hp.sendVVM(ip,"DAN OFF")
+    #print("DAN Turn off, exit the code, GoodBye")
     sys.exit()
 else:
     #Next is for show the data
     data_vvm(ip,form_mod,timeint)
     #Back to Nrrmal Setting if dev
-    hp.sendVVM(ip,"DAN OFF")
-    print("DAN Turn off, exit the code, GoodBye")
+    #hp.sendVVM(ip,"DAN OFF")
+    #print("DAN Turn off, exit the code, GoodBye")
     sys.exit()
 
 print("End of the code")

@@ -13,10 +13,20 @@ sys.path.append("../module")
 
 
 def plot_vvm(filename,form_mod):
-    [first,loc2,form_mod2,t1,t2]=filename.rstrip('.txt').split("_")
+    base, ext = filename.rsplit('.', 1)
+    # Add 'm' before the extension
+    new_filename = f"{base}m.{ext}"
+    with open(filename, "r") as infile, open(new_filename, "w") as outfile:
+        for line in infile:
+            fields = line.split()
+            if len(fields) == 4:
+                outfile.write(line)
+    [first,loc2,form_mod2,t1,t2]=new_filename.rstrip('.txt').split("_")
     print(filename,first,loc2,form_mod2,t1,t2)
+    file_name = os.path.basename(new_filename)
+
     #timenow=t1+"_"+t2
-    timeWritetoFile, timecount, phase, ba = np.genfromtxt(filename,unpack="True")
+    timeWritetoFile, timecount, phase, ba = np.genfromtxt(new_filename,unpack="True")
     #print(len(phase),max(timecount))
 
     fig1=plt.figure()
@@ -25,6 +35,7 @@ def plot_vvm(filename,form_mod):
     plt.axis([0, round(timecount[-1]), -180,180])
     major_ticks = np.arange(-180, 181, 20)
     minor_ticks = np.arange(-180, 181, 5)
+    plt.title(f"Plot for {file_name}")  # Use file name as title
     plt.xlabel('Time (seconds)', fontsize=18)
     plt.ylabel('Phase (degrees)', fontsize=18)
     ax.set_yticks(major_ticks)
@@ -56,8 +67,7 @@ if opt.filename:
 else:
     directory = '../assets/'
 
-    # 查找以 'example' 開頭的檔案
-    #files = [f for f in os.listdir(directory) if f.startswith('vvm_')]
+    # 查找以 'vvm_' 開頭和.txt結尾的檔案
     files = [f for f in os.listdir(directory) if f.startswith('vvm_') and f.endswith('.txt')]
 
     # 找出檔案的完整路徑
