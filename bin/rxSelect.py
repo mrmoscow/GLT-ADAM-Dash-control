@@ -50,7 +50,7 @@ try:
     if args.nomirror:
         print("Mirrot & Calibration Postiton don't move")
     else:
-        print("Now will moving the M3 mirrot to",mpos, "and watch",cpos)
+        print("Now will moving the M3 mirrot to",mpos, "and watch",cpos,"\n")
         result1 = subprocess.run(["cpy3", ROT, mpos , cpos],capture_output=True,
             text=True,check=True)
         print(result1.stdout)

@@ -168,7 +168,7 @@ def setN_6260(machine,Rxnumber):
         sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) # UDP
         sock.sendto( b"$016\r", (ADAM_list[machine], 1025))
         indata, addr = sock.recvfrom(1024)
-        print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
+        #print('recvfrom Testing' + str(addr) + ': ' + indata.decode())
         sock.close()
         if MESSAGE[-3:-1] == indata.decode()[-3:-1]:
             return 'Setting Succeful'
