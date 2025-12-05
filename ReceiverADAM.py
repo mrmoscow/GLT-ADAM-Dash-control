@@ -96,7 +96,7 @@ def check_ADAM(machine):
     k=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     #k= ModbusClient(j, port=502, timeout=10)
     if k.connect():
-        print (machine,":",ADAM_list[machine],"Good connection!")
+        #print (machine,":",ADAM_list[machine],"Good connection!")
         message +=machine+":"+ADAM_list[machine]+"  "+"Good connection!\n"
     else:
         print (machine,":",ADAM_list[machine],"*** Connection Failure ***")
@@ -131,7 +131,7 @@ def set_6260(machine,data):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     time.sleep(adam_delay)  # must be padded before the consecutive reading
     try:
-        print(co.write_coils(18, data,unit=1,slave=1))
+        #print(co.write_coils(18, data,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -246,7 +246,7 @@ def set_5056(machine,data,card_at='S3'):
     if type(data2) is not list:
         return data2
     try:
-        print(co.write_coils(coil_list[card_at], data2,unit=1,slave=1))
+        #print(co.write_coils(coil_list[card_at], data2,unit=1,slave=1))
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
