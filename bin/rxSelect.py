@@ -27,7 +27,6 @@ if args.tone:
 else:
     tone="Off"
     cpos="sky"
-print(tone)
 
 if args.receiver not in ['86','230','345','rx1','rx2','rx3','rx4','off','Rx1','Rx2','Rx3','Rx4','rx86','rx230','rx345']:
     sys.exit("Receiver name Error: should be one of (rx86,rx230,rx345,off)")

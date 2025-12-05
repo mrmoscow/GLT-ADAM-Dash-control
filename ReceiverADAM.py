@@ -242,7 +242,7 @@ def set_5056(machine,data,card_at='S3'):
     if not co.connect():      # True / False
         return 'Error 01'
     data2=hex_to_BiList(data)
-    print('Setting',machine,data,data2)
+    #print('Setting',machine,data,data2)
     if type(data2) is not list:
         return data2
     try:
