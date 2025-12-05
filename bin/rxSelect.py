@@ -43,8 +43,7 @@ if 'Bad' in RAD.check_ADAM('A44_ReSl'): sys.exit("Error: A44 is not conection")
 if 'Bad' in RAD.check_ADAM('A45_ReSl'): sys.exit("Error: A45 is not conection")
 
 try:
-    print("All ADAM works, The receiver will set to ",mpos, "with tone",tone)
-    print("\n")
+    print("All ADAM works, The receiver will set to ",mpos, "with tone",tone,"\n")
     RAD.set_Rx(rx,tone)
     #print("Receiver set to",rx)
     #Next is for moving mirror
