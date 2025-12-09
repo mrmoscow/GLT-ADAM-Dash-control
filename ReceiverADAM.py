@@ -13,6 +13,7 @@ if sys.version_info[1] == 7 or sys.version_info[1] == 9:
 if sys.version_info[1] == 11:
     from pymodbus.client import ModbusTcpClient as ModbusClient
 
+showADAM=True
 
 #Next list the name and IP at GLT telescope
 ADAM_list={"A01":'192.168.1.207',\
@@ -131,7 +132,8 @@ def set_6260(machine,data):
     co=ModbusClient(ADAM_list[machine],port=502,timeout=10)
     time.sleep(adam_delay)  # must be padded before the consecutive reading
     try:
-        #print(co.write_coils(18, data,unit=1,slave=1))
+        #bfix,print(co.write_coils(18, data,unit=1,slave=1))
+        co.write_coils(18, data,unit=1,slave=1)
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -246,7 +248,7 @@ def set_5056(machine,data,card_at='S3'):
     if type(data2) is not list:
         return data2
     try:
-        #print(co.write_coils(coil_list[card_at], data2,unit=1,slave=1))
+        #gb,print(co.write_coils(coil_list[card_at], data2,unit=1,slave=1))
         co.write_coils(coil_list[card_at], data2,unit=1,slave=1)
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
@@ -638,7 +640,6 @@ def CAB1417switch(channel,mode):
             try:
                 #only A14 A17 S5
                 print(co14.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
-                #print(co17.write_coils(80,A14_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 print(co17.write_coils(80,A17_S5_doTable,unit=1,slave=1));time.sleep(adam_delay)
                 return "Channel "+str(channel)+" set to Spectrum."
             except:
