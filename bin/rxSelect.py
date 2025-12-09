@@ -21,7 +21,7 @@ parser.add_argument("-n", "--nomirror", help="Don't move the M3 morror and Calib
 
 args = parser.parse_args()
 if args.tone:
-    print(" The tone is set to on")
+    print("The tone is set On")
     tone="On"
     cpos="tone"
 else:

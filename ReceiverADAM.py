@@ -247,6 +247,7 @@ def set_5056(machine,data,card_at='S3'):
         return data2
     try:
         #print(co.write_coils(coil_list[card_at], data2,unit=1,slave=1))
+        co.write_coils(coil_list[card_at], data2,unit=1,slave=1)
         time.sleep(adam_delay)  # must be padded before the consecutive reading
         return 'Setting Succeful'
     except:
@@ -378,7 +379,9 @@ A01_hex_tone ={1:'FF80', 2:'5500', 3: 'AA00', 4:'0000'}
 A11_hex={1:'D000', 2:'CC00', 3: 'CC00', 4:'0000'}
 
 def set_Rx(rx_number,tone):
-    if tone == 'On':
+    if tone.lower() == "on":
+        #if tone == 'On':
+        print("In set_Rx with tone On,(ADAD)")
         rxIO_A01=A01_hex_tone[rx_number]
     else:
         rxIO_A01=A01_hex[rx_number]
