@@ -397,7 +397,7 @@ def set_Rx(rx_number,tone):
     try:
         #set_6050('A03',[0,0,0,0,0,0])
         time.sleep(0.5)
-        r1=set_5056('A01','0000')
+        #r1=set_5056('A01','0000')
         time.sleep(0.5)
         r2=set_5056('A01',rxIO_A01)
         set_5056('A11',A11_hex[rx_number])

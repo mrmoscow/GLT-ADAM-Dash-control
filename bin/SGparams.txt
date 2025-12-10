@@ -1,0 +1,3 @@
+Frequency is:  +2.0560000000000E+10 Hz
+Power is:  -1.20000000E+001 dBm
+RF Output is:  1
