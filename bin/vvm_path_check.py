@@ -29,7 +29,7 @@ def get_opt():
 
 receiver = get_opt()
 if receiver not in ['86','230','345','1','2','3']:
-    sys.exit("Error: The receiver should be in one of 1,2,3 or 86,230,300)
+    sys.exit("Error: The receiver should be in one of 1,2,3 or 86,230,300")
 print(receiver)
 checkLOList=[44,22,1,1,12,16,16,11,9,10]
 

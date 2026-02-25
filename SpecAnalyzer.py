@@ -4,6 +4,32 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
+# set_SA() at RAD
+
+def autotune():
+    try:
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientSocket.connect(('192.168.1.221',5025))
+        #data = "*IDN?\n"
+        #clientSocket.send(data.encode())
+        #dataFromServer = clientSocket.recv(1024)
+        #print(dataFromServer.decode().rstrip())
+        data = "FREQ:TUNE:IMM\n"
+        clientSocket.send(data.encode())
+        data ="*OPC?\n"
+        clientSocket.send(data.encode())
+        dataFromServer = clientSocket.recv(1024)
+        #print(dataFromServer.decode().rstrip())
+        if dataFromServer.decode().rstrip() == "1":
+            print( 'SA(192.168.1.221) Auto_Tune Successful')
+        return 'AutoTune Succeful'
+
+    except:
+        print('Error 01')
+        return 'Error 01'
+    finally:
+        clientSocket.close()
+
 def save_plot(pngfile='./assets/SA_plot.png',plt_title="Spectrum"):
     now = datetime.now()
     d = now.strftime("%Y-%m-%d, %H:%M:%S")
