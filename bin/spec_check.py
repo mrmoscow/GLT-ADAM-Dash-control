@@ -43,7 +43,7 @@ def png_to_grid(png_files,out_png,
         return cell
 
     cells = [fit_to_cell(im) for im in imgs]
-    #2 rows, each 4 png, and 4 on top, 3 on botton
+    #2 rows, each 4 png
     cols = 4
     rows = 2
 
@@ -55,7 +55,7 @@ def png_to_grid(png_files,out_png,
         x = margin + i * (cell_w + gap)
         y = margin
         canvas.paste(cells[i], (x, y), cells[i])
-    for j in range(3):
+    for j in range(4):
         x = margin + j * (cell_w + gap)
         y = margin + (cell_h + gap)
         canvas.paste(cells[4 + j], (x, y), cells[4 + j])
@@ -68,7 +68,7 @@ def get_opt():
     args = parser.parse_args()
     return args.lockFreq
 
-checkLOList=[7,31,19,20,33,34,44]
+checkLOList=[7,31,30,44,19,20,33,34]
 i=1
 png_files=[]
 
