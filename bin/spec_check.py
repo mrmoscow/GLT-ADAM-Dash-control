@@ -89,16 +89,19 @@ for channel in checkLOList:
         #atuotone.
         print("In channel 44, will auto tune the SA.")
         SA.autotune()
+        time.sleep(2)
+        SA.set_p_SA("sp",200);SA.set_p_SA("rb",1);SA.set_p_SA("vb",1)
         time.sleep(5)
-
-    SA.save_plot(pngfile,plt_title)
+    SA.save_plot(pngfile, plt_title, ch=(44 if channel==44 else 0))
     print("complete")
     i=i+1
     png_files.append(pngfile)
 
 now = datetime.now()
-output_pdf="../spectrum/spec_check"+now.strftime("_%Y-%m-%d-%H-%M.pdf")
-output_png="../spectrum/spec_check"+now.strftime("_%Y-%m-%d-%H-%M.png")
-print("Start to combine each png into PDF and png( /spectrum/spec_check...)")
+output_pdf="../assets/sp_"+now.strftime("_%y_%m%d%H%M.pdf")
+output_png="./spectrum/"+now.strftime("%y_%m%d%H%M.png")
 combine_png_to_pdf(png_files, output_pdf)
 png_to_grid(png_files,output_png)
+
+print()
+print(f"png file saved to {output_png}")

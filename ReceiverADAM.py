@@ -412,21 +412,13 @@ def set_Rx(rx_number,tone):
 def set_SA(machine,centFreq,span,refLevel,scale,rbw,vbw):
     #print (machine,centFreq,span,refLevel,scale,rbw,vbw)
     #print (ADAM_list[machine])
-    '''
-    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect((ADAM_list[machine],5025))
-    data = "*IDN?\n"
-    clientSocket.send(data.encode())
-    dataFromServer = clientSocket.recv(1024)
-    print(dataFromServer.decode())
-    '''
     try:
         clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         clientSocket.connect((ADAM_list[machine],5025))
         data = "*IDN?\n"
         clientSocket.send(data.encode())
         dataFromServer = clientSocket.recv(1024)
-        print(dataFromServer.decode().rstrip())
+        #print(dataFromServer.decode().rstrip())
 
         data = 'FREQ:CENT'+" {:.0f} ".format(centFreq) +'Hz\n'
         #print(data)
